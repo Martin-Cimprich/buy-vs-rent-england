@@ -1,0 +1,132 @@
+% ============================================================================
+% wp_header.tex — Standard economics working-paper preamble
+% ============================================================================
+% Conventions: single column, 12pt, Times-like serif (TeX Gyre Termes),
+% 1.5 line spacing, 25mm margins, plain headers, author-year citations,
+% no decorative elements. Compile with XeLaTeX + biber.
+% ============================================================================
+
+% --- Language ---
+\usepackage{polyglossia}
+\setdefaultlanguage[variant=british]{english}
+\usepackage{csquotes}
+\MakeOuterQuote{"}
+
+% --- Geometry ---
+\usepackage[a4paper, margin=25mm]{geometry}
+
+% --- Fonts ---
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}[Ligatures=TeX]
+
+% --- Spacing ---
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{1.5em}
+
+% --- Sectioning: plain bold, standard sizes ---
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.6em}{0.6em}
+\titlespacing*{\subsection}{0pt}{1.2em}{0.4em}
+\titlespacing*{\subsubsection}{0pt}{1.0em}{0.3em}
+
+% --- Math ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% --- Graphics & floats ---
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{float}
+\usepackage{placeins}
+
+% --- Tables ---
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{threeparttable}
+\renewcommand{\arraystretch}{1.15}
+\AtBeginEnvironment{table}{\small\singlespacing}
+\AtBeginEnvironment{threeparttable}{\small}
+
+% --- Captions: plain, bold label ---
+\usepackage[font=small, labelfont=bf, format=plain, justification=justified]{caption}
+
+% --- Lists ---
+\usepackage{enumitem}
+\setlist{nosep, topsep=0.3em, itemsep=0.15em}
+
+% --- Appendix ---
+\usepackage[toc,page]{appendix}
+
+% --- Headers: page number only ---
+\usepackage{fancyhdr}
+\pagestyle{plain}
+
+% --- Footnotes ---
+\usepackage[bottom]{footmisc}
+
+% --- Bibliography: author-year ---
+\usepackage[
+  backend=biber,
+  style=authoryear,
+  natbib=true,
+  maxcitenames=3,
+  maxbibnames=10,
+  minnames=1,
+  giveninits=true,
+  uniquename=init,
+  url=false,
+  doi=false,
+  isbn=false,
+  dashed=false
+]{biblatex}
+\setlength{\bibitemsep}{0.5em}
+\setlength{\bibhang}{1.5em}
+\renewcommand*{\bibfont}{\normalsize\singlespacing}
+\setcounter{biburlnumpenalty}{100}
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburllcpenalty}{100}
+
+% --- Hyperlinks: subdued ---
+\usepackage[
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue,
+  bookmarks=true
+]{hyperref}
+
+% --- Utility ---
+\newcommand{\gbp}[1]{\mbox{\pounds#1}}
+
+% --- Title page (standard WP style) ---
+% \wptitlepage{Title}{Author block}{Date}{Abstract}{JEL}{Keywords}{Thanks footnote}
+\newcommand{\wptitlepage}[7]{%
+  \begin{titlepage}
+    \begin{center}
+      \vspace*{18mm}
+      {\Large\bfseries #1\par}
+      \vspace{9mm}
+      {\normalsize #2\par}
+      \vspace{4mm}
+      {\normalsize #3\par}
+      \vspace{12mm}
+      \begin{minipage}{0.86\textwidth}
+        \begin{center}\textbf{Abstract}\end{center}
+        \vspace{1mm}
+        \noindent {\small\singlespacing #4\par}
+        \vspace{5mm}
+        {\small\noindent \textit{JEL classification:} #5\par}
+        \vspace{1mm}
+        {\small\noindent \textit{Keywords:} #6\par}
+      \end{minipage}
+    \end{center}
+    \vfill
+    {\footnotesize\noindent #7\par}
+  \end{titlepage}
+  \setcounter{page}{2}
+}

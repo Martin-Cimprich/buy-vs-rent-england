@@ -1,0 +1,72 @@
+% ============================================================================
+% 03_data.tex — Data
+% ============================================================================
+
+\section{Data}
+\label{sec:data}
+
+The analysis draws on official statistics for all housing inputs and on index-provider data for financial returns. All series are monthly, in nominal pounds sterling, and cover January 2005 to April 2026 (256 months). I focus on England and its nine regions: England is the only part of the United Kingdom for which official monthly rent statistics reach back to 2005. Appendix~\ref{app:data} provides construction details; Table~\ref{tab:sources} summarises the sources.
+
+\begin{table}[H]
+  \centering
+  \caption{Data sources}
+  \label{tab:sources}
+  \begin{threeparttable}
+  \begin{tabularx}{\textwidth}{@{}lXl@{}}
+    \toprule
+    \textbf{Series} & \textbf{Source} & \textbf{Coverage used} \\
+    \midrule
+    House prices & UK House Price Index, HM Land Registry (all dwellings, England and regions) & 2005:1--2026:4 \\
+    Private rents & ONS Price Index of Private Rents (PIPR) and its historical series & 2005:1--2026:4 \\
+    Mortgage rate & Bank of England effective rate on new advances (CFMBJ95) & 2005:1--2026:4 \\
+    Equity returns & MSCI ACWI net total return, GBP, less 0.12\% p.a.\ fund fee & 2005:1--2026:4 \\
+    Gilt yield & 10-year UK government bond yield (OECD, via FRED) & 2005:1--2026:4 \\
+    Stamp duty & HMRC SDLT schedules, first-time-buyer rules by month & 2003:12--2026:4 \\
+    \bottomrule
+  \end{tabularx}
+  \end{threeparttable}
+\end{table}
+
+\subsection{House prices and rents}
+
+House prices come from the UK House Price Index (UK HPI), the official transaction-based index constructed from HM Land Registry sales records by hedonic regression with geometric averaging \parencite{ukhpi}. I use the average price of all dwellings, monthly, for England and each region.
+
+Rents come from the ONS Price Index of Private Rents (PIPR), the official measure of private rents based on Valuation Office Agency lettings data \parencite{ons_pipr,ons_bulletin2026}. Two features make PIPR the appropriate counterpart to the UK HPI. First, it publishes average rent \emph{levels} in pounds per calendar month, not only an index. Second, it is a \emph{stock} measure covering new and existing tenancies, matching the position of a long-term renter whose rent adjusts with the market rather than only at new lets. The live PIPR series begins in January 2015; earlier years use the ONS historical series, chain-linked to PIPR's predecessor index back to January 2005 for England and its regions \parencite{ons_pipr_hist}. The two sources agree exactly over their 122-month overlap, so the splice introduces no discontinuity.
+
+\subsection{A composition-consistent representative dwelling}
+\label{sec:representative}
+
+Moving from regions to a single national figure raises a measurement issue that, to my knowledge, has not been documented. The headline UK HPI England price and the headline PIPR England rent each average the country, but they weight the regions differently: the price is a transaction-mix average, close to a simple average of the nine regions, whereas the rent is a tenancy-mix average dominated by London's large private rental sector. In April 2026 the national average rent (\gbp{1{,}438}) exceeded the average rent of every region except London, while the national average price (\gbp{291{,}445}) sat near the middle of the regional range. The ratio of the two --- a price-to-rent ratio of 16.9 --- consequently falls \emph{below the ratio of every individual region} (17.5 to 22.2). Any rent-versus-own comparison built on this pair prices a mid-England home against a London-weighted rent, overstating the cost of renting and biasing the comparison towards ownership.
+
+I therefore construct the price and rent of a \emph{representative English dwelling} as the same population-weighted average of the nine regions:
+\begin{equation}
+  P^{\text{rep}}_t = \sum_{i=1}^{9} w_i\, P_{i,t}, \qquad
+  R^{\text{rep}}_t = \sum_{i=1}^{9} w_i\, R_{i,t}, \qquad
+  w_i = \frac{\text{pop}_i}{\sum_j \text{pop}_j},
+  \label{eq:representative}
+\end{equation}
+with fixed weights from mid-2023 ONS regional population estimates. Both aggregates then share one regional composition, and the resulting price-to-rent ratio (20.7 in April 2026) lies within the regional range. Over the sample the representative dwelling appreciated from \gbp{162{,}312} to \gbp{317{,}738} (3.2\% per year), falling 18\% peak-to-trough during 2007--2009, while its rent rose from \gbp{692} to \gbp{1{,}280} per month (2.9\% per year). The regional analyses in Sections~\ref{sec:results} and~\ref{sec:rar} use each region's own price and rent and are unaffected by aggregation.
+
+\subsection{Mortgage rates}
+
+The mortgage rate is the Bank of England's effective interest rate on new mortgage advances to households (series CFMBJ95): the volume-weighted average rate actually paid on newly drawn mortgages each month, across products, fixation lengths and loan-to-value tiers \parencite{boe_effective}. I prefer it to the Bank's quoted (advertised) series, which exist only for particular product tiers and have multi-year gaps around the financial crisis. Over the sample the effective rate averaged 3.5\%, peaking at 6.1\% in August 2008, reaching a low of 1.5\% in November 2021, and standing at 4.1\% in April 2026. Because first-time buyers borrow at higher loan-to-value ratios than the average borrower, they typically pay a premium over this series; Section~\ref{sec:robustness} shows results with a 40 basis-point premium.
+
+\subsection{Financial returns}
+
+The renter's portfolio tracks the MSCI ACWI index, covering large- and mid-capitalisation equities in 47 developed and emerging markets \parencite{msci_acwi}. I use end-of-month index levels computed by MSCI directly in pounds sterling in the net-total-return variant (dividends reinvested after withholding taxes), less an ongoing charge of 0.12\% per year representing a low-cost global index fund available to UK retail investors. Measuring the index in sterling embeds the currency exposure an unhedged UK investor bears. Over the sample the net-of-fee series returned 10.2\% per year (a factor of 7.85). As a home-bias robustness check I also use a FTSE~100 total-return series, which returned 7.1\% per year. The 10-year gilt yield (OECD, via FRED) serves as a conservative alternative opportunity cost in Section~\ref{sec:rar}; it ranged from 5.4\% (2007) to 0.2\% (July 2020) and ended the sample at 4.8\% \parencite{fred_uk_gilts}.
+
+Figure~\ref{fig:market_overview} shows the three housing inputs; Figure~\ref{fig:stock_returns} compares cumulative asset performance. The gap the buyer must overcome is evident: over twenty-one years the global equity portfolio multiplied roughly eightfold, UK large-cap equities fourfold, and the representative English dwelling --- before the owner's running costs --- twofold.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uk_v1_market_overview}
+  \caption{Housing-market inputs, representative English dwelling, 2005--2026. \textit{Top:} average house price. \textit{Middle:} average private rent. \textit{Bottom:} Bank of England effective mortgage rate on new advances. Sources: HM Land Registry UK HPI; ONS PIPR; Bank of England.}
+  \label{fig:market_overview}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uk_v1_stock_returns}
+  \caption{Cumulative performance of global equities (MSCI ACWI, net total return in GBP), UK equities (FTSE 100 total return) and representative English house prices, January 2005 = 100. Sources: MSCI; Morningstar; HM Land Registry.}
+  \label{fig:stock_returns}
+\end{figure}

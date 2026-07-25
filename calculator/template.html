@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buy vs Rent in England — Calculator</title>
+<meta name="description" content="Free, open-source buy-vs-rent calculator for England, based on the research paper 'Buy versus Rent in England, 2005–2026'. Compare buying a first home with renting and investing the difference.">
+<style>
+  :root{
+    --navy:#1F4E79; --claret:#8B2E3D; --ink:#1A1A1A; --gray:#6B6B6B;
+    --light:#F5F4F1; --rule:#DDDDDD; --bg:#FFFFFF; --good:#2E7D6B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       color:var(--ink); background:var(--bg); line-height:1.5;}
+  .wrap{max-width:1060px; margin:0 auto; padding:0 18px;}
+  header{border-bottom:3px solid var(--navy); padding:26px 0 18px;}
+  header h1{font-size:1.7rem; font-weight:800; letter-spacing:-0.01em;}
+  header h1 span{color:var(--navy);}
+  header p.sub{color:var(--gray); font-size:0.95rem; margin-top:4px; max-width:760px;}
+  header .links{margin-top:8px; font-size:0.85rem;}
+  header .links a{color:var(--navy); text-decoration:none; margin-right:16px; font-weight:600;}
+  header .links a:hover{text-decoration:underline;}
+
+  .tabs{display:flex; gap:4px; margin:18px 0 0; border-bottom:1px solid var(--rule); flex-wrap:wrap;}
+  .tab{padding:10px 16px; cursor:pointer; border:1px solid transparent; border-bottom:none;
+       border-radius:6px 6px 0 0; font-weight:600; font-size:0.92rem; color:var(--gray); background:none;}
+  .tab.active{color:var(--navy); background:var(--light); border-color:var(--rule);}
+  .pane{display:none; padding:20px 0 10px;}
+  .pane.active{display:block;}
+
+  .grid{display:grid; grid-template-columns:330px 1fr; gap:26px;}
+  @media(max-width:820px){.grid{grid-template-columns:1fr;}}
+
+  .card{background:var(--light); border:1px solid var(--rule); border-radius:8px; padding:16px;}
+  .card h3{font-size:0.8rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray); margin-bottom:10px;}
+  .field{margin-bottom:9px;}
+  .field label{display:block; font-size:0.8rem; color:var(--gray); margin-bottom:2px;}
+  .field input,.field select{width:100%; padding:7px 9px; border:1px solid var(--rule); border-radius:5px;
+       font-size:0.95rem; background:#fff; color:var(--ink);}
+  .field input:focus,.field select:focus{outline:2px solid var(--navy); outline-offset:-1px;}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:9px;}
+  .note{font-size:0.78rem; color:var(--gray); margin-top:6px;}
+
+  .verdict{border-radius:8px; padding:16px 18px; color:#fff; margin-bottom:14px;}
+  .verdict.buy{background:var(--navy);} .verdict.rent{background:var(--claret);}
+  .verdict .v-title{font-size:1.06rem; font-weight:800;}
+  .verdict .v-sub{font-size:0.88rem; opacity:0.92; margin-top:3px;}
+
+  .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:14px;}
+  .stat{background:#fff; border:1px solid var(--rule); border-radius:8px; padding:10px 12px;}
+  .stat .s-label{font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--gray);}
+  .stat .s-value{font-size:1.18rem; font-weight:800; margin-top:2px;}
+  .stat .s-value.navy{color:var(--navy);} .stat .s-value.claret{color:var(--claret);}
+
+  canvas{width:100%; height:auto; background:#fff; border:1px solid var(--rule); border-radius:8px;}
+  .chart-title{font-size:0.85rem; font-weight:700; margin:14px 0 6px;}
+
+  .method{max-width:800px; font-size:0.95rem;}
+  .method h2{font-size:1.15rem; margin:20px 0 8px; color:var(--navy);}
+  .method p,.method li{margin-bottom:8px; color:#333;}
+  .method ul{padding-left:20px;}
+  .method table{border-collapse:collapse; width:100%; font-size:0.88rem; margin:10px 0;}
+  .method td,.method th{border-bottom:1px solid var(--rule); padding:6px 8px; text-align:left;}
+  .method th{font-weight:700;}
+
+  footer{border-top:1px solid var(--rule); margin-top:30px; padding:16px 0 30px;
+         font-size:0.8rem; color:var(--gray);}
+  footer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Buy vs Rent <span>in England</span></h1>
+    <p class="sub">Should you buy a first home, or keep renting and invest the difference?
+    This free calculator implements the analysis of the research paper
+    <em>Buy versus Rent in England: A Cash-Flow-Matched Horse Race for the First-Time Buyer, 2005–2026</em>,
+    using official data (HM Land Registry, ONS, Bank of England, MSCI).</p>
+    <div class="links">
+      <a href="https://github.com/Martin-Cimprich/buy-vs-rent-england" target="_blank" rel="noopener">Paper, code &amp; data (GitHub)</a>
+      <a href="#" id="linkMethod">Methodology</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="tabs">
+    <button class="tab active" data-pane="forward">What if I buy today?</button>
+    <button class="tab" data-pane="backtest">How would it have gone? (2005–2026)</button>
+    <button class="tab" data-pane="method">Methodology &amp; FAQ</button>
+  </div>
+
+  <!-- ============================ FORWARD ============================ -->
+  <div class="pane active" id="pane-forward">
+    <div class="grid">
+      <div>
+        <div class="card">
+          <h3>Your situation</h3>
+          <div class="field"><label>Region preset</label>
+            <select id="f_region"></select></div>
+          <div class="two">
+            <div class="field"><label>Property price (£)</label><input id="f_price" type="number" step="1000"></div>
+            <div class="field"><label>Monthly rent (£)</label><input id="f_rent" type="number" step="10"></div>
+          </div>
+          <div class="two">
+            <div class="field"><label>Deposit (%)</label><input id="f_dep" type="number" step="1" value="10"></div>
+            <div class="field"><label>Mortgage rate (% p.a.)</label><input id="f_rate" type="number" step="0.05"></div>
+          </div>
+          <div class="two">
+            <div class="field"><label>Mortgage term (years)</label><input id="f_term" type="number" step="1" value="30"></div>
+            <div class="field"><label>Holding period (years)</label><input id="f_hor" type="number" step="1" value="10"></div>
+          </div>
+          <h3 style="margin-top:12px">Assumptions</h3>
+          <div class="two">
+            <div class="field"><label>Maintenance (%/yr of value)</label><input id="f_maint" type="number" step="0.1" value="1.5"></div>
+            <div class="field"><label>Purchase costs (%)</label><input id="f_pc" type="number" step="0.1" value="1.5"></div>
+          </div>
+          <div class="two">
+            <div class="field"><label>Selling costs (%)</label><input id="f_sc" type="number" step="0.1" value="2.0"></div>
+            <div class="field"><label>House-price growth (%/yr)</label><input id="f_g" type="number" step="0.1" value="3.0"></div>
+          </div>
+          <div class="two">
+            <div class="field"><label>Investment return (%/yr)</label><input id="f_opp" type="number" step="0.1" value="5.9"></div>
+            <div class="field"><label>Rent growth (%/yr)</label><input id="f_rg" type="number" step="0.1" value="3.0"></div>
+          </div>
+          <div class="note" id="f_sdlt_note"></div>
+          <div class="note">Defaults follow the paper's first-time-buyer baseline. Stamp duty is computed automatically from the current England first-time-buyer schedule.</div>
+        </div>
+      </div>
+      <div>
+        <div id="f_verdict" class="verdict buy"><div class="v-title"></div><div class="v-sub"></div></div>
+        <div class="stats">
+          <div class="stat"><div class="s-label">Buyer's wealth</div><div class="s-value navy" id="f_nw_buy"></div></div>
+          <div class="stat"><div class="s-label">Renter's wealth</div><div class="s-value claret" id="f_nw_rent"></div></div>
+          <div class="stat"><div class="s-label">Wealth ratio R</div><div class="s-value" id="f_R"></div></div>
+          <div class="stat"><div class="s-label">Break-even price growth</div><div class="s-value" id="f_rar"></div></div>
+        </div>
+        <div class="chart-title">Projected wealth: buying vs renting-and-investing</div>
+        <canvas id="f_chart" width="700" height="360"></canvas>
+        <div class="note">Break-even price growth = the annual house-price growth at which buying exactly matches renting-and-investing over your holding period (the paper's "required appreciation rate"). If you expect prices to grow faster than this, buying wins on these assumptions; slower, renting wins.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================ BACKTEST ============================ -->
+  <div class="pane" id="pane-backtest">
+    <div class="grid">
+      <div>
+        <div class="card">
+          <h3>Historical experiment</h3>
+          <div class="field"><label>Region</label><select id="b_region"></select></div>
+          <div class="field"><label>Entry month</label><select id="b_start"></select></div>
+          <div class="two">
+            <div class="field"><label>Deposit (%)</label><input id="b_dep" type="number" step="1" value="10"></div>
+            <div class="field"><label>Term (years)</label><input id="b_term" type="number" step="1" value="30"></div>
+          </div>
+          <div class="two">
+            <div class="field"><label>Maintenance (%/yr)</label><input id="b_maint" type="number" step="0.1" value="1.5"></div>
+            <div class="field"><label>Purchase costs (%)</label><input id="b_pc" type="number" step="0.1" value="1.5"></div>
+          </div>
+          <div class="two">
+            <div class="field"><label>Selling costs (%)</label><input id="b_sc" type="number" step="0.1" value="2.0"></div>
+            <div class="field"><label>&nbsp;</label><span></span></div>
+          </div>
+          <div class="note">Uses the actual month-by-month history: regional house prices (UK HPI), regional rents (ONS), the Bank of England effective mortgage rate (variable, recast monthly), period-accurate first-time-buyer stamp duty, and global equity returns (MSCI ACWI in GBP, net of tax and a 0.12% fund fee). Both strategies run to April 2026.</div>
+        </div>
+      </div>
+      <div>
+        <div id="b_verdict" class="verdict buy"><div class="v-title"></div><div class="v-sub"></div></div>
+        <div class="stats">
+          <div class="stat"><div class="s-label">Buyer's wealth</div><div class="s-value navy" id="b_nw_buy"></div></div>
+          <div class="stat"><div class="s-label">Renter's wealth</div><div class="s-value claret" id="b_nw_rent"></div></div>
+          <div class="stat"><div class="s-label">Wealth ratio R</div><div class="s-value" id="b_R"></div></div>
+          <div class="stat"><div class="s-label">Initial capital</div><div class="s-value" id="b_init"></div></div>
+        </div>
+        <div class="chart-title">What actually happened: wealth paths from your entry month</div>
+        <canvas id="b_chart" width="700" height="330"></canvas>
+        <div class="chart-title">Every entry quarter since 2005, on your parameters (R &gt; 1: renting won)</div>
+        <canvas id="b_cohorts" width="700" height="240"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================ METHOD ============================ -->
+  <div class="pane" id="pane-method">
+    <div class="method">
+      <h2>What this calculator does</h2>
+      <p>It compares two ways of paying for the same home, on a <strong>cash-flow-matched</strong> basis.
+      The <strong style="color:var(--navy)">buyer</strong> pays a deposit, purchase costs and stamp duty, then a monthly
+      mortgage payment plus maintenance. The <strong style="color:var(--claret)">renter</strong> starts by investing
+      exactly the money the buyer put down, pays the market rent, and every month invests (or withdraws)
+      the difference between the owner's costs and the rent. At the end, the buyer's wealth is the home's
+      value minus selling costs and the remaining mortgage; the renter's wealth is the investment portfolio.</p>
+      <h2>Where the numbers come from</h2>
+      <ul>
+        <li><strong>House prices:</strong> UK House Price Index (HM Land Registry), average price of all dwellings, by region.</li>
+        <li><strong>Rents:</strong> ONS Price Index of Private Rents (average rent levels, by region; historical series back to 2005).</li>
+        <li><strong>Mortgage rate:</strong> Bank of England effective rate on new mortgage advances (what borrowers actually paid).</li>
+        <li><strong>Investment returns:</strong> MSCI ACWI global equity index in GBP, net total return, minus a 0.12% p.a. fund fee.</li>
+        <li><strong>Stamp duty:</strong> the exact England first-time-buyer schedule in force in each month since 2005.</li>
+      </ul>
+      <p>The "England (representative)" series is a population-weighted average of the nine English regions'
+      prices <em>and</em> rents, so both share the same regional composition (see the paper, Section 3).</p>
+      <h2>Default assumptions (the paper's baseline)</h2>
+      <table>
+        <tr><th>Parameter</th><th>Default</th><th>Why</th></tr>
+        <tr><td>Deposit</td><td>10%</td><td>Typical first-time-buyer loan-to-value</td></tr>
+        <tr><td>Mortgage term</td><td>30 years</td><td>Modern first-time-buyer norm (UK Finance)</td></tr>
+        <tr><td>Maintenance &amp; depreciation</td><td>1.5% of value/yr</td><td>Between measured cash spending (~1.2%) and the user-cost literature (2%+)</td></tr>
+        <tr><td>Purchase / selling costs</td><td>1.5% / 2%</td><td>Conveyancing, survey, fees / agent commission incl. VAT</td></tr>
+        <tr><td>Investment return</td><td>5.9%/yr</td><td>Conservative long-run global equity assumption, net of fees</td></tr>
+        <tr><td>Rent growth</td><td>3%/yr</td><td>England average, 2005–2026</td></tr>
+      </table>
+      <h2>What it leaves out</h2>
+      <p>Taxes (a first-time buyer's home is CGT-free and the renter's flows fit in ISAs for most households),
+      council tax and utilities (paid under both tenures), moving costs, and everything non-financial:
+      security of tenure, freedom to renovate, flexibility, and the discipline required to actually invest
+      the difference every month. The paper discusses all of these.</p>
+      <h2>FAQ</h2>
+      <p><strong>Is this financial advice?</strong> No. It is an educational tool showing how the arithmetic
+      works and how it would have played out historically. Your circumstances, and the future, will differ.</p>
+      <p><strong>Why does a smaller deposit help the buyer?</strong> Leverage. The mortgage lets the buyer hold
+      a large asset with little capital; when prices rise even modestly, the return on the buyer's own money is
+      amplified. The paper shows an all-cash buyer would never have beaten a renter who invested globally.</p>
+      <p><strong>Why global equities and not UK shares or a savings account?</strong> Because that is the
+      renter's honest best alternative. The paper shows a UK-only (FTSE 100) renter would have lost to the
+      buyer in most cohorts — diversification is what makes renting competitive.</p>
+      <p><strong>Can I check the code?</strong> Yes — everything (paper, data pipeline, this calculator) is
+      open source: <a href="https://github.com/Martin-Cimprich/buy-vs-rent-england">github.com/Martin-Cimprich/buy-vs-rent-england</a>.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <strong>Martin Cimprich</strong> · PhD student, Queen Mary University of London ·
+    Data to April 2026 · This tool is for education only and is not financial advice.
+    Sources: HM Land Registry UK HPI, ONS PIPR, Bank of England, MSCI. Contains public sector
+    information licensed under the Open Government Licence v3.0.
+  </div>
+</footer>
+
+<script>
+/*__ENGINE__*/
+</script>
+<script>
+/*__DATA__*/
+</script>
+<script>
+'use strict';
+// ============================ UI ============================
+const $ = id => document.getElementById(id);
+const fmt0 = new Intl.NumberFormat('en-GB', {maximumFractionDigits: 0});
+const gbp = x => '£' + fmt0.format(Math.round(x));
+const pct1 = x => (x * 100).toFixed(1) + '%';
+
+const REGIONS = Object.keys(CALC_DATA.series);
+const N = CALC_DATA.months.length;
+const NOW_YM = CALC_DATA.ym[N - 1];
+
+function seriesData(region) {
+  const s = CALC_DATA.series[region];
+  return { prices: s.prices, rents: s.rents, rates: CALC_DATA.rates,
+           returns: CALC_DATA.returns, ym: CALC_DATA.ym };
+}
+function readParams(prefix) {
+  return {
+    depositShare: +$(prefix + '_dep').value / 100,
+    amortYears: +$(prefix + '_term').value,
+    maintPct: +$(prefix + '_maint').value / 100,
+    purchaseCostsPct: +$(prefix + '_pc').value / 100,
+    sellingCostsPct: +$(prefix + '_sc').value / 100,
+    includeSdlt: true, fixationYears: null,
+    rentGrowthAnnual: prefix === 'f' ? +$('f_rg').value / 100 : 0.03,
+  };
+}
+
+// ---- generic line chart ----
+function drawLines(canvas, labels, seriesList, yFmt) {
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.clientWidth || canvas.width, H = +canvas.getAttribute('height');
+  canvas.width = W * dpr; canvas.height = H * dpr; canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+  const padL = 62, padR = 12, padT = 14, padB = 30;
+  const all = seriesList.flatMap(s => s.data);
+  let yMin = Math.min(0, ...all), yMax = Math.max(...all);
+  if (yMax === yMin) yMax = yMin + 1;
+  const span = yMax - yMin; yMax += span * 0.06;
+  const x = i => padL + (W - padL - padR) * i / (labels.length - 1);
+  const y = v => padT + (H - padT - padB) * (1 - (v - yMin) / (yMax - yMin));
+  ctx.font = '11px sans-serif';
+  // gridlines
+  const steps = 5;
+  for (let k = 0; k <= steps; k++) {
+    const v = yMin + (yMax - yMin) * k / steps, yy = y(v);
+    ctx.strokeStyle = '#eee'; ctx.beginPath(); ctx.moveTo(padL, yy); ctx.lineTo(W - padR, yy); ctx.stroke();
+    ctx.fillStyle = '#888'; ctx.textAlign = 'right'; ctx.fillText(yFmt(v), padL - 6, yy + 4);
+  }
+  // x labels (5)
+  ctx.textAlign = 'center';
+  for (let k = 0; k <= 4; k++) {
+    const i = Math.round((labels.length - 1) * k / 4);
+    ctx.fillStyle = '#888'; ctx.fillText(labels[i], x(i), H - 10);
+  }
+  // series
+  for (const s of seriesList) {
+    ctx.strokeStyle = s.color; ctx.lineWidth = 2; ctx.beginPath();
+    s.data.forEach((v, i) => i ? ctx.lineTo(x(i), y(v)) : ctx.moveTo(x(i), y(v)));
+    ctx.stroke();
+  }
+  // legend
+  let lx = padL + 8;
+  for (const s of seriesList) {
+    ctx.fillStyle = s.color; ctx.fillRect(lx, padT + 2, 14, 3);
+    ctx.fillStyle = '#444'; ctx.textAlign = 'left'; ctx.fillText(s.label, lx + 18, padT + 7);
+    lx += 24 + ctx.measureText(s.label).width + 18;
+  }
+}
+
+// ---- cohort bar chart ----
+function drawCohorts(canvas, cohorts, highlightIdx) {
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.clientWidth || canvas.width, H = +canvas.getAttribute('height');
+  canvas.width = W * dpr; canvas.height = H * dpr; canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+  const padL = 46, padR = 8, padT = 10, padB = 26;
+  const Rs = cohorts.map(c => c.R);
+  const yMin = Math.min(0.5, ...Rs) - 0.05, yMax = Math.max(1.5, ...Rs) + 0.05;
+  const y = v => padT + (H - padT - padB) * (1 - (v - yMin) / (yMax - yMin));
+  const bw = (W - padL - padR) / cohorts.length;
+  ctx.font = '11px sans-serif';
+  for (const g of [0.5, 1.0, 1.5, 2.0]) {
+    if (g < yMin || g > yMax) continue;
+    ctx.strokeStyle = g === 1 ? '#333' : '#eee'; ctx.beginPath();
+    ctx.moveTo(padL, y(g)); ctx.lineTo(W - padR, y(g)); ctx.stroke();
+    ctx.fillStyle = '#888'; ctx.textAlign = 'right'; ctx.fillText(g.toFixed(1), padL - 5, y(g) + 4);
+  }
+  cohorts.forEach((c, i) => {
+    const x0 = padL + i * bw;
+    ctx.fillStyle = c.R > 1 ? '#8B2E3D' : '#1F4E79';
+    if (highlightIdx !== null && c.startIdx === highlightIdx) ctx.fillStyle = '#B8860B';
+    const y1 = y(1), y2 = y(c.R);
+    ctx.fillRect(x0 + 0.5, Math.min(y1, y2), Math.max(bw - 1.2, 0.8), Math.abs(y2 - y1) || 1);
+  });
+  ctx.textAlign = 'center'; ctx.fillStyle = '#888';
+  for (let yr = 2006; yr <= 2026; yr += 4) {
+    const idx = cohorts.findIndex(c => c.ym[0] === yr);
+    if (idx >= 0) ctx.fillText(String(yr), padL + idx * bw, H - 8);
+  }
+}
+
+// ============================ FORWARD TAB ============================
+function initForward() {
+  const sel = $('f_region');
+  REGIONS.forEach(r => sel.add(new Option(r, r)));
+  sel.value = REGIONS[0];
+  prefillForward();
+  sel.addEventListener('change', prefillForward);
+  ['f_price','f_rent','f_dep','f_rate','f_term','f_hor','f_maint','f_pc','f_sc','f_g','f_opp','f_rg']
+    .forEach(id => $(id).addEventListener('input', updateForward));
+}
+function prefillForward() {
+  const s = CALC_DATA.series[$('f_region').value];
+  $('f_price').value = s.prices[N - 1];
+  $('f_rent').value = s.rents[N - 1];
+  $('f_rate').value = (CALC_DATA.rates[N - 1] * 100).toFixed(2);
+  updateForward();
+}
+function updateForward() {
+  const p = readParams('f');
+  const price = +$('f_price').value, rent = +$('f_rent').value;
+  const rate = +$('f_rate').value / 100, g = +$('f_g').value / 100;
+  const opp = +$('f_opp').value / 100, hor = +$('f_hor').value;
+  if (!(price > 0 && rent > 0 && hor > 0)) return;
+  const sdlt = sdltEnglandFTB(price, NOW_YM[0], NOW_YM[1]);
+  $('f_sdlt_note').textContent = 'Stamp duty (first-time buyer, current rules): ' + gbp(sdlt) +
+    ' — included in the buyer’s initial costs automatically.';
+  const sim = forwardSim(price, rent, rate, opp, g, hor, p, sdlt);
+  const rar = requiredAppreciationRate(price, rent, rate, opp, hor, p, sdlt);
+  const R = sim.rentNW / sim.buyNW;
+  const v = $('f_verdict');
+  const buyWins = R < 1;
+  v.className = 'verdict ' + (buyWins ? 'buy' : 'rent');
+  v.querySelector('.v-title').textContent = buyWins
+    ? 'Buying comes out ahead on these assumptions'
+    : 'Renting + investing comes out ahead on these assumptions';
+  v.querySelector('.v-sub').textContent = 'After ' + hor + ' years: ' +
+    gbp(Math.abs(sim.buyNW - sim.rentNW)) + ' difference (' +
+    (buyWins ? ((1 / R - 1) * 100).toFixed(0) + '% more for the buyer'
+             : ((R - 1) * 100).toFixed(0) + '% more for the renter') + ').';
+  $('f_nw_buy').textContent = gbp(sim.buyNW);
+  $('f_nw_rent').textContent = gbp(sim.rentNW);
+  $('f_R').textContent = R.toFixed(2);
+  $('f_rar').textContent = rar === null ? 'n/a' : (rar * 100).toFixed(1) + '%/yr';
+  const labels = Array.from({length: hor * 12}, (_, i) => String(NOW_YM[0] + Math.floor((NOW_YM[1] + i) / 12)));
+  drawLines($('f_chart'), labels, [
+    {label: 'Buyer (home equity)', color: '#1F4E79', data: sim.ownerPath},
+    {label: 'Renter (portfolio)', color: '#8B2E3D', data: sim.renterPath},
+  ], v2 => '£' + Math.round(v2 / 1000) + 'k');
+}
+
+// ============================ BACKTEST TAB ============================
+function initBacktest() {
+  const sel = $('b_region');
+  REGIONS.forEach(r => sel.add(new Option(r, r)));
+  const st = $('b_start');
+  for (let i = 0; i < N - 12; i++) st.add(new Option(CALC_DATA.months[i], i));
+  st.value = 0;
+  sel.addEventListener('change', updateBacktest);
+  st.addEventListener('change', updateBacktest);
+  ['b_dep','b_term','b_maint','b_pc','b_sc'].forEach(id => $(id).addEventListener('input', updateBacktest));
+  updateBacktest();
+}
+function updateBacktest() {
+  const p = readParams('b');
+  const data = seriesData($('b_region').value);
+  const start = +$('b_start').value;
+  const res = runPair(data, start, N, p);
+  const R = res.R, buyWins = R < 1;
+  const months = N - start;
+  const v = $('b_verdict');
+  v.className = 'verdict ' + (buyWins ? 'buy' : 'rent');
+  v.querySelector('.v-title').textContent = buyWins
+    ? 'Buying won this period' : 'Renting + investing won this period';
+  v.querySelector('.v-sub').textContent = CALC_DATA.months[start] + ' to ' + CALC_DATA.months[N - 1] +
+    ' (' + Math.round(months / 12) + ' years): ' + gbp(Math.abs(res.buy.netWorth - res.rent.netWorth)) +
+    ' difference. Entry price ' + gbp(res.buy.purchasePrice) + ', stamp duty ' + gbp(res.buy.sdlt) + '.';
+  $('b_nw_buy').textContent = gbp(res.buy.netWorth);
+  $('b_nw_rent').textContent = gbp(res.rent.netWorth);
+  $('b_R').textContent = R.toFixed(2);
+  $('b_init').textContent = gbp(res.buy.initialEquity);
+  const equity = res.buy.homeValues.map((h, i) => h - res.buy.balances[i]);
+  const labels = CALC_DATA.months.slice(start).map(m2 => m2.slice(0, 4));
+  drawLines($('b_chart'), labels, [
+    {label: 'Buyer (home equity)', color: '#1F4E79', data: equity},
+    {label: 'Renter (portfolio)', color: '#8B2E3D', data: res.rent.portfolioPath},
+  ], v2 => '£' + Math.round(v2 / 1000) + 'k');
+  const cohorts = runRolling(data, N, p);
+  drawCohorts($('b_cohorts'), cohorts, start);
+}
+
+// ============================ TABS ============================
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.pane').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  $('pane-' + t.dataset.pane).classList.add('active');
+  if (t.dataset.pane === 'forward') updateForward();
+  if (t.dataset.pane === 'backtest') updateBacktest();
+}));
+$('linkMethod').addEventListener('click', e => {
+  e.preventDefault();
+  document.querySelector('[data-pane="method"]').click();
+});
+
+initForward();
+initBacktest();
+window.addEventListener('resize', () => { updateForward(); updateBacktest(); });
+</script>
+</body>
+</html>

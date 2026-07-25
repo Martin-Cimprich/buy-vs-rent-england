@@ -1,0 +1,46 @@
+% ============================================================================
+% main.tex — Buy versus Rent in England: working-paper edition
+% ============================================================================
+% Compile: xelatex -> biber -> xelatex -> xelatex
+% ============================================================================
+
+% !TEX encoding = UTF-8
+
+\documentclass[12pt, a4paper]{article}
+
+\input{wp_header}
+
+\addbibresource{references.bib}
+
+\begin{document}
+
+\wptitlepage
+  {Buy versus Rent in England:\\ A Cash-Flow-Matched Horse Race for the First-Time Buyer, 2005--2026}
+  {Martin Cimprich\thanks{School of Economics and Finance, Queen Mary University of London. Email: [address to be added]. Replication code and data are openly available at \url{https://github.com/Martin-Cimprich/buy-vs-rent-england}. The views expressed are those of the author alone, as are any errors. This paper is independent personal research and does not constitute financial advice.}\\[1mm]
+   \normalsize Queen Mary University of London}
+  {This version: July 2026}
+  {I compare the financial outcomes of buying a first home and renting it while investing, using a monthly cash-flow-matched simulation on official English data from January 2005 to April 2026. A leveraged first-time buyer (10\% deposit, 30-year mortgage at the Bank of England effective rate, period-accurate stamp duty) is matched against a renter who invests the deposit-equivalent and every monthly cost difference in a global equity index fund. To compare like with like, I construct a representative English dwelling whose price and rent share one population-weighted regional composition, avoiding the bias that arises from combining the transaction-weighted national house-price average with the tenancy-weighted national rent average. Across 85 quarterly entry cohorts the two strategies finish near parity --- buying produced greater terminal wealth in 53\% of cohorts --- but with wide dispersion governed by entry conditions: the price-to-rent ratio and the mortgage rate at purchase jointly explain 74\% of the variation in outcomes, and buying's advantage is concentrated in the affordable North and Midlands and in the cheap-credit decade after 2008. Leverage is essential to this parity: an unlevered (cash) buyer never beats the renter. A forward-looking break-even metric --- the required appreciation rate --- indicates that at April 2026 conditions average English prices need grow only about 1\% per year over a decade for buying to match a diversified equity investor.}
+  {D14, G11, G51, R21, R31}
+  {housing tenure choice; buy versus rent; first-time buyers; user cost of housing; household portfolios; leverage; stamp duty}
+  {}
+
+% --- Sections ---
+\input{sections/01_introduction}
+\input{sections/02_literature}
+\input{sections/03_data}
+\input{sections/04_framework}
+\input{sections/05_results}
+\input{sections/06_rar}
+\input{sections/07_robustness}
+\input{sections/08_discussion}
+\input{sections/09_conclusion}
+
+% --- Bibliography ---
+\newpage
+\printbibliography[title={References}]
+
+% --- Appendix ---
+\newpage
+\input{sections/appendix}
+
+\end{document}

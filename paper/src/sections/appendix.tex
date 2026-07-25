@@ -1,0 +1,72 @@
+% ============================================================================
+% appendix.tex — Appendices
+% ============================================================================
+
+\begin{appendices}
+
+\section{Data construction}
+\label{app:data}
+
+\subsection*{Rents}
+
+The rent series splices two ONS products. The PIPR historical series (released March 2025) provides average monthly rents in GBP for England and the nine English regions from January 2005 to February 2025, chain-linked to the predecessor Index of Private Housing Rental Prices; the live PIPR monthly dataset provides the same measures from January 2015 onwards. Over their 122-month overlap (January 2015--February 2025) the two agree exactly at every observation, so the splice --- historical values before January 2015, live values thereafter --- introduces no discontinuity. Rent levels are model-consistent estimates published by the ONS (base-period mean rents uprated by the index), not raw sample means.
+
+\subsection*{House prices}
+
+Regional and national average prices (all dwellings) are taken directly from the UK HPI full file (April 2026 vintage). The UK HPI revises its most recent months; the April 2026 observation used here is the first published estimate.
+
+\subsection*{Representative dwelling}
+
+The representative price and rent are fixed-weight averages of the nine regional series with mid-2023 ONS population weights (millions): North East 2.65, North West 7.52, Yorkshire and The Humber 5.56, East Midlands 5.02, West Midlands 6.11, East of England 6.40, London 8.87, South East 9.46, South West 5.80. Using private-rented-sector household counts instead of population moves the April 2026 representative price-to-rent ratio from 20.7 to 20.6 and no headline result materially.
+
+\subsection*{Mortgage rate}
+
+Series CFMBJ95 (Bank of England Bankstats table G1.4): monthly average of UK monetary financial institutions' sterling weighted-average interest rate on loans secured on dwellings, new advances to households, January 2004 onwards, no missing months in the sample window.
+
+\subsection*{Equity returns}
+
+MSCI publishes end-of-month ACWI index levels directly in GBP. I use the net-total-return variant (dividends reinvested after withholding tax) and convert levels to simple monthly returns. The baseline series deducts a fund fee of 0.12\% per year, applied as a constant monthly drag: $r^{\text{net}}_t = (1 + r_t)(1 - 0.0012)^{1/12} - 1$. The FTSE 100 total-return comparator is the net-asset-value total return of a low-cost FTSE 100 ETF (dividends reinvested at NAV; ongoing charge 0.40\% per year to June 2014, 0.07\% thereafter), which tracks the FTSE 100 total-return index with correlation 0.9999 over the months both are available.
+
+\subsection*{Replication}
+
+All raw data under the Open Government Licence, all cleaning and analysis code, and scripts that re-download the licence-restricted financial series from their public endpoints are available at \url{https://github.com/Martin-Cimprich/buy-vs-rent-england}.
+
+\section{Stamp duty schedules}
+\label{app:sdlt}
+
+Table~\ref{tab:sdlt} summarises the SDLT liability of a first-time buyer in England by purchase month, as implemented in the simulation. Before 4 December 2014 SDLT was a ``slab'' tax (the rate applied to the whole price); thereafter a ``slice'' tax (marginal bands). Where first-time-buyer relief exists, the relief schedule applies below its price cap and the standard schedule above it.
+
+\begin{table}[H]
+  \centering
+  \caption{SDLT for an England first-time buyer, by period}
+  \label{tab:sdlt}
+  \begin{threeparttable}
+  \small
+  \begin{tabularx}{\textwidth}{@{}lX@{}}
+    \toprule
+    \textbf{Period} & \textbf{Schedule applying to a first-time buyer} \\
+    \midrule
+    to 16 Mar 2005        & Slab: 0\% to \gbp{60}k; 1\% to \gbp{250}k; 3\% to \gbp{500}k; 4\% above \\
+    17 Mar 2005--22 Mar 2006 & Slab, nil-rate band \gbp{120}k \\
+    23 Mar 2006--2 Sep 2008  & Slab, nil-rate band \gbp{125}k \\
+    3 Sep 2008--31 Dec 2009  & Slab, nil-rate band \gbp{175}k (holiday) \\
+    1 Jan 2010--24 Mar 2010  & Slab, nil-rate band \gbp{125}k \\
+    25 Mar 2010--24 Mar 2012 & First-time-buyer relief: 0\% to \gbp{250}k; standard slab above \\
+    25 Mar 2012--3 Dec 2014  & Slab, nil-rate band \gbp{125}k (relief withdrawn; 7\% top band from Mar 2012) \\
+    4 Dec 2014--21 Nov 2017  & Slice: 0\% to \gbp{125}k; 2\% to \gbp{250}k; 5\% to \gbp{925}k; 10\% to \gbp{1.5}m; 12\% above \\
+    22 Nov 2017--7 Jul 2020  & FTB relief: 0\% to \gbp{300}k, 5\% \gbp{300}--500k (no relief above \gbp{500}k) \\
+    8 Jul 2020--30 Jun 2021  & Holiday: 0\% to \gbp{500}k for all buyers; slice above \\
+    1 Jul 2021--30 Sep 2021  & Standard nil-rate \gbp{250}k; FTB relief 0\% to \gbp{300}k, 5\% to \gbp{500}k \\
+    1 Oct 2021--22 Sep 2022  & Standard slice (\gbp{125}k nil); FTB relief 0\% to \gbp{300}k, 5\% to \gbp{500}k \\
+    23 Sep 2022--31 Mar 2025 & FTB relief: 0\% to \gbp{425}k, 5\% \gbp{425}--625k (no relief above \gbp{625}k) \\
+    1 Apr 2025--             & FTB relief: 0\% to \gbp{300}k, 5\% \gbp{300}--500k (no relief above \gbp{500}k) \\
+    \bottomrule
+  \end{tabularx}
+  \begin{tablenotes}
+    \small
+    \item \textit{Sources:} HMRC SDLT rate tables 2003--2026; House of Commons Library briefings SN07050 and CBP-9814. The simulation evaluates the schedule at each month's representative (or regional) average price. Scotland (LBTT, from April 2015) and Wales (LTT, from April 2018) operate different schedules and are outside the scope of this paper.
+  \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+\end{appendices}

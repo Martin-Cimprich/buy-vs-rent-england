@@ -1,0 +1,162 @@
+% ============================================================================
+% 05_results.tex — Results
+% ============================================================================
+
+\section{Results}
+\label{sec:results}
+
+\subsection{The full-period race}
+\label{sec:single}
+
+I first run the longest race the data allow: a buyer and a renter who both start in January 2005 and are evaluated in April 2026. The buyer purchases the representative dwelling for \gbp{162{,}312} with a deposit of \gbp{16{,}231}, purchase costs of \gbp{2{,}435} and stamp duty of \gbp{1{,}623}; the renter starts with the identical \gbp{20{,}289} invested in the equity index and occupies the same dwelling at the market rent of \gbp{692} per month. Table~\ref{tab:single} reports the outcome and Figure~\ref{fig:single_wealth} the two wealth paths.
+
+\begin{table}[H]
+  \centering
+  \caption{Full-period simulation, January 2005 -- April 2026}
+  \label{tab:single}
+  \begin{threeparttable}
+  \begin{tabular}{@{}lr@{}}
+    \toprule
+     & \textbf{GBP} \\
+    \midrule
+    Purchase price, January 2005            & 162{,}312 \\
+    Initial capital (deposit + costs + SDLT) & 20{,}289 \\
+    \addlinespace
+    Property value, April 2026              & 317{,}738 \\
+    Remaining mortgage balance              & 58{,}615 \\
+    Selling costs (2\%)                     & 6{,}355 \\
+    Owner's terminal wealth                 & 252{,}768 \\
+    \addlinespace
+    Renter's terminal wealth                & 275{,}171 \\
+    \addlinespace
+    Difference (renter $-$ owner)           & 22{,}403 \\
+    Wealth ratio $R$                        & 1.09 \\
+    \bottomrule
+  \end{tabular}
+  \begin{tablenotes}
+    \small
+    \item \textit{Notes:} Baseline parameters of Table~\ref{tab:assumptions}. The renter's portfolio remains positive throughout; no external cash is required by either strategy beyond the matched flows.
+  \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+After twenty-one years the renter finishes 9\% ahead ($R = 1.09$) --- a close race whose lead changes hands more than once. The owner, holding a leveraged position in a rising asset, led through much of the 2010s before the renter's portfolio pulled narrowly ahead in the equity-strong years after 2020. Figure~\ref{fig:single_cashflows} shows the matched cash flows: the owner's outlay exceeded the rent in 173 of 256 months, so the renter added to the portfolio in most months, but the margins are modest --- the mortgage payment starts at \gbp{801} against rent of \gbp{692}, and maintenance grows from \gbp{203} to \gbp{397} per month as the property appreciates. That a leveraged claim on an asset appreciating at 3.2\% per year very nearly matched a portfolio compounding at 10.2\% quantifies how much work the mortgage does for the buyer.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uk_v1_single_wealth}
+  \caption{Owner's home equity and renter's portfolio value, January 2005 entry cohort.}
+  \label{fig:single_wealth}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uk_v1_single_cashflows}
+  \caption{Monthly housing outlays of the owner (mortgage payment plus maintenance) and the renter (market rent), January 2005 entry cohort. Shading indicates months in which the renter invests (owner pays more) or withdraws (renter pays more).}
+  \label{fig:single_cashflows}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uk_v1_single_payments_prices}
+  \caption{Cost components and balance-sheet evolution, January 2005 entry cohort. The variable-rate payment declines with rates and amortisation while maintenance and rent rise; with a 30-year term the mortgage is only partly repaid by April 2026.}
+  \label{fig:single_payments}
+\end{figure}
+
+\subsection{Rolling entry cohorts}
+\label{sec:rolling}
+
+The single 2005 start is one draw from history. To isolate timing, I repeat the race for 85 cohorts entering in every quarter from January 2005 to January 2026, all evaluated in April 2026. Figure~\ref{fig:rolling} plots the wealth ratio by entry date.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uk_v1_rolling_distribution}
+  \caption{Renter/owner wealth ratio $R$ for 85 quarterly entry cohorts, all evaluated in April 2026. Values above one indicate that renting-and-investing produced greater terminal wealth.}
+  \label{fig:rolling}
+\end{figure}
+
+Buying produced greater wealth in 45 of the 85 cohorts (53\%) and renting in 40 (47\%); the mean wealth ratio is $\bar{R} = 1.06$ and the median 0.99 --- collectively, a dead heat. Around the parity, however, dispersion is wide and highly systematic. The best cohort for buying (April 2013) left the renter with 60\% of the owner's wealth; the best for renting (October 2022) left the renter 2.4 times as wealthy. The cohorts sort into three regimes: entries during 2005--mid-2008, at pre-crisis prices, lost to the renter; almost every entry from late 2008 through 2020 --- post-crisis prices financed by a decade of cheap and falling-rate debt --- beat the renter; and every entry since late 2020 has so far lost, as the equity surge and the 2022--2023 rate shock reversed the conditions. Stamp duty plays a minor role throughout: 48 of 85 cohorts paid any SDLT, never exceeding roughly 1\% of the purchase price.
+
+\subsection{Regional results}
+\label{sec:regional}
+
+Running the race region by region --- each region with its own price \emph{and} rent, so each internally consistent --- both validates the representative-dwelling aggregate and reveals the geography of the outcome. Table~\ref{tab:regional} and Figure~\ref{fig:regional} report the single-start wealth ratio, the share of cohorts won by buying, and the mean historical required appreciation rate (defined in Section~\ref{sec:rar}) for each region.
+
+\begin{table}[H]
+  \centering
+  \caption{Regional outcomes, 2005--2026}
+  \label{tab:regional}
+  \begin{threeparttable}
+  \begin{tabular}{@{}lrrrrr@{}}
+    \toprule
+    \textbf{Region} & \textbf{Price (2026:4)} & \textbf{P/R} & \textbf{$R$ (2005)} & \textbf{Buy-win \%} & \textbf{Hist.\ RAR} \\
+    \midrule
+    North East               & \gbp{163{,}190} & 17.5 & 1.36 & 67 & 1.2\% \\
+    North West               & \gbp{216{,}138} & 18.9 & 0.85 & 73 & 0.8\% \\
+    Yorkshire and The Humber & \gbp{207{,}974} & 20.3 & 1.03 & 67 & 1.2\% \\
+    West Midlands            & \gbp{234{,}635} & 20.3 & 1.10 & 65 & 1.0\% \\
+    South West               & \gbp{302{,}618} & 20.5 & 1.48 & 59 & 2.3\% \\
+    London                   & \gbp{552{,}655} & 20.1 & 0.63 & 39 & 1.7\% \\
+    East Midlands            & \gbp{241{,}620} & 22.1 & 1.48 & 60 & 2.3\% \\
+    East of England          & \gbp{336{,}300} & 21.9 & 1.32 & 33 & 2.3\% \\
+    South East               & \gbp{376{,}819} & 22.2 & 1.37 & 26 & 2.6\% \\
+    \midrule
+    England (pop.-weighted)  & ---             & 20.6 & 1.14 & 51 & 1.7\% \\
+    \bottomrule
+  \end{tabular}
+  \begin{tablenotes}
+    \small
+    \item \textit{Notes:} $R$ (2005) is the wealth ratio of the January 2005 entry cohort ($R>1$: renting won). Buy-win \% is the share of 85 quarterly cohorts in which buying produced greater wealth. Hist.\ RAR is the mean, across ten-year holds, of the annual appreciation required for buying to break even against the equity portfolio (Section~\ref{sec:rar}). P/R is the April 2026 ratio of price to annual rent.
+  \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uk_v1_regional_results}
+  \caption{Regional outcomes: single-start wealth ratio, January 2005 cohort (left) and share of the 85 entry cohorts won by buying (right).}
+  \label{fig:regional}
+\end{figure}
+
+The population-weighted aggregates ($R$ of 1.14; buy-win share of 51\%) bracket the representative-dwelling figures (1.09; 53\%), confirming that the aggregation is innocuous once composition is held consistent. The cross-sectional pattern tracks affordability rather than raw price growth: in the North and Midlands, where price-to-rent ratios are lowest, owning is cheap relative to renting and buying won roughly two-thirds of cohorts; in the South and East, where the ratios exceed 22, buying won a quarter to a third. London is distinctive: a 10\% deposit on a \gbp{553{,}000} dwelling is a large leveraged position, and strong price growth made buying the clear winner of the 2005 start ($R = 0.63$) even though it won only 39\% of cohorts overall.
+
+\subsection{What predicts the outcome}
+\label{sec:predictors}
+
+Which conditions observable at purchase predict the eventual winner? Regressing the cohort wealth ratio on the entry-month mortgage rate and price-to-rent ratio yields
+\begin{center}
+\begin{threeparttable}
+\begin{tabular}{lrrr}
+\toprule
+ & \textbf{Pearson $r$} & \textbf{$R^2$} & $p$ \\
+\midrule
+Mortgage rate       & 0.22 & 0.05 & 0.045 \\
+Price-to-rent ratio & 0.59 & 0.35 & $<$0.001 \\
+Joint (OLS)         & ---  & 0.74 & $<$0.001 \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{center}
+
+Neither variable predicts strongly alone, but jointly they explain 74\% of the cross-cohort variation: valuation and financing cost together summarise most of what a buyer needed to know at the moment of decision. Two threshold regularities follow (Figures~\ref{fig:predictor_rate} and~\ref{fig:predictor_pr}): buying won in every cohort that entered at a price-to-rent ratio below 19.5, and renting won in every cohort above 24.3. The representative ratio averaged 21.9 over the sample, peaked at 26.4 in August 2022, and stood at 20.7 in April 2026 --- in the contested middle. Figure~\ref{fig:price_rent} shows the underlying dynamics; the mean reversion of the ratio around 22, and the dominance of its movements over those of the mortgage rate, are consistent with the evidence that rent-price ratios forecast housing returns \parencite{campbell2009}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uk_v1_mortgage_predictor}
+  \caption{Effective mortgage rate at entry versus final wealth ratio, 85 cohorts.}
+  \label{fig:predictor_rate}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uk_v1_priceratio_predictor}
+  \caption{Price-to-rent ratio at entry versus final wealth ratio, 85 cohorts.}
+  \label{fig:predictor_pr}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uk_v1_price_rent_dynamics}
+  \caption{House prices and rents (January 2005 = 100) and the price-to-rent ratio, representative English dwelling.}
+  \label{fig:price_rent}
+\end{figure}

@@ -1,0 +1,26 @@
+# Licence-restricted financial series — regenerate with scripts/fetch_financial_series.py
+data/raw/financial/
+data/clean/uk_stock_returns_gbp.csv
+
+# Built calculator (embeds the above data) — build with calculator/build_calculator.py
+calculator/index.html
+calculator/calculator_data.js
+
+# LaTeX build artifacts
+paper/src/*.aux
+paper/src/*.bbl
+paper/src/*.bcf
+paper/src/*.blg
+paper/src/*.log
+paper/src/*.out
+paper/src/*.run.xml
+paper/src/*.toc
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db

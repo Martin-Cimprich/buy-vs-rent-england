@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software or data pipeline, please cite the working paper."
+title: "Buy versus Rent in England: A Cash-Flow-Matched Horse Race for the First-Time Buyer, 2005-2026"
+type: software
+authors:
+  - family-names: Cimprich
+    given-names: Martin
+    affiliation: "Queen Mary University of London, School of Economics and Finance"
+repository-code: "https://github.com/Martin-Cimprich/buy-vs-rent-england"
+license: MIT
+preferred-citation:
+  type: report
+  title: "Buy versus Rent in England: A Cash-Flow-Matched Horse Race for the First-Time Buyer, 2005-2026"
+  authors:
+    - family-names: Cimprich
+      given-names: Martin
+  institution:
+    name: "Queen Mary University of London"
+  year: 2026
+  url: "https://github.com/Martin-Cimprich/buy-vs-rent-england"

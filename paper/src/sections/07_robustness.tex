@@ -1,0 +1,92 @@
+% ============================================================================
+% 07_robustness.tex — Robustness
+% ============================================================================
+
+\section{Robustness}
+\label{sec:robustness}
+
+Tables~\ref{tab:sensitivity_main} and~\ref{tab:sensitivity_other} vary each baseline parameter in turn, reporting the full-period wealth ratio (January 2005 entry), the rolling-cohort mean, and the share of the 85 cohorts won by buying.
+
+\begin{table}[H]
+  \centering
+  \caption{Sensitivity to maintenance and deposit}
+  \label{tab:sensitivity_main}
+  \begin{threeparttable}
+  \begin{tabular}{@{}lrrrr@{}}
+    \toprule
+    \textbf{Parameter} & \textbf{Value} & \textbf{$R$ (2005)} & \textbf{$\bar{R}$} & \textbf{Buy-win \%} \\
+    \midrule
+    \multicolumn{5}{@{}l}{\textit{Maintenance and depreciation (\% of value p.a.)}} \\
+    & 1.0            & 0.78 & 0.88 & 76 \\
+    & 1.5 (baseline) & 1.09 & 1.06 & 53 \\
+    & 2.0            & 1.39 & 1.24 & 26 \\
+    & 2.5            & 1.70 & 1.42 &  2 \\
+    & 3.0            & 2.01 & 1.60 &  0 \\
+    \addlinespace
+    \multicolumn{5}{@{}l}{\textit{Deposit (\% of purchase price)}} \\
+    &  5             & 1.00 & 1.05 & 65 \\
+    & 10 (baseline)  & 1.09 & 1.06 & 53 \\
+    & 15             & 1.17 & 1.11 & 34 \\
+    & 20             & 1.25 & 1.16 & 25 \\
+    & 25             & 1.33 & 1.22 & 14 \\
+    & 50             & 1.70 & 1.45 &  0 \\
+    & 100 (cash)     & 2.32 & 1.79 &  0 \\
+    \bottomrule
+  \end{tabular}
+  \begin{tablenotes}
+    \small
+    \item \textit{Notes:} $R > 1$: renting-and-investing produced greater wealth. $\bar{R}$ is the mean wealth ratio across the 85 quarterly cohorts; buy-win \% the share won by buying. All other parameters at baseline.
+  \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Sensitivity to other parameters}
+  \label{tab:sensitivity_other}
+  \begin{threeparttable}
+  \begin{tabular}{@{}lrrrr@{}}
+    \toprule
+    \textbf{Parameter} & \textbf{Value} & \textbf{$R$ (2005)} & \textbf{$\bar{R}$} & \textbf{Buy-win \%} \\
+    \midrule
+    \multicolumn{5}{@{}l}{\textit{Mortgage term}} \\
+    & 25 years           & 1.22 & 1.12 & 40 \\
+    & 30 years (baseline) & 1.09 & 1.06 & 53 \\
+    & 35 years           & 0.98 & 1.02 & 61 \\
+    \addlinespace
+    \multicolumn{5}{@{}l}{\textit{Rate fixation}} \\
+    & Variable (baseline) & 1.09 & 1.06 & 53 \\
+    & 2-year fixes        & 1.09 & 1.05 & 59 \\
+    & 5-year fixes        & 1.15 & 1.05 & 62 \\
+    & 10-year fixes       & 1.30 & 1.09 & 62 \\
+    & $+40$bp high-LTV premium & 1.21 & 1.15 & 35 \\
+    \addlinespace
+    \multicolumn{5}{@{}l}{\textit{Transaction costs}} \\
+    & Purchase costs 1.0\% & 1.07 & 1.03 & 56 \\
+    & Purchase costs 2.0\% & 1.11 & 1.09 & 48 \\
+    & Selling costs 1.0\%  & 1.08 & 1.02 & 56 \\
+    & Selling costs 4.0\%  & 1.12 & 1.16 & 39 \\
+    & SDLT excluded        & 1.04 & 1.04 & 58 \\
+    \addlinespace
+    \multicolumn{5}{@{}l}{\textit{Renter's portfolio}} \\
+    & MSCI ACWI net, $-$fee (baseline) & 1.09 & 1.06 & 53 \\
+    & MSCI ACWI gross, no fee          & 1.23 & 1.12 & 40 \\
+    & FTSE 100 total return            & 0.62 & 0.91 & 73 \\
+    \bottomrule
+  \end{tabular}
+  \begin{tablenotes}
+    \small
+    \item \textit{Notes:} As Table~\ref{tab:sensitivity_main}.
+  \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+Four regularities organise the tables.
+
+First, \textbf{maintenance is the single most consequential parameter}. Between 1\% and 3\% of value per year, the full-period ratio moves from 0.78 to 2.01 and the buy-win share from 76\% to zero; within the defensible range the verdict shifts from ``buying usually wins'' (1\%) through near-parity at the 1.5\% baseline to ``renting ahead'' at 2\%. The paper's central finding of near-parity is therefore conditional on this calibration, which I place between measured owner-occupier cash spending ($\approx$1.2\% of value) and the 2\%-plus figures of the user-cost literature \parencite{ons_family_spending,milesmonro2021,judge2021}. Readers with stronger priors can reposition the headline accordingly.
+
+Second, \textbf{leverage is what keeps buying competitive}. A smaller deposit helps the buyer --- at 5\% down, buying wins 65\% of cohorts; at 20\%, 25\%; and an unlevered cash buyer never wins ($R = 2.32$). Longer terms, which slow amortisation and prolong the leverage, work in the same direction. The first-time buyer's high loan-to-value is precisely what allows a claim on an asset appreciating at 3.2\% to compete with a portfolio returning 10.2\%; the result echoes the portfolio-choice observation that owner-occupied housing is attractive largely through its financing \parencite{flavin2002}.
+
+Third, \textbf{transaction costs, stamp duty and fixation are second-order}: none moves the buy-win share by more than a handful of percentage points. England's low round-trip transaction costs are a structural advantage of ownership, and the period-accurate stamp-duty module, while conceptually important, changes little at average first-time-buyer prices. A 40 basis-point high-LTV rate premium costs the buyer visibly (buy-win 35\%) but does not overturn the picture.
+
+Fourth, \textbf{the renter's diversification is decisive}. Substituting the FTSE 100 for the global portfolio reverses the verdict ($R = 0.62$; buying wins 73\% of cohorts): the three-point annual gap between UK large-cap and global equity returns compounds, over two decades, into the difference between the renter winning narrowly and losing badly. The renter's side of the parity is earned by disciplined, globally diversified investing, not by renting per se.

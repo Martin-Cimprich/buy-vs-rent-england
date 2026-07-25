@@ -1,0 +1,62 @@
+FTSE 100 TOTAL RETURN (GBP) — MONTHLY SERIES — DATA PROVENANCE
+Retrieved: 2026-07-09
+
+PRIMARY SERIES
+--------------
+File: ftse100_tr_monthly.csv  (columns: Date, Level)
+Raw:  ftse100_tr_raw.json     (untouched API response; CSV is a pure format conversion
+                               of the [epoch_ms, value] pairs — dates are UTC month-ends)
+
+WHAT IT IS (exact definition, for the whitepaper):
+Morningstar "growth of 10,000" time series for the iShares Core FTSE 100 UCITS ETF,
+GBP Distributing share class (ticker ISF, ISIN IE0005042456), in GBP, monthly
+frequency, NAV-based TOTAL RETURN: all cash distributions (dividends) are treated as
+reinvested at NAV on the ex-date. Base = 10,000.00 at 2004-11-30. This is therefore
+an ETF-based total-return PROXY for the FTSE 100 Total Return Index (TUKXG), NET of
+the fund's ongoing charges: TER was 0.40% p.a. until June 2014, 0.07% p.a. since.
+It is NOT the index itself. UK dividends carry no withholding tax for this fund, so
+net-of-fee fund TR sits between the FTSE 100 gross TR and any net-TR variant.
+
+Source URL:
+https://tools.morningstar.co.uk/api/rest.svc/timeseries_growth/t92wz0sj7c?currencyId=GBP&idtype=isin&frequency=monthly&startDate=2004-11-30&endDate=2026-07-09&outputType=COMPACTJSON&id=IE0005042456
+(Morningstar UK public chart-data API; t92wz0sj7c is Morningstar's public UK tools token.)
+
+COVERAGE & VERIFICATION (run 2026-07-09 with project venv pandas):
+- 260 month-end observations, 2004-11-30 .. 2026-06-30. Zero missing months, zero
+  duplicates; every date is a true calendar month-end. First monthly return: Dec 2004.
+  June 2026 is the last COMPLETE month (retrieval date 2026-07-09).
+- Monthly returns: mean +0.649%; min -13.36% (Mar 2020, matches FTSE 100 TR COVID
+  crash); max +12.65% (Nov 2020, matches vaccine-rally month). CAGR 7.20% p.a.
+- Cross-check vs the ACTUAL FTSE 100 Total Return Index (TUKXG, investing.com,
+  Aug 2010 - Jun 2026, 190 common monthly returns): correlation 0.9999, mean abs
+  monthly deviation 0.028%, max 0.146%. Annualized tracking difference of the ETF
+  vs TUKXG over that window: -0.31% p.a. (fees + NAV/reinvestment timing).
+- Cross-check vs Yahoo Finance ISF.L monthly ADJUSTED close (market price, Feb 2009 -
+  Jun 2026, 209 common months): correlation 0.9876, mean abs monthly deviation 0.42%
+  (market price premium/discount noise vs NAV).
+
+WHY NOT THE INDEX ITSELF: no free source with pre-2010 TUKXG history was accessible
+(Yahoo has no TUKXG; investing.com TUKXG starts Aug 2010; FT's TRIUKX:FSI starts
+May 2012; stooq CSV download and WSJ/MarketWatch are bot-blocked; Yahoo ISF.L history
+starts Jan 2009). For the whitepaper use case (a renter actually investing in a UK
+large-cap tracker) the net-of-fee investable ETF series is arguably the more
+appropriate object anyway.
+
+SUPPORTING / CROSS-CHECK FILES (kept raw, last row of each = PARTIAL current month)
+-----------------------------------------------------------------------------------
+investing_tukxg_monthly_2010plus_raw.json / .csv
+  FTSE 100 Total Return Index (TUKXG) monthly closes, Aug 2010 - Jul 2026 (Jul 2026
+  partial, as of 2026-07-08 close). Source: api.investing.com financialdata/historical,
+  instrument id 948420 (https://www.investing.com/indices/ftse-100-total-return).
+  CSV columns: Month (YYYY-MM), Close. Format conversion of last_closeRaw only.
+
+yahoo_isf_l_monthly_2009plus_raw.json / yahoo_isf_l_monthly_adjclose_2009plus.csv
+  Yahoo Finance chart API, ISF.L, interval=1mo, events=div,split, Jan 2009 - Jul 2026
+  (last bar partial, as of 2026-07-09 intraday). Prices in GBp (pence). AdjClose_GBp
+  = Yahoo dividend-and-split-adjusted close (their TR proxy). Bar timestamps converted
+  to Europe/London dates; each bar is labelled at the START of its month (a date like
+  2009-04-01 means "month of April 2009", value = that month's end adjusted close).
+  Source: https://query1.finance.yahoo.com/v8/finance/chart/ISF.L?period1=1093996800&period2=1789999999&interval=1mo&events=div%2Csplit
+
+NOTE: other files in this folder (msci_*, pipr_*, english_regions.geojson) were
+downloaded by parallel sessions and are documented separately.

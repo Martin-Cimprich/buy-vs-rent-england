@@ -1,0 +1,79 @@
+% ============================================================================
+% 04_framework.tex — Empirical framework
+% ============================================================================
+
+\section{Empirical framework}
+\label{sec:framework}
+
+The simulation compares two housing strategies on a cash-flow-matched basis: both start with identical capital, and their cash flows are equalised every month. Whenever the renter pays less for housing in a given month, the difference is invested; whenever the renter pays more, the difference is withdrawn from the portfolio. The design follows \textcite{beracha2012}, with transaction costs and taxes calibrated to the English first-time buyer.
+
+\subsection{The buyer}
+
+The buyer purchases the property at the market price prevailing in the entry month, with a deposit of 10\% of the price (loan-to-value of 90\%), purchase costs of 1.5\% of the price (conveyancing, survey, mortgage and valuation fees), and stamp duty under the first-time-buyer schedule in force in that month. The mortgage amortises over 30 years. In the baseline the rate floats: each month the payment is recalculated at the prevailing effective market rate over the remaining balance and term,
+\begin{equation}
+  r_{m,t} = (1 + r_{t})^{1/12} - 1, \qquad
+  \text{Payment}_t = \frac{B_t\, r_{m,t}}{1 - (1 + r_{m,t})^{-(T-t)}},
+  \label{eq:payment}
+\end{equation}
+where $r_t$ is the annual effective rate, $B_t$ the outstanding balance and $T-t$ the remaining months. Fixed-rate products of two, five and ten years are examined in Section~\ref{sec:robustness}.
+
+Each month the owner also pays maintenance and depreciation of 1.5\% per year of the property's current market value,
+\begin{equation}
+  M_t = \frac{0.015}{12}\, V_t,
+  \label{eq:maintenance}
+\end{equation}
+an all-in charge covering routine maintenance, major works and replacements, buildings insurance, and physical depreciation not offset by spending. The calibration sits between measured owner-occupier cash outlays on repairs and improvements --- roughly 1.1--1.3\% of the average house value per year in ONS Family Spending data \parencite{ons_family_spending} --- and the 2--3\% range the user-cost literature reaches once insurance and unrecovered depreciation are included \parencite{milesmonro2021,judge2021}. Because this parameter proves the single most consequential assumption, Section~\ref{sec:robustness} reports results for 1\% through 3\%. The property value itself evolves with the relevant house-price index, $V_{t+1} = V_t (1 + g_t)$.
+
+The buyer's terminal wealth after a holding period ending at $T^{*}$ is net housing equity after selling costs of 2\% (estate-agent commission, conveyancing, energy certificate):
+\begin{equation}
+  W^{\text{own}} = V_{T^{*}} (1 - 0.02) - B_{T^{*}}.
+  \label{eq:nw_buy}
+\end{equation}
+
+\subsection{The renter}
+
+The renter occupies an equivalent dwelling at the market rent prevailing each month and invests all spare cash. The initial portfolio equals the buyer's total initial outlay --- deposit plus purchase costs plus stamp duty --- and each month the difference between the owner's outflow (mortgage payment plus maintenance) and the rent is added to, or withdrawn from, the portfolio, which earns the monthly return on the global equity index (net of withholding taxes and fund fees). The renter's terminal wealth is the portfolio value, $W^{\text{rent}} = P_{T^{*}}$. In no simulation does the renter's portfolio hit zero; the strategy is self-financing throughout.
+
+\subsection{Outcome measure and analyses}
+
+Outcomes are summarised by the renter/owner wealth ratio
+\begin{equation}
+  R = \frac{W^{\text{rent}}}{W^{\text{own}}},
+  \label{eq:ratio}
+\end{equation}
+following \textcite{felix2025}; $R > 1$ means renting-and-investing produced greater terminal wealth. The ratio is invariant to the initial capital scale and comparable across cohorts and regions.
+
+Four analyses are run: (i) a single full-sample race from January 2005; (ii) 85 rolling quarterly entry cohorts, January 2005 to January 2026, all evaluated in April 2026; (iii) the same analyses region by region, aggregated with population weights; and (iv) the required appreciation rate of Section~\ref{sec:rar}, computed ex post over fixed ten-year holds and ex ante at end-of-sample conditions.
+
+\subsection{Stamp duty}
+
+Stamp Duty Land Tax is modelled period-accurately: each simulated purchase pays the tax implied by the England first-time-buyer schedule in force in that month --- including the 2008--2009 holiday, the 2010--2012 first-time-buyer relief, the 2014 slab-to-slice reform, the permanent relief from November 2017, the 2020--2021 holiday, and the 2022--2025 threshold changes \parencite{govuk_sdlt,hoc_sdlt}. Appendix~\ref{app:sdlt} tabulates the schedules. For the representative dwelling, a first-time buyer paid SDLT in 141 of 256 purchase months (55\%), averaging roughly \gbp{1{,}800} (0.9\% of the price) when payable.
+
+\subsection{Scope and abstractions}
+
+The model excludes several factors by design. Income and capital-gains taxes are omitted on both sides: a first-time buyer's main residence is exempt from capital-gains tax, and the renter's flows fit within annual ISA allowances for most of the sample, so the symmetric no-tax treatment is a reasonable approximation for the typical household (though not for very large portfolios held outside tax wrappers). Council tax and utilities are paid by the occupant under both tenures and net out. The renter never borrows to invest, so leverage is available only through the mortgage. Non-financial considerations --- security of tenure, freedom to modify, flexibility, the insurance value of ownership against rent risk \parencite{sinai2005} --- are outside the accounting and are discussed in Section~\ref{sec:discussion}. Table~\ref{tab:assumptions} collects the baseline parameters.
+
+\begin{table}[H]
+  \centering
+  \caption{Baseline parameters (first-time buyer)}
+  \label{tab:assumptions}
+  \begin{threeparttable}
+    \begin{tabularx}{\textwidth}{@{}lXr@{}}
+      \toprule
+      \textbf{Parameter} & \textbf{Description} & \textbf{Value} \\
+      \midrule
+      Property              & Representative English dwelling (Section~\ref{sec:representative}) & --- \\
+      Deposit               & Share of purchase price                            & 10\% \\
+      Mortgage term         & Amortisation period                                & 30 years \\
+      Rate type             & Variable, recast monthly at CFMBJ95                & --- \\
+      Purchase costs        & Conveyancing, survey, mortgage fees                & 1.5\% \\
+      Stamp duty            & England first-time-buyer schedule, by month        & rule-based \\
+      Selling costs         & Estate agent, conveyancing, EPC                    & 2\% \\
+      Maintenance \& depreciation & Share of current market value, per year      & 1.5\% \\
+      Equity index          & MSCI ACWI net total return, GBP, less 0.12\% fee   & --- \\
+      Rent                  & Market rent, updated monthly                       & --- \\
+      Currency              & Nominal GBP throughout                             & --- \\
+      \bottomrule
+    \end{tabularx}
+  \end{threeparttable}
+\end{table}
