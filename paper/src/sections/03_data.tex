@@ -55,18 +55,18 @@ The mortgage rate is the Bank of England's effective interest rate on new mortga
 
 The renter's portfolio tracks the MSCI ACWI index, covering large- and mid-capitalisation equities in 47 developed and emerging markets \parencite{msci_acwi}. I use end-of-month index levels computed by MSCI directly in pounds sterling in the net-total-return variant (dividends reinvested after withholding taxes), less an ongoing charge of 0.12\% per year representing a low-cost global index fund available to UK retail investors. Measuring the index in sterling embeds the currency exposure an unhedged UK investor bears. Over the sample the net-of-fee series returned 10.2\% per year (a factor of 7.85). As a home-bias robustness check I also use a FTSE~100 total-return series, which returned 7.1\% per year. The 10-year gilt yield (OECD, via FRED) serves as a conservative alternative opportunity cost in Section~\ref{sec:rar}; it ranged from 5.4\% (2007) to 0.2\% (July 2020) and ended the sample at 4.8\% \parencite{fred_uk_gilts}.
 
-Figure~\ref{fig:market_overview} shows the three housing inputs; Figure~\ref{fig:stock_returns} compares cumulative asset performance. The gap the buyer must overcome is evident: over twenty-one years the global equity portfolio multiplied roughly eightfold, UK large-cap equities fourfold, and the representative English dwelling --- before the owner's running costs --- twofold.
+Figure~\ref{fig:market_overview} shows the model's housing inputs together with the price-to-rent ratio they imply; Figure~\ref{fig:stock_returns} compares cumulative asset performance. The gap the buyer must overcome is evident: over twenty-one years the global equity portfolio multiplied roughly eightfold, UK large-cap equities fourfold, and the representative English dwelling --- before the owner's running costs --- twofold.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{uk_v1_market_overview}
-  \caption{Housing-market inputs, representative English dwelling, 2005--2026. \textit{Top:} average house price. \textit{Middle:} average private rent. \textit{Bottom:} Bank of England effective mortgage rate on new advances. Sources: HM Land Registry UK HPI; ONS PIPR; Bank of England.}
+  \includegraphics[width=\textwidth]{fig1_market}
+  \caption{Housing-market inputs for the representative English dwelling, 2005--2026. Panel A: average house price. Panel B: average private rent. Panel C: price-to-rent ratio (price divided by annual rent); the dashed line marks the sample mean of 21.9. Panel D: Bank of England effective interest rate on new mortgage advances to households. Sources: HM Land Registry UK HPI; ONS PIPR; Bank of England.}
   \label{fig:market_overview}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{uk_v1_stock_returns}
-  \caption{Cumulative performance of global equities (MSCI ACWI, net total return in GBP), UK equities (FTSE 100 total return) and representative English house prices, January 2005 = 100. Sources: MSCI; Morningstar; HM Land Registry.}
+  \includegraphics[width=\textwidth]{fig2_assets}
+  \caption{Cumulative performance of global equities (MSCI ACWI, net total return in GBP, less a 0.12\% fund fee), UK equities (FTSE 100 total return) and representative English house prices, January 2005 = 100. Sources: MSCI; Morningstar; HM Land Registry.}
   \label{fig:stock_returns}
 \end{figure}
