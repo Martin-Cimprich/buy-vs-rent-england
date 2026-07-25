@@ -107,6 +107,9 @@
 % \wptitlepage{Title}{Author block}{Date}{Abstract}{JEL}{Keywords}{Thanks footnote}
 \newcommand{\wptitlepage}[7]{%
   \begin{titlepage}
+    % Author footnote uses a star, per econ convention. NB: \thanks does not
+    % work here (its text is only flushed by \maketitle) — use \footnote.
+    \renewcommand{\thefootnote}{\fnsymbol{footnote}}%
     \begin{center}
       \vspace*{18mm}
       {\Large\bfseries #1\par}
@@ -128,5 +131,6 @@
     \vfill
     {\footnotesize\noindent #7\par}
   \end{titlepage}
+  \setcounter{footnote}{0}%
   \setcounter{page}{2}
 }
