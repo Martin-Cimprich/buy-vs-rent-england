@@ -9,19 +9,32 @@
 
 \subsection*{Rents}
 
-The rent series splices two ONS products. The PIPR historical series (released March 2025) provides average monthly rents in GBP for England and the nine English regions from January 2005 to February 2025, chain-linked to the predecessor Index of Private Housing Rental Prices; the live PIPR monthly dataset provides the same measures from January 2015 onwards. Over their 122-month overlap (January 2015--February 2025) the two agree exactly at every observation, so the splice --- historical values before January 2015, live values thereafter --- introduces no discontinuity. Rent levels are model-consistent estimates published by the ONS (base-period mean rents uprated by the index), not raw sample means.
+The rent series splices two ONS products. The PIPR historical series (released March 2025) provides average monthly rents in GBP for England and the nine English regions from January 2005 to February 2025, chain-linked to the predecessor Index of Private Housing Rental Prices; the live PIPR monthly dataset provides the same measures from January 2015 onwards. Over their 122-month overlap (January 2015--February 2025) the two agree exactly at every observation, so the splice, historical values before January 2015 and live values thereafter, introduces no discontinuity. Rent levels are model-consistent estimates published by the ONS (base-period mean rents uprated by the index), not raw sample means.
 
 \subsection*{House prices}
 
-Regional and national average prices (all dwellings) are taken directly from the UK HPI full file (April 2026 vintage). The UK HPI revises its most recent months; the April 2026 observation used here is the first published estimate.
+Regional and national average prices (all dwellings) are taken directly from the UK HPI full file (June 2026 vintage). The UK HPI revises its most recent months; the June 2026 observation used here is the first published estimate.
 
 \subsection*{Representative dwelling}
 
-The representative price and rent are fixed-weight averages of the nine regional series with mid-2023 ONS population weights (millions): North East 2.65, North West 7.52, Yorkshire and The Humber 5.56, East Midlands 5.02, West Midlands 6.11, East of England 6.40, London 8.87, South East 9.46, South West 5.80. Using private-rented-sector household counts instead of population moves the April 2026 representative price-to-rent ratio from 20.7 to 20.6 and no headline result materially.
+The representative price and rent are fixed-weight averages of the nine regional series with mid-2023 ONS population weights (millions): North East 2.65, North West 7.52, Yorkshire and The Humber 5.56, East Midlands 5.02, West Midlands 6.11, East of England 6.40, London 8.87, South East 9.46, South West 5.80. Using private-rented-sector household counts instead of population moves the June 2026 representative price-to-rent ratio from 20.7 to 20.6, and no headline result materially.
 
 \subsection*{Mortgage rate}
 
-Series CFMBJ95 (Bank of England Bankstats table G1.4): monthly average of UK monetary financial institutions' sterling weighted-average interest rate on loans secured on dwellings, new advances to households, January 2004 onwards, no missing months in the sample window.
+The baseline rate is a five-year fix at 90\% loan-to-value, refixed every sixty months and repriced at each refix by the borrower's current loan-to-value (Section~\ref{sec:mortgage_rate}). No single Bank of England series covers it, so it is constructed from the quoted-rate family \parencite{boe_quoted}, using five-year data wherever possible so that no assumption about the term structure is needed:
+
+\begin{itemize}
+  \item \textbf{February 2019 onwards:} the published five-year 90\% LTV series (IUMZO28) directly.
+  \item \textbf{Before February 2019:} interpolated in loan-to-value between the published five-year series at 75\% (IUMBV42) and 95\% (IUM5WTL), weight 0.55. The weight is fitted against IUMZO28 over the ninety months where it exists; mean discrepancy 0.01 percentage points, standard deviation 0.24. It is below the 0.75 that linear interpolation implies because the premium is convex in loan-to-value.
+  \item \textbf{October 2008 to October 2013:} IUM5WTL is unpublished for all sixty-one months, because fewer than three lenders offered a 95\% LTV five-year fix and the Bank suppresses averages below that threshold. The window is filled from the two-year 90\% series (IUMB482) plus 0.30 percentage points, calibrated against contemporaneous quoted products; it puts January 2010 at 6.91\% against a market range of 6.49\% to 7.49\%. IUMB482 is itself unpublished for March to May 2009 and is interpolated across those three months. The patch is not level-shifted to meet the interpolation, so there is a step of about 0.3 percentage points at each seam.
+  \item \textbf{Bands.} The 75\% and 95\% series are carried through so the engine can reprice by current loan-to-value, piecewise-linearly between bands, with the 75\% rate used unchanged below 75\%.
+\end{itemize}
+
+The resulting series averages 4.74\% and ranges from 2.33\% to 6.99\%, sitting 1.19 percentage points above CFMBJ95.
+
+Five-year data is used in preference to transplanting a two-year loan-to-value premium onto a five-year rate, because the loan-to-value premium compresses at longer tenors when high-loan-to-value credit is rationed: the Bank's data give a five-year-minus-two-year term premium of 0.45 percentage points at 75\% loan-to-value against 0.27 at 95\%. A transplant is unbiased after 2019 but puts January 2010 at 8.20\%, above anything then available.
+
+CFMBJ95 (Bankstats table G1.4, the weighted-average rate on new advances to households, January 2004 onwards) is retained for the floating-rate case in Section~\ref{sec:robustness}. Bank Rate (IUMABEDR) supplies the margin cost in the renter-leverage case.
 
 \subsection*{Equity returns}
 
@@ -30,23 +43,6 @@ MSCI publishes end-of-month ACWI index levels directly in GBP. I use the net-tot
 \subsection*{Replication}
 
 All raw data under the Open Government Licence, all cleaning and analysis code, and scripts that re-download the licence-restricted financial series from their public endpoints are available at \url{https://github.com/Martin-Cimprich/buy-vs-rent-england}.
-
-\section{Supplementary figures}
-\label{app:figures}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{figA1_cashflows}
-  \caption{Monthly housing outlays of the two strategies, January 2005 entry cohort. The owner pays the mortgage payment plus maintenance; the renter pays the market rent. Shading marks the gap that is invested (owner pays more) or withdrawn (renter pays more) each month under cash-flow matching.}
-  \label{fig:cashflows}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.78\textwidth]{figA2_regional_map}
-  \caption{Forward-looking ten-year required appreciation rate against global equities, by English region, at April 2026 conditions (per cent per year). Darker shading indicates a higher break-even, that is, a market in which buying is harder to justify. Values are those reported in Table~\ref{tab:regional}.}
-  \label{fig:rar_map}
-\end{figure}
 
 \section{Stamp duty schedules}
 \label{app:sdlt}

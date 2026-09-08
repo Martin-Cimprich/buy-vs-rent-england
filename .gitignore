@@ -15,6 +15,7 @@ paper/src/*.log
 paper/src/*.out
 paper/src/*.run.xml
 paper/src/*.toc
+paper/src/main.pdf
 
 # Python
 __pycache__/

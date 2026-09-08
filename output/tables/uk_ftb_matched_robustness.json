@@ -1,0 +1,340 @@
+{
+  "sample": [
+    "2015-01",
+    "2026-06"
+  ],
+  "horizon_months": 60,
+  "ftb_price_discount_to_all": 0.8369648982820822,
+  "rows": [
+    {
+      "rent_basis": "one",
+      "geography": "Representative",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 49.36708860759494,
+      "R_median": 1.0164539305208276,
+      "gap_median_gbp": 1306.189529539668,
+      "pr_ratio_latest": 24.255354098112942
+    },
+    {
+      "rent_basis": "one",
+      "geography": "North East",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 73.41772151898735,
+      "R_median": 0.7711001214856418,
+      "gap_median_gbp": -10351.913237416244,
+      "pr_ratio_latest": 21.896060606060605
+    },
+    {
+      "rent_basis": "one",
+      "geography": "North West",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 100.0,
+      "R_median": 0.5915592329381925,
+      "gap_median_gbp": -25354.30258242562,
+      "pr_ratio_latest": 22.79782400765184
+    },
+    {
+      "rent_basis": "one",
+      "geography": "Yorkshire and The Humber",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 93.67088607594937,
+      "R_median": 0.7045935493193632,
+      "gap_median_gbp": -16893.46716625125,
+      "pr_ratio_latest": 24.526279956427015
+    },
+    {
+      "rent_basis": "one",
+      "geography": "East Midlands",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 84.81012658227847,
+      "R_median": 0.8064121373583003,
+      "gap_median_gbp": -13020.977606507266,
+      "pr_ratio_latest": 26.408809891808346
+    },
+    {
+      "rent_basis": "one",
+      "geography": "West Midlands",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 94.9367088607595,
+      "R_median": 0.7109928688938698,
+      "gap_median_gbp": -18553.542694827243,
+      "pr_ratio_latest": 24.767021276595745
+    },
+    {
+      "rent_basis": "one",
+      "geography": "East of England",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 17.72151898734177,
+      "R_median": 1.0910159173506404,
+      "gap_median_gbp": 6848.360875652288,
+      "pr_ratio_latest": 26.104119850187267
+    },
+    {
+      "rent_basis": "one",
+      "geography": "London",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 0.0,
+      "R_median": 1.4726406584260596,
+      "gap_median_gbp": 53813.39241099759,
+      "pr_ratio_latest": 22.587595785440612
+    },
+    {
+      "rent_basis": "one",
+      "geography": "South East",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 24.050632911392405,
+      "R_median": 1.0960658139961363,
+      "gap_median_gbp": 7112.5257363401615,
+      "pr_ratio_latest": 25.400608519269777
+    },
+    {
+      "rent_basis": "one",
+      "geography": "South West",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 58.22784810126582,
+      "R_median": 0.9143148405011822,
+      "gap_median_gbp": -6142.426322767846,
+      "pr_ratio_latest": 25.40161616161616
+    },
+    {
+      "rent_basis": "two",
+      "geography": "Representative",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 79.74683544303798,
+      "R_median": 0.8116048254707681,
+      "gap_median_gbp": -13141.060458713211,
+      "pr_ratio_latest": 19.127382028716745
+    },
+    {
+      "rent_basis": "two",
+      "geography": "North East",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 91.13924050632912,
+      "R_median": 0.5580988806317284,
+      "gap_median_gbp": -18443.06960582616,
+      "pr_ratio_latest": 17.453381642512078
+    },
+    {
+      "rent_basis": "two",
+      "geography": "North West",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 100.0,
+      "R_median": 0.4359925843321739,
+      "gap_median_gbp": -34839.93412998519,
+      "pr_ratio_latest": 18.160095238095238
+    },
+    {
+      "rent_basis": "two",
+      "geography": "Yorkshire and The Humber",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 100.0,
+      "R_median": 0.5404199048958196,
+      "gap_median_gbp": -25588.4413687849,
+      "pr_ratio_latest": 19.595409051348998
+    },
+    {
+      "rent_basis": "two",
+      "geography": "East Midlands",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 98.73417721518987,
+      "R_median": 0.6475338113711216,
+      "gap_median_gbp": -23818.215502088948,
+      "pr_ratio_latest": 20.786496350364963
+    },
+    {
+      "rent_basis": "two",
+      "geography": "West Midlands",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 100.0,
+      "R_median": 0.5577014829591073,
+      "gap_median_gbp": -29138.330946223352,
+      "pr_ratio_latest": 19.93236301369863
+    },
+    {
+      "rent_basis": "two",
+      "geography": "East of England",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 67.08860759493672,
+      "R_median": 0.8900144332135856,
+      "gap_median_gbp": -8494.678416552895,
+      "pr_ratio_latest": 20.41534856473345
+    },
+    {
+      "rent_basis": "two",
+      "geography": "London",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 7.59493670886076,
+      "R_median": 1.2246517937551293,
+      "gap_median_gbp": 25758.33596072343,
+      "pr_ratio_latest": 17.824225245653817
+    },
+    {
+      "rent_basis": "two",
+      "geography": "South East",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 59.49367088607595,
+      "R_median": 0.8832991449947123,
+      "gap_median_gbp": -8898.524247402805,
+      "pr_ratio_latest": 19.814082278481013
+    },
+    {
+      "rent_basis": "two",
+      "geography": "South West",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 87.34177215189874,
+      "R_median": 0.7294384466750418,
+      "gap_median_gbp": -21658.079891031193,
+      "pr_ratio_latest": 19.807498424700693
+    },
+    {
+      "rent_basis": "all",
+      "geography": "Representative",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 94.9367088607595,
+      "R_median": 0.7233900817388069,
+      "gap_median_gbp": -19504.1196807867,
+      "pr_ratio_latest": 17.384268441002476
+    },
+    {
+      "rent_basis": "all",
+      "geography": "North East",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 100.0,
+      "R_median": 0.43451662195006546,
+      "gap_median_gbp": -23867.96012154117,
+      "pr_ratio_latest": 15.419760990183525
+    },
+    {
+      "rent_basis": "all",
+      "geography": "North West",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 100.0,
+      "R_median": 0.3662218906168531,
+      "gap_median_gbp": -40052.91318734265,
+      "pr_ratio_latest": 16.53494623655914
+    },
+    {
+      "rent_basis": "all",
+      "geography": "Yorkshire and The Humber",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 100.0,
+      "R_median": 0.4434547904521413,
+      "gap_median_gbp": -30957.16425299782,
+      "pr_ratio_latest": 17.413089713843775
+    },
+    {
+      "rent_basis": "all",
+      "geography": "East Midlands",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 100.0,
+      "R_median": 0.5553137209556286,
+      "gap_median_gbp": -29464.239672295655,
+      "pr_ratio_latest": 18.612745098039216
+    },
+    {
+      "rent_basis": "all",
+      "geography": "West Midlands",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 100.0,
+      "R_median": 0.47624105909683073,
+      "gap_median_gbp": -34809.94395915334,
+      "pr_ratio_latest": 17.982234809474768
+    },
+    {
+      "rent_basis": "all",
+      "geography": "East of England",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 91.13924050632912,
+      "R_median": 0.7846621185242754,
+      "gap_median_gbp": -16521.841196706548,
+      "pr_ratio_latest": 18.136351808482956
+    },
+    {
+      "rent_basis": "all",
+      "geography": "London",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 22.78481012658228,
+      "R_median": 1.1847576354125258,
+      "gap_median_gbp": 20572.41405145089,
+      "pr_ratio_latest": 17.07316101940342
+    },
+    {
+      "rent_basis": "all",
+      "geography": "South East",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 82.27848101265823,
+      "R_median": 0.7827583195951998,
+      "gap_median_gbp": -17007.808174788304,
+      "pr_ratio_latest": 17.699646643109542
+    },
+    {
+      "rent_basis": "all",
+      "geography": "South West",
+      "n_cohorts": 79,
+      "first_cohort": "2015-01",
+      "last_cohort": "2021-07",
+      "buy_win_pct": 98.73417721518987,
+      "R_median": 0.6036247631805373,
+      "gap_median_gbp": -31794.04441540985,
+      "pr_ratio_latest": 16.94125572621935
+    }
+  ]
+}

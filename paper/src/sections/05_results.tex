@@ -5,123 +5,146 @@
 \section{Results}
 \label{sec:results}
 
-\subsection{The full-period race}
+\subsection{One long race, as an illustration}
 \label{sec:single}
 
-I first run the longest race the data allow: a buyer and a renter who both start in January 2005 and are evaluated in April 2026. The buyer purchases the representative dwelling for \gbp{162{,}312} with a deposit of \gbp{16{,}231}, purchase costs of \gbp{2{,}435} and stamp duty of \gbp{1{,}623}; the renter starts with the identical \gbp{20{,}289} invested in the equity index and occupies the same dwelling at the market rent of \gbp{692} per month. Table~\ref{tab:single} reports the outcome and Figure~\ref{fig:single_wealth} the two wealth paths.
+A buyer and a renter both start in January 2005 and are evaluated in June 2026. The buyer purchases the representative dwelling for \gbp{162{,}312} with a deposit of \gbp{16{,}231} and purchase costs of \gbp{3{,}571} including \gbp{1{,}623} of stamp duty; the renter starts with the identical \gbp{19{,}802} in the equity index and occupies the same dwelling at \gbp{692} per month. This is an illustration, not a result: a twenty-one-year hold is far longer than a first-time buyer keeps a first home, and one entry date says little about a decision that turns on timing. Figure~\ref{fig:single_wealth} shows the two wealth paths.
 
-\begin{table}[H]
-  \centering
-  \caption{Full-period simulation, January 2005 -- April 2026}
-  \label{tab:single}
-  \begin{threeparttable}
-  \begin{tabular}{@{}lr@{}}
-    \toprule
-     & \textbf{GBP} \\
-    \midrule
-    Purchase price, January 2005            & 162{,}312 \\
-    Initial capital (deposit + costs + SDLT) & 20{,}289 \\
-    \addlinespace
-    Property value, April 2026              & 317{,}738 \\
-    Remaining mortgage balance              & 58{,}615 \\
-    Selling costs (2\%)                     & 6{,}355 \\
-    Owner's terminal wealth                 & 252{,}768 \\
-    \addlinespace
-    Renter's terminal wealth                & 275{,}171 \\
-    \addlinespace
-    Difference (renter $-$ owner)           & 22{,}403 \\
-    Wealth ratio $R$                        & 1.09 \\
-    \bottomrule
-  \end{tabular}
-  \begin{tablenotes}
-    \small
-    \item \textit{Notes:} Baseline parameters of Table~\ref{tab:assumptions}. The renter's portfolio remains positive throughout; no external cash is required by either strategy beyond the matched flows.
-  \end{tablenotes}
-  \end{threeparttable}
-\end{table}
+The renter finishes 44\% ahead, with \gbp{367{,}821} against the owner's \gbp{254{,}658} (a \gbp{319{,}488} dwelling less \gbp{59{,}079} of outstanding mortgage and \gbp{5{,}751} of selling costs). Figure~\ref{fig:cashflows} shows the matched flows. The owner's outlay exceeded the rent in 188 of 258 months, so the renter added to the portfolio in most of them: the mortgage payment starts at \gbp{801} against rent of \gbp{692}, and maintenance grows from \gbp{203} to \gbp{399} per month as the property appreciates. Because the rate refixes every five years rather than floating, the payment moves in steps and peaks at \gbp{820} instead of tracking the 2009 collapse downwards; by June 2026 it is \gbp{687} against rent of \gbp{1{,}286}.
 
-After twenty-one years the renter finishes 9\% ahead ($R = 1.09$) --- a close race whose lead changes hands more than once. The owner, holding a leveraged position in a rising asset, led through much of the 2010s before the renter's portfolio pulled narrowly ahead in the equity-strong years after 2020. The matched cash flows (Figure~\ref{fig:cashflows} in the appendix) are modest in magnitude: the owner's outlay exceeded the rent in 173 of 256 months, so the renter added to the portfolio in most months, but the mortgage payment starts at only \gbp{801} against rent of \gbp{692}, and maintenance grows from \gbp{203} to \gbp{397} per month as the property appreciates. Because the rate floats and the term is 30 years, the owner's payment declines over the sample while rent rises; the mortgage is only partly amortised by April 2026, leaving a balance of \gbp{58{,}615}. That a leveraged claim on an asset appreciating at 3.2\% per year very nearly matched a portfolio compounding at 10.2\% quantifies how much work the mortgage does for the buyer.
+A leveraged claim on an asset appreciating at 3.2\% per year returned \gbp{254{,}658} on \gbp{19{,}802} of capital, against \gbp{367{,}821} from a portfolio compounding at 10.4\%. Unlevered, the same dwelling wins 8\% of five-year cohorts (Section~\ref{sec:robustness}).
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{fig3_wealth}
-  \caption{Terminal wealth of the two strategies over the full sample, January 2005 entry cohort. The buyer's wealth is the market value of the dwelling less the outstanding mortgage; the renter's is the value of the investment portfolio. Selling costs are applied at the terminal date only.}
+  \caption{Terminal wealth of the two strategies, January 2005 entry cohort held to June 2026. The buyer's wealth is the market value of the dwelling less the outstanding mortgage; the renter's is the value of the investment portfolio. Selling costs are applied at the terminal date only.}
   \label{fig:single_wealth}
 \end{figure}
 
-\subsection{Rolling entry cohorts}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{fig7_cashflows}
+  \caption{Monthly housing outlays of the two strategies, January 2005 entry cohort. The owner pays the mortgage payment plus maintenance; the renter pays the market rent. Shading marks the gap that is invested (owner pays more) or withdrawn (renter pays more) each month under cash-flow matching.}
+  \label{fig:cashflows}
+\end{figure}
+
+\subsection{Entry cohorts over a five-year hold}
 \label{sec:rolling}
 
-The single 2005 start is one draw from history. To isolate timing, I repeat the race for 85 cohorts entering in every quarter from January 2005 to January 2026, all evaluated in April 2026. Figure~\ref{fig:rolling} plots the wealth ratio by entry date.
+The single 2005 start is one draw from history. To isolate timing, I repeat the race for every entry month, each cohort holding for exactly five years.
+
+Five years is chosen because it is roughly how long a first-time buyer keeps their first home: Santander put the average at 4.5 years \parencite{santander_tenure}. Fixing the holding period also makes the accounting coherent. Every cohort faces the same round trip (stamp duty and 1.2\% purchase costs on the way in, 1.8\% selling costs on the way out), and the selling costs are charged at the moment the buyer actually incurs them, when they move on. The alternative, running every cohort forward to the end of the sample, produces cohorts of wildly unequal length; Section~\ref{sec:robustness} reports it.
+
+This gives 199 cohorts entering between January 2005 and July 2021. Buying produced greater wealth in 102 of them (51\%) and renting in 97 (49\%). The median wealth ratio is $R = 0.980$ and the median wealth gap \gbp{994} in the buyer's favour. On the central case the two strategies finish level. The cohorts overlap heavily, so these are counts of simulations rather than of independent histories: 258 months of data contain only 4.3 non-overlapping five-year windows, a point Section~\ref{sec:predictors} returns to.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{fig4_cohorts}
-  \caption{Renter/owner wealth ratio $R$ by entry quarter, 85 cohorts, all evaluated in April 2026. Bars extend from unity: values above one indicate that renting-and-investing produced greater terminal wealth. Baseline parameters of Table~\ref{tab:assumptions}.}
+  \caption{Cohort outcomes. Panel A: renter/owner wealth ratio $R$ by entry month, 199 cohorts each holding for five years. Bars extend from unity; values above one indicate that renting-and-investing produced greater terminal wealth. Panel B: the share of cohorts won by buying at each holding period from one to ten years (left axis), with the median wealth ratio at each horizon on the right axis; monthly entry months at every horizon. Baseline parameters of Table~\ref{tab:assumptions}.}
   \label{fig:rolling}
 \end{figure}
 
-Buying produced greater wealth in 45 of the 85 cohorts (53\%) and renting in 40 (47\%); the mean wealth ratio is $\bar{R} = 1.06$ and the median 0.99 --- collectively, a dead heat. Around the parity, however, dispersion is wide and highly systematic. The best cohort for buying (April 2013) left the renter with 60\% of the owner's wealth; the best for renting (October 2022) left the renter 2.4 times as wealthy. The cohorts sort into three regimes: entries during 2005--mid-2008, at pre-crisis prices, lost to the renter; almost every entry from late 2008 through 2020 --- post-crisis prices financed by a decade of cheap and falling-rate debt --- beat the renter; and every entry since late 2020 has so far lost, as the equity surge and the 2022--2023 rate shock reversed the conditions. Stamp duty plays a minor role throughout: 48 of 85 cohorts paid any SDLT, never exceeding roughly 1\% of the purchase price.
+Around that parity the dispersion is wide, systematic and asymmetric (Figure~\ref{fig:rolling}, Panel A), and the mean and the median of the 199 cohorts point in opposite directions. The mean wealth ratio is 1.220 against a median of 0.980, so the average cohort left the renter a fifth ahead in proportional terms. The mean wealth gap is \gbp{1{,}744} in the owner's favour against a median of \gbp{994}, so the average cohort left the owner ahead in pounds. Both figures are correct, and the reason they disagree is where each strategy won. Renting's large proportional wins came in cohorts where the owner's equity had collapsed to a small number, and a fourfold ratio over a small sum is a modest amount of money; buying's wins came on much larger balance sheets, where a ratio close to one can still stand for tens of thousands of pounds. The ratio measures how many times over one strategy beat the other and the pound gap measures by how much, so I quote both. The mean ratio on its own would overstate renting's case.
+
+The mean is well defined at this horizon because the owner's terminal net worth never fell below \gbp{15{,}769} across the 199 cohorts, so the denominator of $R$ stays clear of zero. That does not hold region by region, and Section~\ref{sec:regional} reports medians only for the reason set out there.
+
+The tails are lopsided. Renting finished more than twice as wealthy in 21 cohorts, more than three times in 16 of those and more than four times in five; the five all entered between August and December 2007, and the sixteen between April 2007 and July 2008. The peak is the November 2007 cohort at $R = 4.165$, where the owner finished five years with \gbp{15{,}769} against the renter's \gbp{65{,}685}, a gap of \gbp{49{,}916}; that owner supplies the sample minimum quoted above. Buying's best cohort is May 2013 at $R = 0.639$, with the owner on \gbp{100{,}336} against the renter's \gbp{64{,}123}, a gap of \gbp{36{,}214}. Buying won more cohorts and renting won the larger ones, and the largest of renting's wins are proportional wins over small absolute sums. A 10\% deposit is what makes ownership competitive at all against equities compounding at 10.4\% a year, and it is also what turns one mistimed entry into the near-total loss of that deposit.
+
+Timing sorts the cohorts by entry year, and not smoothly. Buying won 17\% of cohorts entering in 2005 and none at all of those entering in 2006, 2007, 2008 or 2009. Its share then rises through 33\% in 2010 to every cohort entering in 2011, 2012 and 2013, and 83\% of those entering in 2014. The run breaks twice: 2015 split evenly, and renting won every cohort entering in 2016, whose five years ran through the equity gains of 2019--2021. Buying then took 92\% of 2017 entries, every cohort entering in 2018 and 2019, 67\% in 2020, and one of the seven 2021 cohorts the five-year panel can evaluate, whose holds contain the 2022--2023 rate shock. Stamp duty is a minor factor: 120 of the 199 cohorts paid any, never exceeding 1.2\% of the purchase price.
+
+\subsubsection*{Other holding periods}
+
+Panel B of Figure~\ref{fig:rolling} repeats the exercise at every holding period from one to ten years. Buying wins 30\% of one-year cohorts, 47\% at four years, 51\% at five and 60--67\% from six to ten, so past five years it is ahead more often than not. The median moves far less than that share does: the median ratio is 0.918 at seven years and 0.891 at ten, leaving the median renter within 8\% and 11\% of the owner, and the median ten-year gap is \gbp{14{,}454} on a dwelling worth \gbp{319{,}488}. The mean ratio is 1.031 at seven years and 0.963 at ten, and the seven-year figure carries the same caveat as the five-year one: the median gap there is \gbp{9{,}272} in the owner's favour. I do not quote it below five years. The minimum owner net worth is negative at one and two years ($-$\gbp{12{,}346} and $-$\gbp{8{,}822}), so the denominator of $R$ changes sign, which is why the mean falls below the median at two years and spikes to 1.471 at three. Panel B therefore plots the median ratio.
+
+The short end of the profile is transaction costs. A buyer pays stamp duty plus 1.2\% on entry and 1.8\% on exit, roughly three per cent of the purchase price in round-trip costs against a 10\% deposit, so the transaction itself consumes about thirty per cent of the initial outlay. Over one year there is almost no appreciation or amortisation to set against that, and the buyer loses on arithmetic alone. Each additional year spreads the same fixed cost more thinly, which is why the curve rises steeply to about year six.
+
+This profile is a property of the sample rather than a general fact about tenure. Twenty-one years of English data contain one house-price crash, one long expansion of cheap credit and one exceptional run in global equities, and the shape of the curve depends on where those three episodes fall inside a given holding period. Ten years is also as far as the data reach at a usable cohort count, 139 against 199 at five years, so I report nothing longer.
 
 \subsection{Regional results}
 \label{sec:regional}
 
-Running the race region by region --- each region with its own price \emph{and} rent, so each internally consistent --- both validates the representative-dwelling aggregate and reveals the geography of the outcome. Table~\ref{tab:regional} reports the single-start wealth ratio, the share of cohorts won by buying, and the mean historical required appreciation rate (defined in Section~\ref{sec:rar}) for each region.
+Running the race region by region, each with its own price \emph{and} rent so that each is internally consistent, validates the representative-dwelling aggregate. Table~\ref{tab:regional} reports five-year cohort outcomes and the forward break-even for each region.
+
+A note on the statistic. $R$ is a ratio, and with a 10\% deposit the buyer's terminal net worth can cross zero, at which point the ratio explodes: in the North East it ranges from $-82$ to $+9{,}567$ across the 199 cohorts, so its \emph{mean} is not a usable summary. That condition holds nationally and fails here. For the representative dwelling the owner's net worth never fell below \gbp{15{,}769}, which is why Section~\ref{sec:rolling} can quote a mean ratio and this table cannot. I therefore report the median ratio and, alongside it, the median wealth gap in pounds, which cannot behave that way. The share of cohorts won by buying is unaffected by the problem.
 
 \begin{table}[H]
   \centering
-  \caption{Regional outcomes, 2005--2026}
+  \caption{Regional outcomes over five-year holds, 2005--2026}
   \label{tab:regional}
   \begin{threeparttable}
-  \begin{tabular}{@{}lrrrrr@{}}
+  \small
+  \setlength{\tabcolsep}{4.2pt}
+  \begin{tabular}{@{}lrrrrrrr@{}}
     \toprule
-    \textbf{Region} & \textbf{Price (2026:4)} & \textbf{P/R} & \textbf{$R$ (2005)} & \textbf{Buy-win \%} & \textbf{Hist.\ RAR} \\
+    & \textbf{Price} & & \textbf{Buy-} & \textbf{Median} & \textbf{Median} & \textbf{5y break-} & \textbf{Realised} \\
+    \textbf{Region} & \textbf{(2026:6)} & \textbf{P/R} & \textbf{win \%} & \textbf{$R$} & \textbf{gap} & \textbf{even} & \textbf{appr.} \\
     \midrule
-    North East               & \gbp{163{,}190} & 17.5 & 1.36 & 67 & 1.2\% \\
-    North West               & \gbp{216{,}138} & 18.9 & 0.85 & 73 & 0.8\% \\
-    Yorkshire and The Humber & \gbp{207{,}974} & 20.3 & 1.03 & 67 & 1.2\% \\
-    West Midlands            & \gbp{234{,}635} & 20.3 & 1.10 & 65 & 1.0\% \\
-    South West               & \gbp{302{,}618} & 20.5 & 1.48 & 59 & 2.3\% \\
-    London                   & \gbp{552{,}655} & 20.1 & 0.63 & 39 & 1.7\% \\
-    East Midlands            & \gbp{241{,}620} & 22.1 & 1.48 & 60 & 2.3\% \\
-    East of England          & \gbp{336{,}300} & 21.9 & 1.32 & 33 & 2.3\% \\
-    South East               & \gbp{376{,}819} & 22.2 & 1.37 & 26 & 2.6\% \\
+    North East               & \gbp{165{,}550} & 17.7 & 38 & 1.11 & $+$\gbp{6{,}309}  & 1.17\% & 2.13\% \\
+    North West               & \gbp{219{,}922} & 19.1 & 55 & 0.77 & $-$\gbp{7{,}127}  & 1.69\% & 3.26\% \\
+    London                   & \gbp{553{,}870} & 20.1 & 43 & 1.12 & $+$\gbp{16{,}223} & 2.82\% & 3.81\% \\
+    Yorkshire and The Humber & \gbp{207{,}948} & 20.1 & 52 & 0.93 & $-$\gbp{2{,}923}  & 2.02\% & 2.93\% \\
+    West Midlands            & \gbp{234{,}731} & 20.1 & 63 & 0.81 & $-$\gbp{12{,}249} & 2.03\% & 3.00\% \\
+    South West               & \gbp{304{,}562} & 20.5 & 48 & 1.01 & $+$\gbp{701}      & 2.16\% & 2.77\% \\
+    East Midlands            & \gbp{240{,}457} & 21.8 & 56 & 0.95 & $-$\gbp{3{,}327}  & 2.49\% & 2.90\% \\
+    East of England          & \gbp{338{,}707} & 22.0 & 49 & 1.01 & $+$\gbp{1{,}089}  & 2.69\% & 3.17\% \\
+    South East               & \gbp{380{,}380} & 22.4 & 42 & 1.08 & $+$\gbp{6{,}575}  & 2.90\% & 3.12\% \\
     \midrule
-    England (pop.-weighted)  & ---             & 20.6 & 1.14 & 51 & 1.7\% \\
+    England (pop.-weighted)  & --              & 20.6 & 49 & 0.98 & $+$\gbp{1{,}263}  & 2.34\% & 3.12\% \\
     \bottomrule
   \end{tabular}
   \begin{tablenotes}
     \small
-    \item \textit{Notes:} $R$ (2005) is the wealth ratio of the January 2005 entry cohort ($R>1$: renting won). Buy-win \% is the share of 85 quarterly cohorts in which buying produced greater wealth. Hist.\ RAR is the mean, across ten-year holds, of the annual appreciation required for buying to break even against the equity portfolio (Section~\ref{sec:rar}). P/R is the April 2026 ratio of price to annual rent.
+    \item \textit{Notes:} 199 cohorts per region, each entering in a distinct month and holding for five years. Buy-win \% is the share in which buying produced greater terminal wealth. Median $R$ is the median renter/owner wealth ratio ($R>1$: renting won); median gap is the median of renter minus owner terminal wealth, so a negative figure favours the buyer. 5y break-even is the forward required appreciation against equities at the cautious 5.9\% assumption (Section~\ref{sec:rar}). Realised appr.\ is the region's own annualised house-price growth over 2005--2026. P/R is the June 2026 ratio of price to annual rent. Rows are ordered by price-to-rent ratio.
   \end{tablenotes}
   \end{threeparttable}
 \end{table}
 
-The population-weighted aggregates ($R$ of 1.14; buy-win share of 51\%) bracket the representative-dwelling figures (1.09; 53\%), confirming that the aggregation is innocuous once composition is held consistent. The cross-sectional pattern tracks affordability rather than raw price growth: in the North and Midlands, where price-to-rent ratios are lowest, owning is cheap relative to renting and buying won roughly two-thirds of cohorts; in the South and East, where the ratios exceed 22, buying won a quarter to a third. London is distinctive: a 10\% deposit on a \gbp{553{,}000} dwelling is a large leveraged position, and strong price growth made buying the clear winner of the 2005 start ($R = 0.63$) even though it won only 39\% of cohorts overall.
+The population-weighted aggregate (buy-win 49\%, median $R$ 0.98) sits almost exactly on the representative-dwelling figures (51\%, 0.98). The two part company on the pound gap ($+$\gbp{1{,}263} against $-$\gbp{994}) and on appreciation (3.12\% against 3.21\%), because averaging nine regional medians and nine regional growth rates is not the same operation as measuring the composite series itself.
 
-\subsection{What predicts the outcome}
+The cross-section tracks affordability only loosely. The West Midlands, the East Midlands and the North West (price-to-rent ratios of 20.1, 21.8 and 19.1) delivered the highest buy-win shares at 63\%, 56\% and 55\%, and the largest median gaps in the buyer's favour. The South East, on the highest ratio at 22.4, managed 42\%. But the North East breaks the pattern outright: it has the cheapest housing relative to rent of any region, at 17.7, and the \emph{lowest} buy-win share at 38\%.
+
+Splitting cohorts by entry era shows where the North East diverges. In the post-crisis window of 2010--2015, when cheap debt made buying win almost everywhere, North East buyers won just 14\% of cohorts against 82\% in the West Midlands; from 2016 onwards both won essentially every cohort, the North East 98\% and the West Midlands all of them. That runs against the national record, where renting won every 2016 entry: the representative dwelling is weighted towards the South East and London, where those cohorts lost. North East prices simply did not recover after 2009, appreciating 2.13\% per year across the sample against 3.81\% in London. A low price-to-rent ratio makes owning cheap relative to renting, but it cannot substitute for capital growth once transaction costs have to be recovered.
+
+The North East also shows what leverage does when appreciation fails. Eleven of its 199 cohorts, every one of them entering between June 2007 and June 2008, ended a five-year hold with \emph{negative} net worth after selling costs, and five North West cohorts, entering between June 2007 and February 2008, did the same. No other region produced a single instance. A 10\% deposit in a low-appreciation region is a position an ordinary downturn can destroy outright, and a wealth ratio conceals that in a way a pound figure does not.
+
+\subsection{What entry conditions determine}
 \label{sec:predictors}
 
-Which conditions observable at purchase predict the eventual winner? Regressing the cohort wealth ratio on the entry-month mortgage rate and price-to-rent ratio yields
+I regress the five-year cohort wealth ratio on the entry mortgage rate and the entry price-to-rent ratio.
+
 \begin{center}
 \begin{threeparttable}
 \begin{tabular}{lrrr}
 \toprule
- & \textbf{Pearson $r$} & \textbf{$R^2$} & $p$ \\
+ & \textbf{Pearson $r$} & \textbf{$R^2$} & \textbf{HAC $t$} \\
 \midrule
-Mortgage rate       & 0.22 & 0.05 & 0.045 \\
-Price-to-rent ratio & 0.59 & 0.35 & $<$0.001 \\
-Joint (OLS)         & ---  & 0.74 & $<$0.001 \\
+Mortgage rate       & 0.42 & 0.18 & 3.42 \\
+Price-to-rent ratio & 0.03 & 0.00 & 3.04 \\
+Joint (OLS)         & --   & 0.56 & --   \\
 \bottomrule
 \end{tabular}
+\begin{tablenotes}
+  \small
+  \item \textit{Notes:} 199 cohorts, each holding five years. HAC $t$-statistics use Hansen--Hodrick standard errors with the truncation set to the overlap length (59 months); the corresponding OLS statistics are 15.9 and 13.2, and the difference is the cost of ignoring the overlap.
+\end{tablenotes}
 \end{threeparttable}
 \end{center}
 
-Neither variable predicts strongly alone, but jointly they explain 74\% of the cross-cohort variation: valuation and financing cost together summarise most of what a buyer needed to know at the moment of decision. Two threshold regularities follow (Figure~\ref{fig:predictors}): buying won in every cohort that entered at a price-to-rent ratio below 19.5, and renting won in every cohort above 24.3. The representative ratio averaged 21.9 over the sample, peaked at 26.4 in August 2022, and stood at 20.7 in April 2026 --- in the contested middle (Figure~\ref{fig:market_overview}, Panel C). The mean reversion of the ratio, and the dominance of its movements over those of the mortgage rate, are consistent with the evidence that rent-price ratios forecast housing returns \parencite{campbell2009,gallin2008}.
+Jointly the two variables account for 56\% of the cross-cohort variation. Pearson $r$ and its $R^2$ above are bivariate while the $t$-statistics are on the joint regression, which is why the price-to-rent ratio shows a $t$ of 3.04 despite a bivariate $r$ of 0.03 and $p$ of 0.70: the two regressors are collinear, and the ratio contributes through the joint fit rather than on its own. Three further qualifications change what the 56\% is a claim about.
+
+\emph{First, most of the relationship is an accounting identity rather than a forecast.} The entry price-to-rent ratio is, by construction, the initial rent the renter pays relative to the price the buyer pays; it therefore fixes the monthly cash-flow difference that the renter invests, and the entry rate fixes the buyer's payment for the first fix. To measure how much of the fit this mechanism alone produces, I re-ran all 199 cohorts in a counterfactual world with nothing whatever to forecast: house prices, rents and equities all grow at their sample-mean rates and the mortgage rate never moves, so every cohort faces an identical future and differs only in where it entered. In that world the same two variables explain \textbf{97\%} of the variation in outcomes. The regression is largely re-deriving the user-cost identity of Section~\ref{sec:rar}, not discovering a predictive relationship.
+
+\emph{Second, a high $R^2$ is what overlapping cohorts produce even when nothing is predictable.} Because the 199 cohorts overlap and both regressors are highly persistent, the sampling distribution of $R^2$ under the null of no relationship is not centred near zero. Shifting the predictor series circularly against the outcomes, which preserves each series' own autocorrelation exactly and destroys only their alignment, gives, across 5{,}000 draws, a median $R^2$ of 0.29 and a 99th percentile of 0.58 under no predictability at all. The observed 0.56 clears that null ($p = 0.034$), but only just, and reporting 0.56 without the benchmark would overstate it substantially. The Hansen--Hodrick correction tells the same story: the $t$-statistics fall from about 15 to about 3.
+
+\emph{Third, there is no out-of-sample forecasting power in this sample.} A buyer in real time could only have estimated the relationship on cohorts whose five years had already elapsed. Imposing that constraint, the expanding-window forecast is \emph{worse} than simply using the historical mean outcome, with a Campbell--Thompson out-of-sample $R^2$ of $-2.5$ and a Clark--West statistic of $-2.1$. What binds is the number of independent cohorts rather than the number of cohorts: 258 months contain only 4.3 non-overlapping five-year windows, and no amount of monthly restarting creates more.
+
+Through the arithmetic Section~\ref{sec:rar} makes explicit, these two variables largely \emph{determine} the outcome without forecasting it: buy when the price-to-rent ratio is low and financing is cheap, and the cash flows work in your favour because you have bought cheaply relative to renting.
+
+One empirical regularity does survive, and it is one-sided (Figure~\ref{fig:predictors}). Renting won \emph{every} cohort that entered at a price-to-rent ratio above 24.4. There is no corresponding floor: renting also won at the lowest ratio in the sample, 17.6, because the 2007--2008 entrants bought at moderate ratios and were still overwhelmed by the crash. A floor does appear if cohorts are evaluated at a common sample end rather than over a fixed hold, but it is an artefact of that design. The representative ratio averaged 21.9 over the sample, peaked at 26.4 in August 2022 and stood at 20.7 in June 2026, below the ceiling and in the contested middle (Figure~\ref{fig:market_overview}, Panel C).
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{fig5_predictors}
-  \caption{Conditions at entry and the eventual outcome, 85 quarterly cohorts. Panel A: effective mortgage rate at entry. Panel B: price-to-rent ratio at entry. Filled markers denote cohorts in which buying produced greater terminal wealth, hollow markers those in which renting-and-investing did. Dashed lines are ordinary least-squares fits.}
+  \caption{Conditions at entry and the eventual outcome, 199 cohorts each holding five years. Panel A: quoted first-time-buyer mortgage rate at entry. Panel B: price-to-rent ratio at entry. Filled markers denote cohorts in which buying produced greater terminal wealth, hollow markers those in which renting-and-investing did. Dashed lines are ordinary least-squares fits.}
   \label{fig:predictors}
 \end{figure}

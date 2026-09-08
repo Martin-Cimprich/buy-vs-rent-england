@@ -5,88 +5,52 @@
 \section{Robustness}
 \label{sec:robustness}
 
-Tables~\ref{tab:sensitivity_main} and~\ref{tab:sensitivity_other} vary each baseline parameter in turn, reporting the full-period wealth ratio (January 2005 entry), the rolling-cohort mean, and the share of the 85 cohorts won by buying.
+Every value in the baseline of Table~\ref{tab:assumptions} is typical rather than universal. Tables~\ref{tab:sensitivity_main} and~\ref{tab:sensitivity_other} vary each parameter in turn, reporting the January 2005 full-period ratio, the median ratio across the 199 fixed five-year cohorts, and the share of those cohorts won by buying. The first column is a single cohort held twenty-one years, an illustration on the same footing as Section~\ref{sec:single} rather than a result at that horizon. The tables are generated directly from the simulation output rather than transcribed.
 
-\begin{table}[H]
-  \centering
-  \caption{Sensitivity to maintenance and deposit}
-  \label{tab:sensitivity_main}
-  \begin{threeparttable}
-  \begin{tabular}{@{}lrrrr@{}}
-    \toprule
-    \textbf{Parameter} & \textbf{Value} & \textbf{$R$ (2005)} & \textbf{$\bar{R}$} & \textbf{Buy-win \%} \\
-    \midrule
-    \multicolumn{5}{@{}l}{\textit{Maintenance and depreciation (\% of value p.a.)}} \\
-    & 1.0            & 0.78 & 0.88 & 76 \\
-    & 1.5 (baseline) & 1.09 & 1.06 & 53 \\
-    & 2.0            & 1.39 & 1.24 & 26 \\
-    & 2.5            & 1.70 & 1.42 &  2 \\
-    & 3.0            & 2.01 & 1.60 &  0 \\
-    \addlinespace
-    \multicolumn{5}{@{}l}{\textit{Deposit (\% of purchase price)}} \\
-    &  5             & 1.00 & 1.05 & 65 \\
-    & 10 (baseline)  & 1.09 & 1.06 & 53 \\
-    & 15             & 1.17 & 1.11 & 34 \\
-    & 20             & 1.25 & 1.16 & 25 \\
-    & 25             & 1.33 & 1.22 & 14 \\
-    & 50             & 1.70 & 1.45 &  0 \\
-    & 100 (cash)     & 2.32 & 1.79 &  0 \\
-    \bottomrule
-  \end{tabular}
-  \begin{tablenotes}
-    \small
-    \item \textit{Notes:} $R > 1$: renting-and-investing produced greater wealth. $\bar{R}$ is the mean wealth ratio across the 85 quarterly cohorts; buy-win \% the share won by buying. All other parameters at baseline.
-  \end{tablenotes}
-  \end{threeparttable}
-\end{table}
+\input{tables/sensitivity_generated}
 
-\begin{table}[H]
-  \centering
-  \caption{Sensitivity to other parameters}
-  \label{tab:sensitivity_other}
-  \begin{threeparttable}
-  \begin{tabular}{@{}lrrrr@{}}
-    \toprule
-    \textbf{Parameter} & \textbf{Value} & \textbf{$R$ (2005)} & \textbf{$\bar{R}$} & \textbf{Buy-win \%} \\
-    \midrule
-    \multicolumn{5}{@{}l}{\textit{Mortgage term}} \\
-    & 25 years           & 1.22 & 1.12 & 40 \\
-    & 30 years (baseline) & 1.09 & 1.06 & 53 \\
-    & 35 years           & 0.98 & 1.02 & 61 \\
-    \addlinespace
-    \multicolumn{5}{@{}l}{\textit{Rate fixation}} \\
-    & Variable (baseline) & 1.09 & 1.06 & 53 \\
-    & 2-year fixes        & 1.09 & 1.05 & 59 \\
-    & 5-year fixes        & 1.15 & 1.05 & 62 \\
-    & 10-year fixes       & 1.30 & 1.09 & 62 \\
-    & $+40$bp high-LTV premium & 1.21 & 1.15 & 35 \\
-    \addlinespace
-    \multicolumn{5}{@{}l}{\textit{Transaction costs}} \\
-    & Purchase costs 1.0\% & 1.07 & 1.03 & 56 \\
-    & Purchase costs 2.0\% & 1.11 & 1.09 & 48 \\
-    & Selling costs 1.0\%  & 1.08 & 1.02 & 56 \\
-    & Selling costs 4.0\%  & 1.12 & 1.16 & 39 \\
-    & SDLT excluded        & 1.04 & 1.04 & 58 \\
-    \addlinespace
-    \multicolumn{5}{@{}l}{\textit{Renter's portfolio}} \\
-    & MSCI ACWI net, $-$fee (baseline) & 1.09 & 1.06 & 53 \\
-    & MSCI ACWI gross, no fee          & 1.23 & 1.12 & 40 \\
-    & FTSE 100 total return            & 0.62 & 0.91 & 73 \\
-    \bottomrule
-  \end{tabular}
-  \begin{tablenotes}
-    \small
-    \item \textit{Notes:} As Table~\ref{tab:sensitivity_main}.
-  \end{tablenotes}
-  \end{threeparttable}
-\end{table}
+Five regularities organise them, and they are ordered by how much they matter.
 
-Four regularities organise the tables.
+\subsection{Maintenance moves the answer most}
 
-First, \textbf{maintenance is the single most consequential parameter}. Between 1\% and 3\% of value per year, the full-period ratio moves from 0.78 to 2.01 and the buy-win share from 76\% to zero; within the defensible range the verdict shifts from ``buying usually wins'' (1\%) through near-parity at the 1.5\% baseline to ``renting ahead'' at 2\%. The paper's central finding of near-parity is therefore conditional on this calibration, which I place between measured owner-occupier cash spending ($\approx$1.2\% of value) and the 2\%-plus figures of the user-cost literature \parencite{ons_family_spending,milesmonro2021,judge2021}. Readers with stronger priors can reposition the headline accordingly.
+Across the range UK national-accounts evidence supports, 1.2\% to 1.8\% of value per year, the buy-win share moves from 63\% to 46\% and the median ratio from 0.92 to 1.04. The verdict shifts from ``buying modestly ahead'' to ``renting modestly ahead'' inside the defensible band, so the near-parity headline is conditional on this calibration.
 
-Second, \textbf{leverage is what keeps buying competitive}. A smaller deposit helps the buyer --- at 5\% down, buying wins 65\% of cohorts; at 20\%, 25\%; and an unlevered cash buyer never wins ($R = 2.32$). Longer terms, which slow amortisation and prolong the leverage, work in the same direction. The first-time buyer's high loan-to-value is precisely what allows a claim on an asset appreciating at 3.2\% to compete with a portfolio returning 10.2\%; the result echoes the portfolio-choice observation that owner-occupied housing is attractive largely through its financing \parencite{flavin2002}.
+Two points bound how much weight that deserves. The supported band does not run from 1\% to 3\%: the ONS depreciation figure is 1.20\% of market value on average and 1.47\% at its 1995 peak, and adding cash maintenance and insurance cannot reach 2\% without double-counting capital improvements as running costs. Within the band the buy-win share moves 17 percentage points and crosses 50\%, so the sign of the verdict is not safe inside the supported range. Across the unsupported 1\%--3\% range it would move from 71\% to 18\%.
 
-Third, \textbf{transaction costs, stamp duty and fixation are second-order}: none moves the buy-win share by more than a handful of percentage points. England's low round-trip transaction costs are a structural advantage of ownership, and the period-accurate stamp-duty module, while conceptually important, changes little at average first-time-buyer prices. A 40 basis-point high-LTV rate premium costs the buyer visibly (buy-win 35\%) but does not overturn the picture.
+\subsection{Leverage helps the buyer up to about 15 per cent down}
 
-Fourth, \textbf{the renter's diversification is decisive}. Substituting the FTSE 100 for the global portfolio reverses the verdict ($R = 0.62$; buying wins 73\% of cohorts): the three-point annual gap between UK large-cap and global equity returns compounds, over two decades, into the difference between the renter winning narrowly and losing badly. The renter's side of the parity is earned by disciplined, globally diversified investing, not by renting per se.
+An unlevered buyer is comprehensively beaten: at a 100\% deposit, buying wins 8\% of cohorts and the January 2005 ratio is 2.59. At a 50\% deposit it wins 20\%. Leverage is what allows a claim on an asset appreciating at 3.2\% per year to compete with a portfolio compounding at 10.4\%, and the result echoes the portfolio-choice observation that owner-occupied housing is attractive largely through its financing \parencite{flavin2002}.
+
+But the relationship is not monotonic. Buying does \emph{best} at deposits of 15--20\% (54\% of cohorts), slightly worse at the 10\% baseline (51\%), and worse again at 5\% (46\%). The reason is visible in Section~\ref{sec:rolling}: leverage magnifies losses more than gains, and the cohorts that bought into the 2007--2008 peak were destroyed in proportion to how levered they were. A 5\% deposit produces both the best and the worst outcomes, and the median cohort is worse off for it. The first-time buyer's high loan-to-value both makes ownership competitive and makes badly-timed ownership catastrophic.
+
+\subsection{Fixing the rate cost buyers 23 percentage points}
+
+Replacing the first-time buyer's five-year fix with the Bank of England's effective rate on all new advances, recast monthly, moves the buy-win share from 51\% to \textbf{74\%}, a larger effect than any parameter except maintenance. Shortening the fix to two years moves it to 65\%.
+
+That gap is the cost of fixing. A borrower who fixed for five years in 2005 paid a pre-crisis rate through to 2010 and did not receive the 2009 collapse; a floating borrower received it within months. Over this particular sample, in which rates fell for a decade, fixing was expensive. That is a statement about 2005--2026 rather than a recommendation: the same design would have protected a borrower through 2022--2023, and the sample contains only one such episode. The direction of the effect is worth keeping in view when reading any buy-versus-rent comparison built on an all-borrower average rate, which will flatter buyers relative to the product a first-time buyer actually holds.
+
+\subsection{A home-biased renter loses}
+
+Substituting the FTSE~100 for the global portfolio moves the buy-win share from 51\% to 64\% and the January 2005 ratio from 1.44 to 0.77, turning a renter who finished 44\% ahead into one who finished 23\% behind. The three-point annual gap between UK large-cap and global equity returns (7.1\% against 10.4\%) compounds into the difference between the two verdicts. The renter's side of the parity is earned by disciplined, globally diversified investing, not by renting as such; a home-biased renter loses.
+
+Letting the renter borrow to invest works in the same direction, as expected: at 2.00$\times$ leverage, charging margin interest at Bank Rate plus 1.50\%, the buy-win share falls to 38\%. Two caveats belong with that figure. No cohort is force-liquidated even at 2$\times$, but that is a property of \emph{this} design rather than of leverage. Because the renter is cash-flow matched, the contributions made over sixty months exceed the entire initial stake: \gbp{32{,}764} against \gbp{24{,}314} for the November 2007 cohort, the worst entry point in the sample. The position therefore deleverages itself well before a margin call can bite. The minimum equity ratio across all cohorts is 31.9\%, uncomfortably close to the 30\% maintenance margin, and monthly observation understates drawdowns: month-end missed the daily trough by roughly four percentage points in the financial crisis and nine to eleven in 2020, while brokers liquidate in real time. A daily simulation would very likely show forced sales. Separately, 2$\times$ survived 2020 only because sterling fell about 13\% in a global equity crash, which is a property of the currency pair in that episode and not of equity leverage.
+
+\subsection{Transaction costs, stamp duty and the term are second-order}
+
+None of these moves the buy-win share by more than a handful of percentage points across ranges wider than any real buyer faces. Doubling purchase costs from 1.0\% to 2.0\% costs five points; varying selling costs from 1.0\% to 4.0\% costs eleven; removing stamp duty entirely gains six. England's low round-trip transaction costs are a structural advantage of ownership, and the period-accurate stamp-duty module, while conceptually important, changes little at average first-time-buyer prices, though not in London, where the relief cliff above \gbp{500{,}000} is worth \gbp{17{,}694} (Section~\ref{sec:rar}). The mortgage term is almost inert: 25, 30 and 35 years give 51\%, 51\% and 53\%.
+
+\subsection{First-time-buyer prices, matched to a first-time-buyer rent}
+
+The headline uses the all-dwellings price against the all-property rent. Both sides describe the same dwelling, but not specifically the dwelling a first-time buyer occupies. Substituting the UK HPI first-time-buyer price series tests that.
+
+It cannot be done by swapping the price alone. The first-time-buyer price is 84\% of the all-dwellings price, so pairing it with a whole-market rent prices a cheap dwelling against an expensive tenancy, the same composition error Section~\ref{sec:representative} identifies, and a large one: it puts the price-to-rent ratio at 17.4 against a regional range of 17.7--22.4 and makes buying win 95\% of cohorts. The rent must be matched. Applying the same principle as before, the one-bedroom PIPR rent is 82\% of the all-property rent, which tracks the 84\% price discount closely; two-bedroom, at 92\%, does not.
+
+On that matched pair, buying wins \textbf{49\%} of cohorts against the headline's 51\%, with a median ratio of 1.02 against 0.98. The conclusion is unchanged. On the two-bedroom basis buying wins 80\%, which brackets the answer from the other side and shows that the bedroom choice matters more than the price series does.
+
+The check runs only from January 2015, because the first-time-buyer price series begins in 2012 and the PIPR bedroom series in 2015. It therefore omits the financial crisis and the 2010--2014 recovery, the episodes that generate most of the dispersion in the headline, which is why it is a robustness check and not the main specification.
+
+\subsection{Cohorts evaluated at the sample end}
+
+Running every cohort forward to the last month of the sample, rather than for a fixed period, gives 255 cohorts and a buy-win share of 16\% against 51\% over fixed five-year holds. It is the design most buy-versus-rent backtests use, so the gap is worth explaining.
+
+The gap is not a finding about tenure. Running to a common end date produces cohorts of wildly unequal length, from 258 months down to four, and the recent, short ones cannot amortise their round-trip transaction costs, which consume roughly thirty per cent of the initial outlay. A buyer who entered in 2025 and is measured eighteen months later has lost on arithmetic that has nothing to do with the merits of owning. Because entry conditions are correlated with cohort length under that design, it also contaminates the regression of Section~\ref{sec:predictors}: cohort length alone accounts for a third of the variance in outcomes. The fixed-horizon design avoids both problems.

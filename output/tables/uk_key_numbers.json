@@ -2,418 +2,770 @@
   "single": {
     "purchase_price": 162311.85694371842,
     "deposit": 16231.185694371843,
-    "initial_equity": 20288.982117964802,
+    "initial_equity": 19802.04654713365,
     "sdlt_paid": 1623.1185694371843,
-    "nw_buy": 252768.26642048254,
-    "nw_rent": 275170.7785931623,
-    "diff": 22402.512172679766,
-    "R": 1.088628657742238,
+    "nw_buy": 254658.3529884687,
+    "nw_rent": 367821.3757936647,
+    "diff": 113163.02280519603,
+    "R": 1.444371926061739,
     "external_cash": 0.0,
-    "final_home_value": 317737.60132427304,
-    "final_balance": 58614.58287730505,
-    "closing_purchase": 4057.7964235929603,
-    "closing_sale": 6354.752026485461,
-    "months_owner_cheaper": 83,
-    "first_payment": 800.7907966920565,
-    "last_payment": 662.6874941732418,
-    "peak_payment": 863.6597096638335,
+    "final_home_value": 319488.0374629732,
+    "final_balance": 59078.899800171006,
+    "closing_purchase": 3570.8608527618053,
+    "closing_sale": 5750.784674333518,
+    "months_owner_cheaper": 70,
+    "first_payment": 801.2638119174217,
+    "last_payment": 686.5209561703699,
+    "peak_payment": 819.7976497589308,
     "first_rent": 692.3606900156822,
-    "last_rent": 1279.5385955741417,
+    "last_rent": 1286.075971423593,
     "first_maint": 202.88982117964804,
-    "last_maint": 397.1720016553413
+    "last_maint": 399.3600468287165
   },
+  "cohorts_5y": {
+    "horizon_months": 60,
+    "n": 199,
+    "buy_wins": 102,
+    "rent_wins": 97,
+    "buy_pct": 51,
+    "R_mean": 1.2203008118205871,
+    "R_median": 0.9801350942892295,
+    "gap_mean_gbp": -1744.4649872885216,
+    "gap_median_gbp": -993.6236656575056,
+    "negative_equity_cohorts": 0,
+    "R_min": 0.6390774875929816,
+    "R_max": 4.165337887516003,
+    "R_min_start": "2013-05",
+    "R_max_start": "2007-11",
+    "first_cohort": "2005-01",
+    "last_cohort": "2021-07",
+    "sdlt_paying_cohorts": 120,
+    "R_p10": 0.713652989821309,
+    "R_p90": 2.203105622327489,
+    "n_R_above_2": 21,
+    "n_R_above_3": 16,
+    "n_R_above_4": 5,
+    "R_max_gap_gbp": 54892.5941808136,
+    "R_min_gap_gbp": -36213.61552514522,
+    "nw_buy_min_gbp": 15769.40762116955,
+    "years_renting_won_every_cohort": [
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2016"
+    ],
+    "years_buying_won_every_cohort": [
+      "2011",
+      "2012",
+      "2013",
+      "2018",
+      "2019"
+    ]
+  },
+  "entry_year_regimes": [
+    {
+      "yr": "2005",
+      "n": 12,
+      "R_mean": 1.1172195358363861,
+      "R_median": 1.1181676996569383,
+      "buy_win_pct": 16.666666666666664
+    },
+    {
+      "yr": "2006",
+      "n": 12,
+      "R_mean": 1.6965166939908347,
+      "R_median": 1.8160514475637237,
+      "buy_win_pct": 0.0
+    },
+    {
+      "yr": "2007",
+      "n": 12,
+      "R_mean": 3.5018919851025423,
+      "R_median": 3.709707367805671,
+      "buy_win_pct": 0.0
+    },
+    {
+      "yr": "2008",
+      "n": 12,
+      "R_mean": 2.7169802880915177,
+      "R_median": 3.1125614803190818,
+      "buy_win_pct": 0.0
+    },
+    {
+      "yr": "2009",
+      "n": 12,
+      "R_mean": 1.0656462989281303,
+      "R_median": 1.06438315265189,
+      "buy_win_pct": 0.0
+    },
+    {
+      "yr": "2010",
+      "n": 12,
+      "R_mean": 1.0547912023437418,
+      "R_median": 1.1439494916787178,
+      "buy_win_pct": 33.33333333333333
+    },
+    {
+      "yr": "2011",
+      "n": 12,
+      "R_mean": 0.6982920055335314,
+      "R_median": 0.6906709511430282,
+      "buy_win_pct": 100.0
+    },
+    {
+      "yr": "2012",
+      "n": 12,
+      "R_mean": 0.8036032662073754,
+      "R_median": 0.8069617843825432,
+      "buy_win_pct": 100.0
+    },
+    {
+      "yr": "2013",
+      "n": 12,
+      "R_mean": 0.687151557029908,
+      "R_median": 0.685757294095326,
+      "buy_win_pct": 100.0
+    },
+    {
+      "yr": "2014",
+      "n": 12,
+      "R_mean": 0.8956691072778815,
+      "R_median": 0.938959730507569,
+      "buy_win_pct": 83.33333333333334
+    },
+    {
+      "yr": "2015",
+      "n": 12,
+      "R_mean": 0.9594993618290543,
+      "R_median": 0.9591475115994363,
+      "buy_win_pct": 50.0
+    },
+    {
+      "yr": "2016",
+      "n": 12,
+      "R_mean": 1.1220427858751691,
+      "R_median": 1.08624602147426,
+      "buy_win_pct": 0.0
+    },
+    {
+      "yr": "2017",
+      "n": 12,
+      "R_mean": 0.8689979501031662,
+      "R_median": 0.8927048393793139,
+      "buy_win_pct": 91.66666666666666
+    },
+    {
+      "yr": "2018",
+      "n": 12,
+      "R_mean": 0.7790129796314202,
+      "R_median": 0.7757729265518947,
+      "buy_win_pct": 100.0
+    },
+    {
+      "yr": "2019",
+      "n": 12,
+      "R_mean": 0.7598472226485624,
+      "R_median": 0.7617223811383091,
+      "buy_win_pct": 100.0
+    },
+    {
+      "yr": "2020",
+      "n": 12,
+      "R_mean": 0.880260254866919,
+      "R_median": 0.8113574112708433,
+      "buy_win_pct": 66.66666666666666
+    },
+    {
+      "yr": "2021",
+      "n": 7,
+      "R_mean": 1.0786845155347362,
+      "R_median": 1.0664287223807751,
+      "buy_win_pct": 14.285714285714285
+    }
+  ],
+  "horizon_panel": [
+    {
+      "horizon_years": 1,
+      "n_cohorts": 247,
+      "buy_win_pct": 29.554655870445345,
+      "R_mean": 1.265269156188895,
+      "R_median": 1.2099761835229157,
+      "gap_mean_gbp": 6713.918425429925,
+      "gap_median_gbp": 6323.504306610579,
+      "nw_buy_min_gbp": -12345.910849168547,
+      "first_cohort": "2005-01",
+      "last_cohort": "2025-07"
+    },
+    {
+      "horizon_years": 2,
+      "n_cohorts": 235,
+      "buy_win_pct": 41.702127659574465,
+      "R_mean": 1.0468606203165052,
+      "R_median": 1.102022949011658,
+      "gap_mean_gbp": 4578.245366652774,
+      "gap_median_gbp": 5732.558196171776,
+      "nw_buy_min_gbp": -8822.317912465223,
+      "first_cohort": "2005-01",
+      "last_cohort": "2024-07"
+    },
+    {
+      "horizon_years": 3,
+      "n_cohorts": 223,
+      "buy_win_pct": 46.63677130044843,
+      "R_mean": 1.4710506426187322,
+      "R_median": 1.0549864815296666,
+      "gap_mean_gbp": 2889.1840751551745,
+      "gap_median_gbp": 2610.109295816612,
+      "nw_buy_min_gbp": 6090.219724894094,
+      "first_cohort": "2005-01",
+      "last_cohort": "2023-07"
+    },
+    {
+      "horizon_years": 4,
+      "n_cohorts": 211,
+      "buy_win_pct": 47.39336492890995,
+      "R_mean": 1.3531664307463553,
+      "R_median": 1.0148091904192607,
+      "gap_mean_gbp": -292.64250599250687,
+      "gap_median_gbp": 1034.0180783310352,
+      "nw_buy_min_gbp": 8304.803060959151,
+      "first_cohort": "2005-01",
+      "last_cohort": "2022-07"
+    },
+    {
+      "horizon_years": 5,
+      "n_cohorts": 199,
+      "buy_win_pct": 51.256281407035175,
+      "R_mean": 1.2203008118205871,
+      "R_median": 0.9801350942892295,
+      "gap_mean_gbp": -1744.4649872885216,
+      "gap_median_gbp": -993.6236656575056,
+      "nw_buy_min_gbp": 15769.40762116955,
+      "first_cohort": "2005-01",
+      "last_cohort": "2021-07"
+    },
+    {
+      "horizon_years": 6,
+      "n_cohorts": 187,
+      "buy_win_pct": 66.84491978609626,
+      "R_mean": 1.10764310213186,
+      "R_median": 0.900086490039788,
+      "gap_mean_gbp": -4220.447635618544,
+      "gap_median_gbp": -9410.484721140645,
+      "nw_buy_min_gbp": 24021.31508842265,
+      "first_cohort": "2005-01",
+      "last_cohort": "2020-07"
+    },
+    {
+      "horizon_years": 7,
+      "n_cohorts": 175,
+      "buy_win_pct": 61.71428571428571,
+      "R_mean": 1.030835089405688,
+      "R_median": 0.9177047526759368,
+      "gap_mean_gbp": -5270.0035690729,
+      "gap_median_gbp": -9272.007771730481,
+      "nw_buy_min_gbp": 44896.64087221111,
+      "first_cohort": "2005-01",
+      "last_cohort": "2019-07"
+    },
+    {
+      "horizon_years": 8,
+      "n_cohorts": 163,
+      "buy_win_pct": 60.122699386503065,
+      "R_mean": 0.9902200254429582,
+      "R_median": 0.9487976832050602,
+      "gap_mean_gbp": -6813.014981572619,
+      "gap_median_gbp": -5829.729854509351,
+      "nw_buy_min_gbp": 54938.803378521334,
+      "first_cohort": "2005-01",
+      "last_cohort": "2018-07"
+    },
+    {
+      "horizon_years": 9,
+      "n_cohorts": 151,
+      "buy_win_pct": 64.23841059602648,
+      "R_mean": 0.9568565385101908,
+      "R_median": 0.9507534657959176,
+      "gap_mean_gbp": -9584.104555959137,
+      "gap_median_gbp": -5790.049171850289,
+      "nw_buy_min_gbp": 72644.65761506272,
+      "first_cohort": "2005-01",
+      "last_cohort": "2017-07"
+    },
+    {
+      "horizon_years": 10,
+      "n_cohorts": 139,
+      "buy_win_pct": 61.15107913669065,
+      "R_mean": 0.9627668533088203,
+      "R_median": 0.8914708275279555,
+      "gap_mean_gbp": -9495.597092795535,
+      "gap_median_gbp": -14454.356070158305,
+      "nw_buy_min_gbp": 93115.1746152123,
+      "first_cohort": "2005-01",
+      "last_cohort": "2016-07"
+    }
+  ],
   "rolling": {
-    "n": 85,
-    "buy_wins": 45,
-    "rent_wins": 40,
-    "buy_pct": 53,
-    "R_mean": 1.0639762289389028,
-    "R_median": 0.9933569929975444,
-    "R_min": 0.5957003781843643,
-    "R_max": 2.362142637836528,
-    "R_min_start": "2013-04",
+    "n": 255,
+    "buy_wins": 41,
+    "rent_wins": 214,
+    "buy_pct": 16,
+    "R_mean": 1.3583041614949574,
+    "R_median": 1.233153026796242,
+    "R_min": 0.8826077530012243,
+    "R_max": 3.043049549662091,
+    "R_min_start": "2013-03",
     "R_max_start": "2022-10",
-    "last_cohort": "2026-01",
-    "sdlt_paying_cohorts": 48
+    "last_cohort": "2026-03",
+    "sdlt_paying_cohorts": 140
   },
   "predictors": {
-    "r_rate": 0.21816629111823777,
-    "r_pr": 0.5893455504799774,
-    "r2_rate": 0.04759653058028767,
-    "r2_pr": 0.3473281778705476,
-    "r2_combined": 0.7414050906752531,
-    "p_rate": 0.04487287226639881,
-    "p_pr": 2.9609279618371947e-09,
-    "pr_buy_always_below": 19.536042807885053,
-    "pr_rent_always_above": 24.290162410848694
+    "r_rate": 0.4182806801695737,
+    "r_pr": 0.027665599187741773,
+    "r2_rate": 0.1749587274031212,
+    "r2_pr": 0.0007653853784167782,
+    "r2_combined": 0.5638313805247961,
+    "p_rate": 7.866717379126773e-10,
+    "p_pr": 0.6980996596227551,
+    "pr_buy_always_below": 17.622000315616766,
+    "pr_rent_always_above": 24.393094886094293
   },
   "sensitivity": [
     {
       "group": "base",
       "label": "base",
-      "R_single": 1.088628657742238,
-      "R_rolling_mean": 1.0639762289389028,
-      "buy_win_share": 0.5294117647058824
+      "R_single": 1.444371926061739,
+      "R_cohort_median": 0.9801350942892295,
+      "buy_win_share": 0.5125628140703518
     },
     {
       "group": "deposit",
       "label": "5%",
-      "R_single": 1.0030618321791793,
-      "R_rolling_mean": 1.0510913533217399,
-      "buy_win_share": 0.6470588235294118
+      "R_single": 1.422278026313472,
+      "R_cohort_median": 1.026031813717436,
+      "buy_win_share": 0.457286432160804
     },
     {
       "group": "deposit",
       "label": "15%",
-      "R_single": 1.172018842137488,
-      "R_rolling_mean": 1.1112881399694643,
-      "buy_win_share": 0.3411764705882353
+      "R_single": 1.515844855581565,
+      "R_cohort_median": 0.975367913605454,
+      "buy_win_share": 0.5376884422110553
     },
     {
       "group": "deposit",
       "label": "20%",
-      "R_single": 1.253314396076084,
-      "R_rolling_mean": 1.164244565827364,
-      "buy_win_share": 0.24705882352941178
+      "R_single": 1.5862049988890914,
+      "R_cohort_median": 0.9739234228305722,
+      "buy_win_share": 0.5376884422110553
     },
     {
       "group": "deposit",
       "label": "25%",
-      "R_single": 1.3325932614103317,
-      "R_rolling_mean": 1.217210537528078,
-      "buy_win_share": 0.1411764705882353
+      "R_single": 1.6554961111772093,
+      "R_cohort_median": 0.9902581945679952,
+      "buy_win_share": 0.5226130653266332
     },
     {
       "group": "deposit",
       "label": "50%",
-      "R_single": 1.7012103417902393,
-      "R_rolling_mean": 1.451593827619986,
-      "buy_win_share": 0.0
+      "R_single": 2.0035418593068206,
+      "R_cohort_median": 1.1084597364902207,
+      "buy_win_share": 0.20100502512562815
     },
     {
       "group": "deposit",
       "label": "100%",
-      "R_single": 2.322797283183048,
-      "R_rolling_mean": 1.7856987653218395,
-      "buy_win_share": 0.0
+      "R_single": 2.5905685081993663,
+      "R_cohort_median": 1.2182331690533408,
+      "buy_win_share": 0.08040201005025126
     },
     {
-      "group": "maintenance",
+      "group": "maintenance (UK-grounded)",
+      "label": "1.2%",
+      "R_single": 1.2367876262839528,
+      "R_cohort_median": 0.9194085569929903,
+      "buy_win_share": 0.628140703517588
+    },
+    {
+      "group": "maintenance (UK-grounded)",
+      "label": "1.8%",
+      "R_single": 1.6519562258395242,
+      "R_cohort_median": 1.042202733925049,
+      "buy_win_share": 0.4623115577889447
+    },
+    {
+      "group": "maintenance (beyond evidence)",
       "label": "1.0%",
-      "R_single": 0.7825256742929014,
-      "R_rolling_mean": 0.8838896660684568,
-      "buy_win_share": 0.7647058823529411
+      "R_single": 1.0983980930987576,
+      "R_cohort_median": 0.8708290965909509,
+      "buy_win_share": 0.7135678391959799
     },
     {
-      "group": "maintenance",
+      "group": "maintenance (beyond evidence)",
       "label": "2.0%",
-      "R_single": 1.3947316411915756,
-      "R_rolling_mean": 1.244062791809348,
-      "buy_win_share": 0.25882352941176473
+      "R_single": 1.7903457590247143,
+      "R_cohort_median": 1.0813459897829625,
+      "buy_win_share": 0.4371859296482412
     },
     {
-      "group": "maintenance",
+      "group": "maintenance (beyond evidence)",
       "label": "2.5%",
-      "R_single": 1.7008346246409074,
-      "R_rolling_mean": 1.4241493546797934,
-      "buy_win_share": 0.023529411764705882
+      "R_single": 2.1363195919876987,
+      "R_cohort_median": 1.189677356556335,
+      "buy_win_share": 0.35678391959798994
     },
     {
-      "group": "maintenance",
+      "group": "maintenance (beyond evidence)",
       "label": "3.0%",
-      "R_single": 2.006937608090246,
-      "R_rolling_mean": 1.604235917550239,
-      "buy_win_share": 0.0
+      "R_single": 2.482293424950676,
+      "R_cohort_median": 1.2839941746047283,
+      "buy_win_share": 0.17587939698492464
     },
     {
       "group": "term",
       "label": "25y",
-      "R_single": 1.223215293310969,
-      "R_rolling_mean": 1.1192058761549204,
-      "buy_win_share": 0.4
+      "R_single": 1.5645750739561477,
+      "R_cohort_median": 0.9983672736604349,
+      "buy_win_share": 0.507537688442211
     },
     {
       "group": "term",
       "label": "35y",
-      "R_single": 0.9772385495951526,
-      "R_rolling_mean": 1.01833133048845,
-      "buy_win_share": 0.611764705882353
+      "R_single": 1.3623298404003068,
+      "R_cohort_median": 0.9744623523594534,
+      "buy_win_share": 0.5326633165829145
     },
     {
       "group": "fixation",
       "label": "2y",
-      "R_single": 1.0942328248520317,
-      "R_rolling_mean": 1.053708779586436,
-      "buy_win_share": 0.5882352941176471
+      "R_single": 1.3967101075909665,
+      "R_cohort_median": 0.8698792759918401,
+      "buy_win_share": 0.6532663316582915
     },
     {
       "group": "fixation",
       "label": "5y",
-      "R_single": 1.14564701052824,
-      "R_rolling_mean": 1.0452586158931783,
-      "buy_win_share": 0.6235294117647059
+      "R_single": 1.444371926061739,
+      "R_cohort_median": 0.9801350942892295,
+      "buy_win_share": 0.5125628140703518
     },
     {
       "group": "fixation",
       "label": "10y",
-      "R_single": 1.2976931161444847,
-      "R_rolling_mean": 1.0875721436815737,
-      "buy_win_share": 0.6235294117647059
+      "R_single": 1.4565136770134863,
+      "R_cohort_median": 0.9801350942892295,
+      "buy_win_share": 0.5125628140703518
     },
     {
-      "group": "rate_premium",
-      "label": "+0.4pp (high-LTV)",
-      "R_single": 1.211516733314671,
-      "R_rolling_mean": 1.1512752392292873,
-      "buy_win_share": 0.35294117647058826
+      "group": "rate design",
+      "label": "CFMBJ95 floating",
+      "R_single": 1.199283551533132,
+      "R_cohort_median": 0.7426199660578535,
+      "buy_win_share": 0.7386934673366834
+    },
+    {
+      "group": "renter leverage",
+      "label": "1.25x",
+      "R_single": 1.5657788479862567,
+      "R_cohort_median": 1.0196306363185925,
+      "buy_win_share": 0.4824120603015075
+    },
+    {
+      "group": "renter leverage",
+      "label": "1.50x",
+      "R_single": 1.6871857699107715,
+      "R_cohort_median": 1.0713536004227953,
+      "buy_win_share": 0.45226130653266333
+    },
+    {
+      "group": "renter leverage",
+      "label": "1.75x",
+      "R_single": 1.8085926918352857,
+      "R_cohort_median": 1.1105765299863861,
+      "buy_win_share": 0.4221105527638191
+    },
+    {
+      "group": "renter leverage",
+      "label": "2.00x",
+      "R_single": 1.9299996137598026,
+      "R_cohort_median": 1.1471736006727922,
+      "buy_win_share": 0.3768844221105528
     },
     {
       "group": "purchase_costs",
       "label": "1.0%",
-      "R_single": 1.06505586129645,
-      "R_rolling_mean": 1.0348589228769005,
-      "buy_win_share": 0.5647058823529412
+      "R_single": 1.4337660259216838,
+      "R_cohort_median": 0.9706913501392698,
+      "buy_win_share": 0.5376884422110553
     },
     {
       "group": "purchase_costs",
       "label": "2.0%",
-      "R_single": 1.1122014541880259,
-      "R_rolling_mean": 1.093093535000905,
-      "buy_win_share": 0.4823529411764706
+      "R_single": 1.4867955266219575,
+      "R_cohort_median": 1.0179100708890698,
+      "buy_win_share": 0.48743718592964824
     },
     {
       "group": "selling_costs",
       "label": "1.0%",
-      "R_single": 1.0751141374263296,
-      "R_rolling_mean": 1.0241746221514025,
-      "buy_win_share": 0.5647058823529412
+      "R_single": 1.4300193918938657,
+      "R_cohort_median": 0.9554731784566379,
+      "buy_win_share": 0.5678391959798995
     },
     {
       "group": "selling_costs",
       "label": "4.0%",
-      "R_single": 1.116703275264296,
-      "R_rolling_mean": 1.1616844702243891,
-      "buy_win_share": 0.38823529411764707
+      "R_single": 1.4853690826288057,
+      "R_cohort_median": 1.066285420744641,
+      "buy_win_share": 0.457286432160804
     },
     {
       "group": "sdlt",
       "label": "excluded",
-      "R_single": 1.0414830648506614,
-      "R_rolling_mean": 1.0402102844352799,
-      "buy_win_share": 0.5764705882352941
+      "R_single": 1.3913424253614672,
+      "R_cohort_median": 0.94792167949492,
+      "buy_win_share": 0.5678391959798995
     },
     {
       "group": "index",
       "label": "ACWI gross",
-      "R_single": 1.2346956366199144,
-      "R_rolling_mean": 1.1232186237114874,
-      "buy_win_share": 0.4
+      "R_single": 1.6287957753787377,
+      "R_cohort_median": 1.0067931830176555,
+      "buy_win_share": 0.49246231155778897
     },
     {
       "group": "index",
       "label": "FTSE 100",
-      "R_single": 0.6235037742391917,
-      "R_rolling_mean": 0.9053206991986675,
-      "buy_win_share": 0.7294117647058823
+      "R_single": 0.7700784253259365,
+      "R_cohort_median": 0.7578645606262692,
+      "buy_win_share": 0.6381909547738693
     }
   ],
   "rar_hist": {
-    "n": 136,
-    "mean_stocks": 0.017628701092017703,
-    "min_stocks": 0.0024843724770600784,
-    "max_stocks": 0.03455406786667433,
-    "mean_gilts": -0.005691956760961523,
-    "mean_actual": 0.03952918292786509,
-    "buy_right_stocks": 120
+    "n": 138,
+    "mean_stocks": 0.034793277030464656,
+    "min_stocks": 0.01778157815716813,
+    "max_stocks": 0.05397122778018455,
+    "mean_gilts": 0.008960406718893294,
+    "mean_actual": 0.03933461976686802,
+    "buy_right_stocks": 90
   },
   "rar_fwd": {
-    "price": 317737.60132427246,
-    "rent": 1279.5385955741417,
-    "rate": 0.0408,
-    "pr": 20.693501184939535,
-    "gilt": 0.04820700000000001,
-    "sdlt": 886.880066213623,
-    "gross_yield": 0.048324350290601725,
-    "rar_stocks": 0.009620947825264627,
-    "rar_gilts": 0.0064869936605181,
+    "price": 319488.0374629726,
+    "rent": 1286.075971423593,
+    "rate": 0.049400000000000006,
+    "pr": 20.701734355897763,
+    "gilt": 0.049416,
+    "sdlt": 974.4018731486315,
+    "gross_yield": 0.0483051314835903,
+    "rar_stocks": 0.017884613144440047,
+    "rar_gilts": 0.014995755826547583,
+    "rar_stocks_realised": 0.0338299463960728,
     "equity_opp": 0.0588,
+    "equity_realised": 0.10393734380386488,
     "rent_growth": 0.03
   },
   "rar_fwd_sens": [
     {
       "horizon_years": 3,
-      "rar_stocks_pct": 2.1630560161129426,
-      "rar_gilts_pct": 1.9945351342957183
+      "rar_stocks_pct": 2.7694540279370456,
+      "rar_stocks_realised_pct": 3.5322878164932208,
+      "rar_gilts_pct": 2.616815783377416
     },
     {
       "horizon_years": 5,
-      "rar_stocks_pct": 1.5772522553918886,
-      "rar_gilts_pct": 1.3732854921900524
+      "rar_stocks_pct": 2.270594654476928,
+      "rar_stocks_realised_pct": 3.237340807558652,
+      "rar_gilts_pct": 2.08361408522505
     },
     {
       "horizon_years": 7,
-      "rar_stocks_pct": 1.2753212722572727,
-      "rar_gilts_pct": 1.031615214238234
+      "rar_stocks_pct": 2.025010503574502,
+      "rar_stocks_realised_pct": 3.221613859287432,
+      "rar_gilts_pct": 1.8003277347168962
     },
     {
       "horizon_years": 10,
-      "rar_stocks_pct": 0.9620947825264627,
-      "rar_gilts_pct": 0.64869936605181
+      "rar_stocks_pct": 1.7884613144440047,
+      "rar_stocks_realised_pct": 3.38299463960728,
+      "rar_gilts_pct": 1.4995755826547583
     }
   ],
   "regional": [
     {
       "region": "North East",
       "pop": 2.65,
-      "price": 163190.0,
-      "rent": 776.0,
-      "pr_ratio": 17.524699312714777,
+      "price": 165550.0,
+      "rent": 781.0,
+      "pr_ratio": 17.664319248826292,
       "sdlt": 0.0,
-      "R_single": 1.3642355562329296,
-      "buy_win": 0.6705882352941176,
-      "Rbar": 0.8564853226757158,
-      "R_min": 0.3866653128416812,
-      "R_max": 1.907624701807791,
-      "rar_stocks_pct": -0.5875862469691472,
-      "rar_gilts_pct": -0.8540929994070283,
-      "hist_rar_pct": 1.1740664117806814
+      "R_single": 2.126230991192849,
+      "buy_win": 0.38190954773869346,
+      "R_median": 1.1117426971070703,
+      "gap_mean_gbp": 5389.616994857041,
+      "gap_median_gbp": 6309.193642906495,
+      "negative_equity_cohorts": 11,
+      "rar_stocks_pct": 1.165739547872377,
+      "rar_stocks_realised_pct": 2.0352176567836744,
+      "rar_gilts_pct": 0.9986339788918821,
+      "appreciation_pct": 2.1275704455749667
     },
     {
       "region": "North West",
       "pop": 7.52,
-      "price": 216138.0,
-      "rent": 951.0,
-      "pr_ratio": 18.939537329127234,
+      "price": 219922.0,
+      "rent": 961.0,
+      "pr_ratio": 19.07058619493583,
       "sdlt": 0.0,
-      "R_single": 0.8479898660997321,
-      "buy_win": 0.7294117647058823,
-      "Rbar": 0.6945840953537217,
-      "R_min": 0.29343346094801215,
-      "R_max": 1.403885520397769,
-      "rar_stocks_pct": 0.16982405022795188,
-      "rar_gilts_pct": -0.11921677102810543,
-      "hist_rar_pct": 0.7660273420132026
+      "R_single": 1.3801142769294275,
+      "buy_win": 0.5527638190954773,
+      "R_median": 0.7734950915871471,
+      "gap_mean_gbp": -5015.203685850705,
+      "gap_median_gbp": -7126.67983737927,
+      "negative_equity_cohorts": 5,
+      "rar_stocks_pct": 1.6866784830676083,
+      "rar_stocks_realised_pct": 2.598356318581028,
+      "rar_gilts_pct": 1.510886116911956,
+      "appreciation_pct": 3.257826782536566
     },
     {
       "region": "Yorkshire and The Humber",
       "pop": 5.56,
-      "price": 207974.0,
-      "rent": 855.0,
-      "pr_ratio": 20.27037037037037,
+      "price": 207948.0,
+      "rent": 862.0,
+      "pr_ratio": 20.103248259860788,
       "sdlt": 0.0,
-      "R_single": 1.0283996472806725,
-      "buy_win": 0.6705882352941176,
-      "Rbar": 0.8122484632630057,
-      "R_min": 0.3963171489356924,
-      "R_max": 1.4777708001230998,
-      "rar_stocks_pct": 0.7484624461752802,
-      "rar_gilts_pct": 0.44317952806679606,
-      "hist_rar_pct": 1.2394619824258186
+      "R_single": 1.6491700592213303,
+      "buy_win": 0.5175879396984925,
+      "R_median": 0.9333672272563016,
+      "gap_mean_gbp": -777.813477529971,
+      "gap_median_gbp": -2923.4680251356767,
+      "negative_equity_cohorts": 0,
+      "rar_stocks_pct": 2.0171256022661685,
+      "rar_stocks_realised_pct": 2.955129754651622,
+      "rar_gilts_pct": 1.835907200375858,
+      "appreciation_pct": 2.9342229515795903
     },
     {
       "region": "West Midlands",
       "pop": 6.11,
-      "price": 234635.0,
-      "rent": 964.0,
-      "pr_ratio": 20.28310857538036,
+      "price": 234731.0,
+      "rent": 971.0,
+      "pr_ratio": 20.145125300377618,
       "sdlt": 0.0,
-      "R_single": 1.1033228975528246,
-      "buy_win": 0.6470588235294118,
-      "Rbar": 0.7880903888754096,
-      "R_min": 0.35591973244657454,
-      "R_max": 1.7164508175651667,
-      "rar_stocks_pct": 0.753496003494242,
-      "rar_gilts_pct": 0.44807530716651944,
-      "hist_rar_pct": 0.9864189863706389
+      "R_single": 1.725548354755216,
+      "buy_win": 0.6331658291457286,
+      "R_median": 0.8123958556983066,
+      "gap_mean_gbp": -6211.486625322382,
+      "gap_median_gbp": -12248.561204456746,
+      "negative_equity_cohorts": 0,
+      "rar_stocks_pct": 2.0297247107288046,
+      "rar_stocks_realised_pct": 2.9687259563908164,
+      "rar_gilts_pct": 1.8483007002054246,
+      "appreciation_pct": 3.0035885723791234
     },
     {
       "region": "South West",
       "pop": 5.8,
-      "price": 302618.0,
-      "rent": 1231.0,
-      "pr_ratio": 20.485919306796642,
-      "sdlt": 130.9,
-      "R_single": 1.4795309908892873,
-      "buy_win": 0.5882352941176471,
-      "Rbar": 1.1636604621465654,
-      "R_min": 0.6803185824004981,
-      "R_max": 2.956924471965388,
-      "rar_stocks_pct": 0.8404536547314911,
-      "rar_gilts_pct": 0.5322991306521125,
-      "hist_rar_pct": 2.2716473810680644
-    },
-    {
-      "region": "London",
-      "pop": 8.87,
-      "price": 552655.0,
-      "rent": 2290.0,
-      "pr_ratio": 20.111171761280932,
-      "sdlt": 17632.75,
-      "R_single": 0.6338592888113241,
-      "buy_win": 0.38823529411764707,
-      "Rbar": 1.3698068969095585,
-      "R_min": 0.5970882118648358,
-      "R_max": 3.496115435209358,
-      "rar_stocks_pct": 1.2650015671549724,
-      "rar_gilts_pct": 0.9200880838582167,
-      "hist_rar_pct": 1.6648192860165345
+      "price": 304562.0,
+      "rent": 1237.0,
+      "pr_ratio": 20.517515494475884,
+      "sdlt": 228.10000000000002,
+      "R_single": 2.1772032667695536,
+      "buy_win": 0.4824120603015075,
+      "R_median": 1.0111707772472593,
+      "gap_mean_gbp": 3506.197173147226,
+      "gap_median_gbp": 700.5552992132216,
+      "negative_equity_cohorts": 0,
+      "rar_stocks_pct": 2.1586504955510475,
+      "rar_stocks_realised_pct": 3.109992607430402,
+      "rar_gilts_pct": 1.9747224756652932,
+      "appreciation_pct": 2.768098684672804
     },
     {
       "region": "East Midlands",
       "pop": 5.02,
-      "price": 241620.0,
-      "rent": 911.0,
-      "pr_ratio": 22.102085620197585,
+      "price": 240457.0,
+      "rent": 918.0,
+      "pr_ratio": 21.827977487291214,
       "sdlt": 0.0,
-      "R_single": 1.4819207376237526,
-      "buy_win": 0.6,
-      "Rbar": 1.0158961023363384,
-      "R_min": 0.5778182611494651,
-      "R_max": 1.9818508342923096,
-      "rar_stocks_pct": 1.3932065637539337,
-      "rar_gilts_pct": 1.0707461010528376,
-      "hist_rar_pct": 2.3353146661140523
+      "R_single": 2.1863619662390943,
+      "buy_win": 0.5628140703517588,
+      "R_median": 0.952318152523662,
+      "gap_mean_gbp": 1188.4456459938797,
+      "gap_median_gbp": -3326.8305938136837,
+      "negative_equity_cohorts": 0,
+      "rar_stocks_pct": 2.4916266292592923,
+      "rar_stocks_realised_pct": 3.466850988122712,
+      "rar_gilts_pct": 2.302728200330671,
+      "appreciation_pct": 2.9034341050788948
     },
     {
       "region": "East of England",
       "pop": 6.4,
-      "price": 336300.0,
-      "rent": 1278.0,
-      "pr_ratio": 21.928794992175273,
-      "sdlt": 1815.0,
-      "R_single": 1.3155025079918905,
-      "buy_win": 0.32941176470588235,
-      "Rbar": 1.1817272276316149,
-      "R_min": 0.6544900033797779,
-      "R_max": 2.731589159583425,
-      "rar_stocks_pct": 1.4328270904910738,
-      "rar_gilts_pct": 1.1050475748607285,
-      "hist_rar_pct": 2.273251771897394
+      "price": 338707.0,
+      "rent": 1281.0,
+      "pr_ratio": 22.034022898776996,
+      "sdlt": 1935.3500000000001,
+      "R_single": 1.9368512762470704,
+      "buy_win": 0.48743718592964824,
+      "R_median": 1.0113622086359912,
+      "gap_mean_gbp": 1052.584202231792,
+      "gap_median_gbp": 1089.0379114899988,
+      "negative_equity_cohorts": 0,
+      "rar_stocks_pct": 2.6882303666914877,
+      "rar_stocks_realised_pct": 3.6948286975815225,
+      "rar_gilts_pct": 2.493158327161724,
+      "appreciation_pct": 3.174026956577891
+    },
+    {
+      "region": "London",
+      "pop": 8.87,
+      "price": 553870.0,
+      "rent": 2302.0,
+      "pr_ratio": 20.050318563567913,
+      "sdlt": 17693.5,
+      "R_single": 1.0952535944386348,
+      "buy_win": 0.4271356783919598,
+      "R_median": 1.1168254695780702,
+      "gap_mean_gbp": -546.6812405858362,
+      "gap_median_gbp": 16223.12391400963,
+      "negative_equity_cohorts": 0,
+      "rar_stocks_pct": 2.8207425880634425,
+      "rar_stocks_realised_pct": 3.9110406534008955,
+      "rar_gilts_pct": 2.609739889108046,
+      "appreciation_pct": 3.807022459032372
     },
     {
       "region": "South East",
       "pop": 9.46,
-      "price": 376819.0,
-      "rent": 1414.0,
-      "pr_ratio": 22.20762611975483,
-      "sdlt": 3840.9500000000003,
-      "R_single": 1.3675960175312412,
-      "buy_win": 0.25882352941176473,
-      "Rbar": 1.3228147578179743,
-      "R_min": 0.7559606594625322,
-      "R_max": 3.187924179046356,
-      "rar_stocks_pct": 1.6024399992524185,
-      "rar_gilts_pct": 1.266614445704592,
-      "hist_rar_pct": 2.547723282301964
+      "price": 380380.0,
+      "rent": 1415.0,
+      "pr_ratio": 22.401648998822143,
+      "sdlt": 4019.0,
+      "R_single": 1.999000447020681,
+      "buy_win": 0.41708542713567837,
+      "R_median": 1.0797796175682728,
+      "gap_mean_gbp": 5916.851632222295,
+      "gap_median_gbp": 6575.300221169324,
+      "negative_equity_cohorts": 0,
+      "rar_stocks_pct": 2.898852491544193,
+      "rar_stocks_realised_pct": 3.935075656399894,
+      "rar_gilts_pct": 2.6979093820813063,
+      "appreciation_pct": 3.117577918356873
     }
   ],
   "regional_popwtd": {
-    "R_single": 1.1404572413102412,
-    "buy_win": 0.5117329315416705,
-    "Rbar": 1.0611672833157058,
-    "rar_stocks_pct": 0.9740991968209286,
-    "rar_gilts_pct": 0.6572591141425829,
-    "hist_rar_pct": 1.7443158272163117,
-    "pr_ratio": 20.632238245456374
+    "R_single": 1.7485636045172777,
+    "buy_win": 0.49472926577477033,
+    "R_median": 0.978483439000825,
+    "gap_median_gbp": 1262.717591830985,
+    "rar_stocks_pct": 2.336048310711224,
+    "rar_stocks_realised_pct": 3.31952609145879,
+    "rar_gilts_pct": 2.1458254006763813,
+    "appreciation_pct": 3.119144193996124,
+    "pr_ratio": 20.638503897882558
   }
 }

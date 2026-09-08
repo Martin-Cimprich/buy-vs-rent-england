@@ -5,49 +5,75 @@
 \section{The required appreciation rate}
 \label{sec:rar}
 
-The cohort analysis looks backwards. To connect it to the decision facing a buyer at any point in time, I define the \emph{required appreciation rate} (RAR): the constant annual house-price growth at which buying exactly matches renting-and-investing over a given horizon, holding all other inputs at their realised (ex post) or assumed (ex ante) paths. The RAR inverts the user-cost equilibrium of \textcite{poterba1984} and \textcite{himmelberg2005}: rather than assuming an expected capital gain and asking whether prices are fair, it solves for the break-even capital gain and lets the reader supply their own expectation. If prices subsequently grow faster than the RAR, the buyer wins; slower, and the renter wins.
+The cohort analysis of Section~\ref{sec:results} looks backwards. It tells a buyer what would have happened had they bought at some past date, which is not the question they face. This section turns the same model forwards.
 
-\subsection{Historical RAR}
+Define the \emph{required appreciation rate} (RAR) as the constant annual house-price growth at which buying exactly matches renting-and-investing over a given holding period, with every other input held at its assumed path. It is the user-cost equilibrium of \textcite{poterba1984} and \textcite{himmelberg2005} solved for the one term those authors have to assume. Rather than positing an expected capital gain and pronouncing prices fair or unfair, the RAR inverts the question: it reports the growth rate buying needs, and leaves the reader to supply their own expectation. If prices grow faster than the RAR the buyer wins; slower, and the renter wins.
 
-For each entry month from January 2005 to April 2016 I compute the RAR over a fixed ten-year hold, using the realised paths of mortgage rates, rents and equity returns, and compare it with the appreciation actually delivered. Figure~\ref{fig:rar_hist} plots both.
+The RAR is a threshold, so it requires no view on house prices. The one judgement it does need is the return the renter's portfolio earns instead, and since that judgement drives the answer, this section reports it under two openly different assumptions.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{fig6_rar}
-  \caption{Required versus realised ten-year house-price appreciation, by month of purchase, 2005:1--2016:4. The required rate is the constant annual appreciation at which buying exactly matches renting-and-investing over the subsequent ten years, computed against the realised paths of mortgage rates and rents and against either global equity returns or the ten-year gilt yield prevailing at entry. Buying was ex-post the better choice whenever the realised line lies above the corresponding required line.}
-  \label{fig:rar_hist}
-\end{figure}
+\subsection{Assumptions}
+\label{sec:rar_assumptions}
 
-Measured against the equity portfolio, the mean RAR across the 136 entry months is 1.8\% per year (never above 3.5\%), while the representative dwelling delivered 4.0\% on average; buying was therefore, ex post, the better ten-year call in 88\% of entry months. Measured against gilts the mean RAR is slightly negative ($-0.6$\%): house prices could have drifted down and buying would still have beaten a bond-earning renter in most months. The apparent tension with the near-even cohort split of Section~\ref{sec:rolling} is informative rather than contradictory: the rolling cohorts are all evaluated in April 2026 and are therefore weighted towards the recent equity-strong regime, whereas fixed ten-year holds end throughout 2015--2026. Horizon and end-date, not methodology, separate the two views.
+The calculation uses the last month of the sample, June 2026: a representative English dwelling priced at \gbp{319{,}488} let at \gbp{1{,}286} per month, a price-to-rent ratio of 20.7 and a gross rental yield of 4.83\%. First-time-buyer stamp duty on that price is \gbp{974}.
 
-\subsection{Forward-looking RAR}
+Every parameter of the baseline in Table~\ref{tab:assumptions} carries over unchanged: a 10\% deposit, a 30-year term, maintenance and depreciation at 1.5\% of value per year, purchase costs of 1.2\% and selling costs of 1.8\%. Two inputs are worth stating explicitly.
 
-At end-of-sample conditions --- price \gbp{317{,}738}, rent \gbp{1{,}280} per month (price-to-rent 20.7), effective mortgage rate 4.1\%, first-time-buyer stamp duty of \gbp{887} --- I compute the RAR under an expected equity return of 6.0\% nominal less the 0.12\% fee (5.9\% net). The figure is deliberately conservative relative to the realised 10.2\%: it combines a CAPE-implied long-run real return on global equities of roughly 3\% --- a real return on the same global portfolio, hence currency-invariant --- with expected inflation of roughly 3\%, the same assumption underlying the 3\% rent-growth path. The current 4.8\% gilt yield provides the conservative alternative.
+\emph{The mortgage rate} is 4.94\%, the June 2026 quoted rate on a five-year fix at 90\% loan-to-value (the same series the historical analysis uses, at its latest observation). It is held constant across the horizon. This is a real assumption and it cuts against the buyer at long horizons: a borrower refixing every five years is exposed to rates that may be higher or lower, and holding today's rate fixed for ten years understates that uncertainty in both directions. Rent is assumed to grow at 3\% per year, against the 2.9\% the representative dwelling's rent actually delivered over the sample.
+
+\emph{The renter's return} is the input that matters most, and there is no single defensible value for it. The paper therefore reports two.
+
+The \textbf{cautious} figure is 5.9\% nominal: a CAPE-implied long-run real return on global equities of roughly 3\%, plus expected inflation of roughly 3\%, less the 0.12\% fund fee. The \textbf{realised} figure is 10.4\%, the return the renter's portfolio actually earned over 2005--2026 net of that fee. They are two coherent views rather than bounds on a distribution, one anchored on current valuations and one on recent experience. Reporting only the first flatters the buyer; only the second flatters the renter. The 4.94\% ten-year gilt yield provides a third, lower-risk comparator.
+
+\subsection{Results}
 
 \begin{table}[H]
   \centering
-  \caption{Forward-looking required appreciation rate, April 2026 conditions}
+  \caption{Forward-looking required appreciation rate, June 2026 conditions}
   \label{tab:rar_horizon}
   \begin{threeparttable}
-  \begin{tabular}{@{}rrr@{}}
+  \begin{tabular}{@{}rrrr@{}}
     \toprule
-    \textbf{Horizon} & \textbf{vs.\ equities (5.9\%)} & \textbf{vs.\ gilts (4.8\%)} \\
+    & \multicolumn{2}{c}{\textbf{vs.\ global equities}} & \\
+    \cmidrule(lr){2-3}
+    \textbf{Horizon} & \textbf{at 5.9\% (cautious)} & \textbf{at 10.4\% (realised)} & \textbf{vs.\ gilts (4.9\%)} \\
     \midrule
-    3 years  & 2.2\% & 2.0\% \\
-    5 years  & 1.6\% & 1.4\% \\
-    7 years  & 1.3\% & 1.0\% \\
-    10 years & 1.0\% & 0.6\% \\
+    3 years  & 2.77\% & 3.53\% & 2.62\% \\
+    5 years  & 2.27\% & 3.24\% & 2.08\% \\
+    7 years  & 2.03\% & 3.22\% & 1.80\% \\
+    10 years & 1.79\% & 3.38\% & 1.50\% \\
     \bottomrule
   \end{tabular}
   \begin{tablenotes}
     \small
-    \item \textit{Notes:} Constant annual house-price growth at which buying matches renting-and-investing, at April 2026 inputs with 3\% annual rent growth. Baseline parameters of Table~\ref{tab:assumptions}.
+    \item \textit{Notes:} Constant annual house-price growth at which buying exactly matches renting-and-investing, at June 2026 inputs with 3\% annual rent growth and the mortgage rate held at 4.94\%. Baseline parameters of Table~\ref{tab:assumptions}. For comparison, the representative English dwelling appreciated at 3.21\% per year over 2005--2026.
   \end{tablenotes}
   \end{threeparttable}
 \end{table}
 
-Over a ten-year hold, the representative dwelling needs to appreciate only 1.0\% per year to match the equity investor --- well below the 3.2\% it averaged over the sample and below most medium-term forecasts. The intuition is a user-cost identity. Renting costs the gross rental yield, 4.8\% of the property's value per year at current prices. Owning costs mortgage interest on the 90\% loan (about $4.1\% \times 0.9$), the opportunity cost of the 10\% deposit, and 1.5\% maintenance --- together roughly 5.8\% before appreciation. The 1-point gap is the appreciation buying needs; horizon effects (transaction-cost amortisation, mortgage paydown, rent growth against a nominally fixed payment schedule) account for the decline in the requirement as the hold lengthens.
+The two equity assumptions bracket the historical outcome. Over a five-year hold, the horizon of the headline result, buying needs 2.27\% annual appreciation to match a portfolio compounding at the cautious 5.9\%, comfortably below the 3.21\% the dwelling actually delivered. Against a portfolio compounding at the realised 10.4\%, it needs 3.24\%, which is the realised rate almost exactly. Whether buying looks attractive today therefore depends almost entirely on what one expects of global equities, and hardly at all on one's view of house prices.
+
+Figure~\ref{fig:rar_fwd} shows why the horizon matters. Under the cautious assumption the requirement falls throughout, from 2.77\% at three years to 1.79\% at ten: transaction costs amortise, the mortgage amortises, and a rising rent is compared against a payment schedule fixed in nominal terms. Under the realised assumption a portfolio compounding at 10.4\% pulls away fast enough to offset those horizon effects, and the requirement is close to flat: 3.53\% at three years, 3.24\% at five, a minimum of 3.22\% at seven, then back up to 3.38\% at ten. Across the three-to-ten-year range the cautious requirement stays below the 3.2\% the dwelling actually delivered and the realised requirement stays above it, so the horizon moves the numbers without changing which assumption favours which side.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{fig6_rar}
+  \caption{Forward-looking required appreciation rate by holding period, at June 2026 conditions. Each line gives the constant annual house-price growth at which buying exactly matches renting-and-investing, against a global equity portfolio earning the CAPE-implied 5.9\% or the 10.4\% realised over 2005--2026, or against the 4.9\% ten-year gilt yield. The dotted reference is the 3.2\% per year the representative English dwelling actually appreciated over the sample. Sources: HM Land Registry UK HPI; ONS PIPR; Bank of England; MSCI.}
+  \label{fig:rar_fwd}
+\end{figure}
+
+The five-year requirement of 2.27\% has a simple user-cost reading. Renting costs the gross rental yield, 4.83\% of the property's value per year. Owning costs mortgage interest on the 90\% loan (about $4.94\% \times 0.9$), the opportunity cost of the 10\% deposit, and 1.5\% maintenance, together roughly 7.0\% before any appreciation, against which the buyer sets the rent they no longer pay. The residual is the growth buying needs, and the horizon effects above account for its decline.
 
 \subsection{Regional break-evens}
 
-Applying the same calculation region by region --- using each region's April 2026 price and rent, the national mortgage rate, and region-specific stamp duty --- the ten-year requirement ranges from $-0.6$\% in the North East, where prices could fall and buying would still break even, to 1.6\% in the South East; Figure~\ref{fig:rar_map} in the appendix maps the gradient. In every region the break-even lies below the region's own 2005--2026 average appreciation.
+The same calculation region by region, with each region's June 2026 price and rent, the national mortgage rate and region-specific stamp duty, gives a five-year requirement ranging from 1.17\% in the North East to 2.90\% in the South East under the cautious assumption, and from 2.04\% to 3.94\% under the realised one. Figure~\ref{fig:rar_map} maps the gradient.
+
+Comparing each region's break-even with its own realised appreciation is where the choice of equity assumption does its work. Under the cautious assumption every one of the nine regions' break-evens sits below what it actually delivered, by margins of 0.2 to 1.6 percentage points. Under the realised assumption the ordering reverses in six: Yorkshire and the Humber, the South West, the East Midlands, the East of England, London and the South East would all have needed more appreciation than they produced. Only the three regions with the lowest price-to-rent ratios (the North East, the North West and the West Midlands) clear the bar on both assumptions.
+
+The gradient tracks the price-to-rent ratio rather than the price level, with one exception. London has the third-lowest ratio of the nine at 20.1, but the second-\emph{highest} break-even at 2.82\%, because at \gbp{553{,}870} the average London dwelling sits above the \gbp{500{,}000} ceiling at which first-time-buyer stamp-duty relief is withdrawn altogether. That single threshold costs a London first-time buyer \gbp{17{,}694} against nothing at all in five of the nine regions, which moves the region three places up the ranking. What makes London expensive to enter is the stamp duty rather than the valuation.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth]{fig8_regional_map}
+  \caption{Forward-looking five-year required appreciation rate against global equities at the cautious 5.9\% assumption, by English region, at June 2026 conditions (per cent per year). Darker shading indicates a higher break-even, that is, a market in which buying is harder to justify. Values are those reported in Table~\ref{tab:regional}.}
+  \label{fig:rar_map}
+\end{figure}

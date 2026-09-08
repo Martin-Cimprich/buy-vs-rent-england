@@ -1,0 +1,131 @@
+{
+  "generated_from": "code/uk_horse_race_v2.py",
+  "window": {
+    "start": "2005-01-31",
+    "end": "2026-06-30"
+  },
+  "baseline": {
+    "deposit_share": 0.1,
+    "amort_years": 30,
+    "maintenance_pct_of_value": 0.015,
+    "depreciation_drag_annual": 0.0,
+    "rate_fixation_years": 5,
+    "purchase_costs_pct": 0.012,
+    "selling_costs_pct": 0.018,
+    "include_sdlt": true
+  },
+  "rent_growth_annual": 0.03,
+  "equity_opportunity_annual": 0.0588,
+  "months": 258,
+  "sdlt": [
+    {
+      "price": 153030,
+      "date": "2008-02-28",
+      "expected": 1530.3
+    },
+    {
+      "price": 153030,
+      "date": "2008-10-31",
+      "expected": 0.0
+    },
+    {
+      "price": 180000,
+      "date": "2009-06-30",
+      "expected": 1800.0
+    },
+    {
+      "price": 200000,
+      "date": "2011-06-30",
+      "expected": 0.0
+    },
+    {
+      "price": 220000,
+      "date": "2013-06-30",
+      "expected": 2200.0
+    },
+    {
+      "price": 220000,
+      "date": "2015-06-30",
+      "expected": 1900.0
+    },
+    {
+      "price": 290000,
+      "date": "2019-06-30",
+      "expected": 0.0
+    },
+    {
+      "price": 310000,
+      "date": "2022-02-28",
+      "expected": 500.0
+    },
+    {
+      "price": 310000,
+      "date": "2023-12-31",
+      "expected": 0.0
+    },
+    {
+      "price": 310000,
+      "date": "2025-06-30",
+      "expected": 500.0
+    },
+    {
+      "price": 560000,
+      "date": "2019-06-30",
+      "expected": 18000.0
+    },
+    {
+      "price": 560000,
+      "date": "2020-10-31",
+      "expected": 3000.0
+    },
+    {
+      "price": 100000,
+      "date": "2005-02-28",
+      "expected": 1000.0
+    },
+    {
+      "price": 100000,
+      "date": "2005-06-30",
+      "expected": 0.0
+    },
+    {
+      "price": 450000,
+      "date": "2023-06-30",
+      "expected": 1250.0
+    }
+  ],
+  "single": {
+    "R": 1.444372,
+    "nw_buy": 254658.35,
+    "nw_rent": 367821.38,
+    "sdlt": 1623.12,
+    "purchase_price": 162311.86
+  },
+  "cohorts_5y": {
+    "n": 199,
+    "buy_wins": 102,
+    "R_median": 0.980135,
+    "R_mean": 1.220301,
+    "R_min": 0.639077,
+    "R_max": 4.165338,
+    "gap_median_gbp": -993.62,
+    "nw_buy_min_gbp": 15769.41
+  },
+  "cohorts_10y": {
+    "n": 139,
+    "buy_wins": 85,
+    "R_median": 0.891471
+  },
+  "forward": {
+    "price_now": 319488.04,
+    "rent_now": 1286.08,
+    "rate_now": 0.0494,
+    "sdlt_now": 974.4,
+    "rar": {
+      "3": 0.027695,
+      "5": 0.022706,
+      "7": 0.02025,
+      "10": 0.017885
+    }
+  }
+}

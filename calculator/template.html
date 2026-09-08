@@ -109,15 +109,15 @@
           </div>
           <div class="two">
             <div class="field"><label>Mortgage term (years)</label><input id="f_term" type="number" step="1" value="30"></div>
-            <div class="field"><label>Holding period (years)</label><input id="f_hor" type="number" step="1" value="10"></div>
+            <div class="field"><label>Holding period (years)</label><input id="f_hor" type="number" step="1" value="5"></div>
           </div>
           <h3 style="margin-top:12px">Assumptions</h3>
           <div class="two">
             <div class="field"><label>Maintenance (%/yr of value)</label><input id="f_maint" type="number" step="0.1" value="1.5"></div>
-            <div class="field"><label>Purchase costs (%)</label><input id="f_pc" type="number" step="0.1" value="1.5"></div>
+            <div class="field"><label>Purchase costs (%)</label><input id="f_pc" type="number" step="0.1" value="1.2"></div>
           </div>
           <div class="two">
-            <div class="field"><label>Selling costs (%)</label><input id="f_sc" type="number" step="0.1" value="2.0"></div>
+            <div class="field"><label>Selling costs (%)</label><input id="f_sc" type="number" step="0.1" value="1.8"></div>
             <div class="field"><label>House-price growth (%/yr)</label><input id="f_g" type="number" step="0.1" value="3.0"></div>
           </div>
           <div class="two">
@@ -157,13 +157,13 @@
           </div>
           <div class="two">
             <div class="field"><label>Maintenance (%/yr)</label><input id="b_maint" type="number" step="0.1" value="1.5"></div>
-            <div class="field"><label>Purchase costs (%)</label><input id="b_pc" type="number" step="0.1" value="1.5"></div>
+            <div class="field"><label>Purchase costs (%)</label><input id="b_pc" type="number" step="0.1" value="1.2"></div>
           </div>
           <div class="two">
-            <div class="field"><label>Selling costs (%)</label><input id="b_sc" type="number" step="0.1" value="2.0"></div>
-            <div class="field"><label>&nbsp;</label><span></span></div>
+            <div class="field"><label>Selling costs (%)</label><input id="b_sc" type="number" step="0.1" value="1.8"></div>
+            <div class="field"><label>Rate type</label><select id="b_fix"><option value="5" selected>Five-year fix (baseline)</option><option value="2">Two-year fix</option><option value="0">Floating</option></select></div>
           </div>
-          <div class="note">Uses the actual month-by-month history: regional house prices (UK HPI), regional rents (ONS), the Bank of England effective mortgage rate (variable, recast monthly), period-accurate first-time-buyer stamp duty, and global equity returns (MSCI ACWI in GBP, net of tax and a 0.12% fund fee). Both strategies run to April 2026.</div>
+          <div class="note">Uses the actual month-by-month history: regional house prices (UK HPI), regional rents (ONS), the quoted five-year fixed mortgage rate at the borrower&rsquo;s current loan-to-value (Bank of England, 75/90/95% bands), period-accurate first-time-buyer stamp duty, and global equity returns (MSCI ACWI in GBP, net of tax and a 0.12% fund fee). Both strategies run to June 2026. The cohort strip below holds every entry month for exactly five years, which is roughly how long a first-time buyer keeps a first home.</div>
         </div>
       </div>
       <div>
@@ -196,7 +196,7 @@
       <ul>
         <li><strong>House prices:</strong> UK House Price Index (HM Land Registry), average price of all dwellings, by region.</li>
         <li><strong>Rents:</strong> ONS Price Index of Private Rents (average rent levels, by region; historical series back to 2005).</li>
-        <li><strong>Mortgage rate:</strong> Bank of England effective rate on new mortgage advances (what borrowers actually paid).</li>
+        <li><strong>Mortgage rate:</strong> Bank of England quoted rates on five-year fixed mortgages at 75%, 90% and 95% loan-to-value. The baseline buyer starts at 90% and is repriced at each refix by the loan-to-value they have amortised down to, so they do not pay the high-loan-to-value premium for thirty years. The effective rate on all new advances is available as the floating option.</li>
         <li><strong>Investment returns:</strong> MSCI ACWI global equity index in GBP, net total return, minus a 0.12% p.a. fund fee.</li>
         <li><strong>Stamp duty:</strong> the exact England first-time-buyer schedule in force in each month since 2005.</li>
       </ul>
@@ -207,8 +207,8 @@
         <tr><th>Parameter</th><th>Default</th><th>Why</th></tr>
         <tr><td>Deposit</td><td>10%</td><td>Typical first-time-buyer loan-to-value</td></tr>
         <tr><td>Mortgage term</td><td>30 years</td><td>Modern first-time-buyer norm (UK Finance)</td></tr>
-        <tr><td>Maintenance &amp; depreciation</td><td>1.5% of value/yr</td><td>Between measured cash spending (~1.2%) and the user-cost literature (2%+)</td></tr>
-        <tr><td>Purchase / selling costs</td><td>1.5% / 2%</td><td>Conveyancing, survey, fees / agent commission incl. VAT</td></tr>
+        <tr><td>Maintenance &amp; depreciation</td><td>1.5% of value/yr</td><td>ONS consumption of fixed capital on dwellings (1.20% of market value on average, 1.28% in 2024) plus ~0.35% cash maintenance and insurance. UK evidence supports 1.2&ndash;1.8%; figures of 2&ndash;3% come from studies of structure value and do not transfer, because land is 69.9% of UK residential value</td></tr>
+        <tr><td>Purchase / selling costs</td><td>1.2% / 1.8%</td><td>Conveyancing, survey, fees / agent commission incl. VAT</td></tr>
         <tr><td>Investment return</td><td>5.9%/yr</td><td>Conservative long-run global equity assumption, net of fees</td></tr>
         <tr><td>Rent growth</td><td>3%/yr</td><td>England average, 2005–2026</td></tr>
       </table>
@@ -235,7 +235,7 @@
 <footer>
   <div class="wrap">
     <strong>Martin Cimprich</strong> · PhD student, Queen Mary University of London ·
-    Data to April 2026 · This tool is for education only and is not financial advice.
+    Data to June 2026 · This tool is for education only and is not financial advice.
     Sources: HM Land Registry UK HPI, ONS PIPR, Bank of England, MSCI. Contains public sector
     information licensed under the Open Government Licence v3.0.
   </div>
@@ -259,10 +259,19 @@ const REGIONS = Object.keys(CALC_DATA.series);
 const N = CALC_DATA.months.length;
 const NOW_YM = CALC_DATA.ym[N - 1];
 
-function seriesData(region) {
+function seriesData(region, prefix) {
   const s = CALC_DATA.series[region];
-  return { prices: s.prices, rents: s.rents, rates: CALC_DATA.rates,
-           returns: CALC_DATA.returns, ym: CALC_DATA.ym };
+  // A fixed-rate borrower is repriced at each refix by their current
+  // loan-to-value, so the engine gets all three published bands. A floating
+  // borrower pays the Bank of England effective rate on new advances instead,
+  // and gets no bands.
+  const floating = prefix && (+$(prefix + '_fix').value) === 0;
+  return {
+    prices: s.prices, rents: s.rents,
+    rates: floating ? CALC_DATA.ratesFloating : CALC_DATA.rates,
+    bands: floating ? null : CALC_DATA.bands,
+    returns: CALC_DATA.returns, ym: CALC_DATA.ym,
+  };
 }
 function readParams(prefix) {
   return {
@@ -271,7 +280,17 @@ function readParams(prefix) {
     maintPct: +$(prefix + '_maint').value / 100,
     purchaseCostsPct: +$(prefix + '_pc').value / 100,
     sellingCostsPct: +$(prefix + '_sc').value / 100,
-    includeSdlt: true, fixationYears: null,
+    includeSdlt: true,
+    // The baseline is a five-year fix. 0 in the control means floating,
+    // which the engine represents as a null fixation (repriced monthly).
+    // Default to the baseline five-year fix. The forward tab has no control
+    // because it holds the rate constant across the horizon, so fixation
+    // cannot bite there.
+    fixationYears: (function () {
+      const el = $(prefix + '_fix');
+      if (!el) return 5;
+      return (+el.value) || null;
+    })(),
     rentGrowthAnnual: prefix === 'f' ? +$('f_rg').value / 100 : 0.03,
   };
 }
@@ -364,8 +383,10 @@ function initForward() {
 }
 function prefillForward() {
   const s = CALC_DATA.series[$('f_region').value];
-  $('f_price').value = s.prices[N - 1];
-  $('f_rent').value = s.rents[N - 1];
+  // The series carries pence so the engine matches the paper exactly; the
+  // form shows whole pounds, which is what a user wants to edit.
+  $('f_price').value = Math.round(s.prices[N - 1]);
+  $('f_rent').value = Math.round(s.rents[N - 1]);
   $('f_rate').value = (CALC_DATA.rates[N - 1] * 100).toFixed(2);
   updateForward();
 }
@@ -416,7 +437,7 @@ function initBacktest() {
 }
 function updateBacktest() {
   const p = readParams('b');
-  const data = seriesData($('b_region').value);
+  const data = seriesData($('b_region').value, 'b');
   const start = +$('b_start').value;
   const res = runPair(data, start, N, p);
   const R = res.R, buyWins = R < 1;
@@ -426,7 +447,7 @@ function updateBacktest() {
   v.querySelector('.v-title').textContent = buyWins
     ? 'Buying won this period' : 'Renting + investing won this period';
   v.querySelector('.v-sub').textContent = CALC_DATA.months[start] + ' to ' + CALC_DATA.months[N - 1] +
-    ' (' + Math.round(months / 12) + ' years): ' + gbp(Math.abs(res.buy.netWorth - res.rent.netWorth)) +
+    ' (' + Math.floor(months / 12) + ' years): ' + gbp(Math.abs(res.buy.netWorth - res.rent.netWorth)) +
     ' difference. Entry price ' + gbp(res.buy.purchasePrice) + ', stamp duty ' + gbp(res.buy.sdlt) + '.';
   $('b_nw_buy').textContent = gbp(res.buy.netWorth);
   $('b_nw_rent').textContent = gbp(res.rent.netWorth);
@@ -438,7 +459,11 @@ function updateBacktest() {
     {label: 'Buyer (home equity)', color: '#1F4E79', data: equity},
     {label: 'Renter (portfolio)', color: '#8B2E3D', data: res.rent.portfolioPath},
   ], v2 => '£' + Math.round(v2 / 1000) + 'k');
-  const cohorts = runRolling(data, N, p);
+  // Fixed five-year holds with monthly starts: the paper's headline design.
+  // runRolling() instead runs every cohort to the sample end, which gives
+  // cohorts of wildly unequal length and reads as a result about tenure
+  // when it is mostly a result about cohort length.
+  const cohorts = runRollingFixed(data, 60, p);
   drawCohorts($('b_cohorts'), cohorts, start);
 }
 

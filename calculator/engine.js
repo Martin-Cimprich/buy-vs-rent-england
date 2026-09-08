@@ -72,10 +72,29 @@ function monthlyPayment(balance, mRate, monthsRemaining) {
          (Math.pow(1 + mRate, monthsRemaining) - 1);
 }
 
+// Quoted fixed rate for the borrower's CURRENT loan-to-value. Mirrors
+// uk_horse_race_v2.rate_for_ltv: piecewise-linear between the three published
+// Bank of England bands, with the 75% rate used unchanged below 75%.
+//
+// This matters because a first-time buyer moves between bands. The loan
+// amortises and the dwelling usually appreciates, so a buyer who starts at 90%
+// LTV is typically well inside a cheaper band by their first refix. Charging
+// the origination premium at every refix overstates the cost of owning by up
+// to 4pp over 2010-2014, when the high-LTV premium peaked at +2.2pp.
+function rateForLtv(r75, r90, r95, ltv) {
+  if (ltv <= 0.75) return r75;
+  if (ltv <= 0.90) return r75 + (r90 - r75) * (ltv - 0.75) / 0.15;
+  if (ltv <= 0.95) return r90 + (r95 - r90) * (ltv - 0.90) / 0.05;
+  return r95;
+}
+
 // ---- Historical simulation on data arrays [startIdx, endIdx) ----
 // prices/rents: GBP levels; rates: annual decimals; returns: monthly decimals.
 // ymArr: [[y,m], ...] aligned with the arrays.
-function simulateBuy(prices, rates, ymArr, startIdx, endIdx, p) {
+// bands (optional): {r75, r90, r95} arrays of annual decimals, same length. When
+// present the rate is repriced at each refix by the borrower's current LTV,
+// which is the paper's baseline; when absent the single `rates` series is used.
+function simulateBuy(prices, rates, ymArr, startIdx, endIdx, p, bands) {
   const n = endIdx - startIdx;
   const purchasePrice = prices[startIdx];
   const [y0, m0] = ymArr[startIdx];
@@ -88,6 +107,7 @@ function simulateBuy(prices, rates, ymArr, startIdx, endIdx, p) {
 
   const fixationMonths = p.fixationYears ? p.fixationYears * 12 : 1;
   let fixedRate = null;
+  const useBands = !!(bands && bands.r75 && bands.r90 && bands.r95);
 
   const outflows = new Array(n);
   const homeValues = new Array(n);
@@ -102,7 +122,17 @@ function simulateBuy(prices, rates, ymArr, startIdx, endIdx, p) {
     maints[i] = maint;
 
     if (i % fixationMonths === 0 || fixedRate === null) {
-      fixedRate = rates[startIdx + i] + (p.ratePremium || 0);
+      if (useBands) {
+        // At origination the LTV is set by the deposit; at every refix it is
+        // the borrower's actual position.
+        const ltv = i === 0
+          ? (1 - p.depositShare)
+          : (homeValue > 0 ? balance / homeValue : 0);
+        fixedRate = rateForLtv(bands.r75[startIdx + i], bands.r90[startIdx + i],
+                               bands.r95[startIdx + i], ltv) + (p.ratePremium || 0);
+      } else {
+        fixedRate = rates[startIdx + i] + (p.ratePremium || 0);
+      }
     }
     const mr = monthlyRate(fixedRate);
     const pay = monthlyPayment(balance, mr, monthsRemaining);
@@ -141,13 +171,38 @@ function simulateRent(rents, returns, buy, startIdx, endIdx) {
     portfolio = Math.max(portfolio + delta, 0);   // matches Python floor-at-zero
     if (i < n - 1) portfolio *= (1 + returns[startIdx + i]);
   }
-  return { portfolioPath, rentPath, netWorth: portfolioPath[n - 1] };
+  // portfolioPath[i] is the position BEFORE month i's contribution, matching
+  // the Python engine's portfolio_values. Terminal wealth is the position
+  // AFTER the final contribution, with no further return applied, which is
+  // `portfolio` here. Returning portfolioPath[n-1] instead drops the last
+  // month's cash flow: on the November 2007 cohort that understated the
+  // renter by GBP 517 and moved R from 4.165 to 4.133.
+  return { portfolioPath, rentPath, netWorth: portfolio };
 }
 
 function runPair(data, startIdx, endIdx, p) {
-  const buy = simulateBuy(data.prices, data.rates, data.ym, startIdx, endIdx, p);
+  const buy = simulateBuy(data.prices, data.rates, data.ym, startIdx, endIdx, p, data.bands);
   const rent = simulateRent(data.rents, data.returns, buy, startIdx, endIdx);
   return { buy, rent, R: rent.netWorth / buy.netWorth };
+}
+
+// Fixed-horizon cohorts with monthly starts: the paper's headline design.
+// Mirrors uk_horse_race_v2.run_rolling_fixed. Every cohort holds for exactly
+// horizonMonths, so selling costs land where the buyer actually incurs them and
+// outcomes are not confounded with cohort length.
+function runRollingFixed(data, horizonMonths, p, stepMonths) {
+  const step = stepMonths || 1;
+  const total = data.prices.length;
+  const out = [];
+  for (let s = 0; s <= total - horizonMonths; s += step) {
+    const r = runPair(data, s, s + horizonMonths, p);
+    out.push({
+      startIdx: s, ym: data.ym[s], R: r.R,
+      nwBuy: r.buy.netWorth, nwRent: r.rent.netWorth,
+      winner: r.R > 1 ? 'RENT' : 'BUY',
+    });
+  }
+  return out;
 }
 
 // Rolling quarterly cohorts (Python: range(0, n-3, 3)), all ending at endIdx.
@@ -224,8 +279,8 @@ function requiredAppreciationRate(price, rentMonth, mortgageRate, oppAnnual, hor
 // Node export for tests; in the browser these are plain globals.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
-    sdltEnglandFTB, monthlyRate, monthlyPayment,
-    simulateBuy, simulateRent, runPair, runRolling,
+    sdltEnglandFTB, monthlyRate, monthlyPayment, rateForLtv,
+    simulateBuy, simulateRent, runPair, runRolling, runRollingFixed,
     forwardSim, requiredAppreciationRate,
   };
 }

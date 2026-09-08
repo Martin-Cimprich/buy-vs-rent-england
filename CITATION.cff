@@ -8,6 +8,15 @@ authors:
     affiliation: "Queen Mary University of London, School of Economics and Finance"
 repository-code: "https://github.com/Martin-Cimprich/buy-vs-rent-england"
 license: MIT
+version: "2.0.0"
+date-released: 2026-09-08
+abstract: >-
+  Replication package for a monthly, cash-flow-matched buy-versus-rent
+  comparison on official English data, January 2005 to June 2026. Includes the
+  simulation engine, the data pipeline, every result table, and a
+  dependency-free online calculator. This release moves the primary design to
+  199 fixed five-year entry cohorts and the mortgage baseline to a five-year fix
+  at 90% loan-to-value repriced by current loan-to-value.
 preferred-citation:
   type: report
   title: "Buy versus Rent in England: A Cash-Flow-Matched Horse Race for the First-Time Buyer, 2005-2026"

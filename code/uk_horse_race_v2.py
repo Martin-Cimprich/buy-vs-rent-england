@@ -171,10 +171,21 @@ def load_uk_housing(path: str,
     col_map = {'Rent_GBP': 'rent_gbp',
                'Purchase_Price_GBP': 'purchase_price_gbp',
                'Mortgage_Rate_pct': 'mortgage_rate_pct'}
-    for old, new in col_map.items():
+    for old in col_map:
         if old not in df.columns:
             raise ValueError(f"Expected column '{old}' not found. Available: {df.columns.tolist()}")
-    df = df.rename(columns=col_map)[list(col_map.values())].copy()
+
+    # Optional loan-to-value rate bands (v3 pipeline). When present, the buy
+    # simulation reprices at each refix according to the borrower's CURRENT LTV
+    # rather than charging the origination-LTV premium for the whole term.
+    opt_map = {'Rate_75LTV_pct': 'rate_75_pct',
+               'Rate_90LTV_pct': 'rate_90_pct',
+               'Rate_95LTV_pct': 'rate_95_pct',
+               'Bank_Rate_pct': 'bank_rate_pct',
+               'Mortgage_Rate_CFMBJ95_pct': 'mortgage_rate_cfmbj95_pct'}
+    present_opt = {o: n for o, n in opt_map.items() if o in df.columns}
+    keep = {**col_map, **present_opt}
+    df = df.rename(columns=keep)[list(keep.values())].copy()
 
     if df['mortgage_rate_pct'].median() > 1.0:
         df['mortgage_rate_annual'] = df['mortgage_rate_pct'] / 100.0
@@ -225,6 +236,36 @@ def align_monthly_data(housing_df: pd.DataFrame,
 
 def compute_monthly_mortgage_rate(annual_rate: float) -> float:
     return (1 + annual_rate) ** (1 / 12) - 1
+
+
+LTV_BAND_COLS = ('rate_75_pct', 'rate_90_pct', 'rate_95_pct')
+
+
+def rate_for_ltv(row, ltv: float) -> float:
+    """Quoted fixed rate for the borrower's CURRENT loan-to-value.
+
+    Lenders price mortgages in LTV bands, and a first-time buyer moves between
+    them: the loan amortises and the dwelling usually appreciates, so a buyer who
+    starts at 90% LTV is typically well inside a cheaper band by their first
+    refix. Charging the origination-LTV premium at every refix would overstate
+    the cost of owning by up to 4pp over 2010-2014, when the high-LTV premium
+    peaked at +2.2pp -- a Jan-2005 buyer is at 74.8% LTV by their Jan-2010 refix,
+    so pricing them at 90% LTV then is simply wrong.
+
+    Piecewise-linear between the three published bands. Below 75% LTV the 75%
+    rate is used unchanged, which is mildly conservative: lenders price 60% LTV
+    lower still, but the Bank of England publishes no band below 75%.
+    """
+    r75 = row['rate_75_pct'] / 100.0
+    r90 = row['rate_90_pct'] / 100.0
+    r95 = row['rate_95_pct'] / 100.0
+    if ltv <= 0.75:
+        return r75
+    if ltv <= 0.90:
+        return r75 + (r90 - r75) * (ltv - 0.75) / 0.15
+    if ltv <= 0.95:
+        return r90 + (r95 - r90) * (ltv - 0.90) / 0.05
+    return r95
 
 
 def compute_monthly_payment(balance: float, monthly_rate: float,
@@ -283,6 +324,8 @@ def simulate_buy(housing_df: pd.DataFrame,
 
     fixation_months = rate_fixation_years * 12 if rate_fixation_years else 1
     fixed_annual_rate = None
+    # Reprice by current LTV at each refix when the v3 rate bands are available.
+    use_ltv_bands = all(c in df.columns for c in LTV_BAND_COLS)
 
     for i, (date, row) in enumerate(df.iterrows()):
         home_values[i] = home_value
@@ -292,7 +335,14 @@ def simulate_buy(housing_df: pd.DataFrame,
         maintenance_costs[i] = monthly_maintenance
 
         if i % fixation_months == 0 or fixed_annual_rate is None:
-            fixed_annual_rate = row['mortgage_rate_annual']
+            if use_ltv_bands:
+                # At origination the LTV is set by the deposit; at every refix it
+                # is the borrower's actual position.
+                current_ltv = (1.0 - deposit_share) if i == 0 else (
+                    balance / home_value if home_value > 0 else 0.0)
+                fixed_annual_rate = rate_for_ltv(row, current_ltv)
+            else:
+                fixed_annual_rate = row['mortgage_rate_annual']
         monthly_rate = compute_monthly_mortgage_rate(fixed_annual_rate)
 
         payment = compute_monthly_payment(balance, monthly_rate, months_remaining)
@@ -335,12 +385,46 @@ def simulate_buy(housing_df: pd.DataFrame,
 def simulate_rent_invest(housing_df: pd.DataFrame,
                          stock_returns: pd.Series,
                          buy_paths: Dict,
-                         start_idx: int) -> Dict:
+                         start_idx: int,
+                         leverage: float = 1.0,
+                         margin_spread: float = 0.015,
+                         maintenance_margin: float = 0.30,
+                         relever_after_call: bool = False) -> Dict:
     """Simulate RENT+INVEST with monthly cash-flow matching (mirrors CZ engine).
 
     Renter starts with the buyer's total initial cash outlay (deposit +
     purchase costs incl. SDLT) and each month invests/withdraws the
     difference between the owner's outflow and market rent.
+
+    Optional margin leverage (comments.txt item 5). `leverage` = 1.0 is the
+    unlevered baseline and leaves the original arithmetic untouched.
+
+    The levered case is modelled as a ONE-OFF margin loan that is then left to
+    ride, not as a constantly rebalanced constant-leverage position. That is what
+    a buy-and-hold retail investor actually does, and it is the only version in
+    which a margin call can occur: monthly rebalancing to a fixed leverage
+    deleverages on the way down and so never gets called, at the cost of
+    volatility drag. Monthly contributions go into equity, which naturally
+    deleverages the position over time.
+
+    Forced liquidation is modelled explicitly. If equity falls below
+    `maintenance_margin` of the position, assets are sold to restore exactly that
+    ratio and the debt is repaid from the proceeds. Interactive Brokers state
+    they "generally will not issue margin calls" and "generally will liquidate
+    positions ... without prior notice", so the investor does not choose the
+    timing. By default the position is NOT re-levered afterwards.
+
+    Margin interest accrues at Bank Rate + `margin_spread`, read from the
+    `bank_rate_pct` column when present (IBKR U.K. Tier I is benchmark + 1.50%).
+    Falls back to a flat `margin_spread` if Bank Rate is unavailable.
+
+    Two caveats that belong in the text, not just here. Monthly observation
+    understates drawdowns: month-end missed the daily trough by ~4pp in the
+    financial crisis and ~9-11pp in 2020, and brokers liquidate in real time, so
+    a monthly simulation will under-report margin calls. And sterling did much of
+    the work in both episodes -- 2x survived 2020 only because GBP fell ~13% in a
+    global equity crash, which is a property of the currency pair in those
+    episodes, not of equity leverage.
     """
     df = housing_df.iloc[start_idx:].copy()
     returns = stock_returns.iloc[start_idx:].copy()
@@ -349,12 +433,24 @@ def simulate_rent_invest(housing_df: pd.DataFrame,
     portfolio_values = np.zeros(n_months)
     rent_payments = np.zeros(n_months)
     net_flows = np.zeros(n_months)
+    debt_values = np.zeros(n_months)
+    equity_ratios = np.ones(n_months)
 
-    portfolio = buy_paths['initial_equity']
+    equity0 = buy_paths['initial_equity']
+    position = equity0 * leverage          # gross assets
+    debt = position - equity0              # margin borrowing
     external_cash_required = 0.0
+    margin_calls = 0
+    forced_sales_total = 0.0
+    min_equity_ratio = 1.0
+
+    has_bank_rate = 'bank_rate_pct' in df.columns
 
     for i, (date, row) in enumerate(df.iterrows()):
-        portfolio_values[i] = portfolio
+        equity = position - debt
+        portfolio_values[i] = equity
+        debt_values[i] = debt
+        equity_ratios[i] = (equity / position) if position > 0 else 1.0
 
         monthly_rent = row['rent_gbp']
         rent_payments[i] = monthly_rent
@@ -363,26 +459,60 @@ def simulate_rent_invest(housing_df: pd.DataFrame,
         net_flows[i] = delta
 
         if delta > 0:
-            portfolio += delta
+            position += delta                      # contribution buys assets
         else:
             withdrawal = abs(delta)
-            if portfolio >= withdrawal:
-                portfolio -= withdrawal
+            sellable = position - debt             # cannot sell into negative equity
+            if sellable >= withdrawal:
+                position -= withdrawal
             else:
-                external_cash_required += (withdrawal - portfolio)
-                portfolio = 0
+                external_cash_required += (withdrawal - max(sellable, 0.0))
+                position = debt                    # equity exhausted
 
         if i < n_months - 1:
             r = returns.iloc[i]
             if not np.isnan(r):
-                portfolio *= (1 + r)
+                position *= (1 + r)
+            if debt > 0:
+                base = (row['bank_rate_pct'] / 100.0) if has_bank_rate else 0.0
+                m_annual = max(base + margin_spread, 0.0)
+                debt *= (1 + (1 + m_annual) ** (1 / 12) - 1)
+
+            # --- maintenance-margin check, after returns and interest ---
+            if debt > 0 and position > 0:
+                equity = position - debt
+                ratio = equity / position
+                min_equity_ratio = min(min_equity_ratio, ratio)
+                if ratio < maintenance_margin:
+                    margin_calls += 1
+                    if equity <= 0:
+                        forced_sales_total += position   # wiped out
+                        position, debt = 0.0, 0.0
+                    else:
+                        target_position = equity / maintenance_margin
+                        sold = position - target_position
+                        forced_sales_total += sold
+                        position = target_position
+                        debt = max(debt - sold, 0.0)
+                        if not relever_after_call:
+                            # repay in full and continue unlevered
+                            position -= debt
+                            debt = 0.0
+
+    final_equity = max(position - debt, 0.0)
 
     return {
         'portfolio_values': portfolio_values,
         'rent_payments': rent_payments,
         'net_flows': net_flows,
+        'debt_values': debt_values,
+        'equity_ratios': equity_ratios,
         'external_cash_required': external_cash_required,
-        'net_worth': portfolio_values[-1],
+        'leverage': leverage,
+        'margin_calls': margin_calls,
+        'forced_sales_total': forced_sales_total,
+        'min_equity_ratio': min_equity_ratio,
+        'net_worth': final_equity,
         'dates': df.index,
     }
 
@@ -531,14 +661,40 @@ def forward_rar(price: float,
 
 # Baseline = the typical first-time buyer: 10% deposit, 30-year term, 1.5% all-in
 # maintenance, variable effective rate, 1.5% purchase costs + FTB SDLT, 2% selling.
+# Baseline = the typical English FIRST-TIME BUYER, calibrated to data wherever a
+# figure exists. Every value here is a baseline, not a claim about any individual
+# buyer; the robustness section reports the range around each.
+#
+#   deposit_share 0.10 (90% LTV)  FCA PSD001/PSD007 puts the FTB median at 84.8%
+#       and the modal density band at >85-90%; 90% sits at the top of that band.
+#       The median is held down by the ~13% of the FCA sample that is
+#       scheme-assisted (Help-to-Buy borrowers take ~75% LTV mortgages on 5% cash
+#       deposits), so it understates the unassisted FTB's leverage. Sensitivity
+#       reports 75/85/90/95.
+#   amort_years 30                FCA PSD median is exactly 360 months, and the
+#       English Housing Survey 2024-25 (Annex Table 2.1) has 62% of recent
+#       England FTBs on 30 years or more, up from 47% in 2019-20. Unchanged.
+#   maintenance 1.5%              ONS MJX9 consumption of fixed capital on
+#       dwellings over dwellings-plus-land = 1.20% of market value (1995-2024
+#       mean), plus ~0.35% cash maintenance and buildings insurance. Band
+#       1.2-1.8%. This is an ALL-IN charge, hence depreciation_drag_annual = 0.
+#   rate_fixation_years 5         99.1% of FTB new lending in 2025 H1 was
+#       fixed-rate, and the >3-5 year band is the FTB modal choice in six of
+#       seven published periods. Refixes at the prevailing 5-year rate.
+#   purchase_costs_pct 0.012      Conveyancing incl. disbursements GBP 1,421
+#       (reallymoving Cost of Moving 2025, England FTBs) + RICS Level 2 survey
+#       GBP 462 + mortgage product fee GBP 1,129 (Moneyfacts) on a GBP 250,000
+#       purchase. Excludes SDLT, which is modelled separately and exactly.
+#   selling_costs_pct 0.018       Agent commission 1.42% incl. VAT + conveyancing
+#       GBP 929 + EPC GBP 65.
 BASE_SPEC = dict(
     deposit_share=0.10,
     amort_years=30,
     maintenance_pct_of_value=0.015,
     depreciation_drag_annual=0.0,
-    rate_fixation_years=None,
-    purchase_costs_pct=0.015,
-    selling_costs_pct=0.02,
+    rate_fixation_years=5,
+    purchase_costs_pct=0.012,
+    selling_costs_pct=0.018,
     include_sdlt=True,
 )
 
@@ -548,16 +704,27 @@ def sim_pair(ha: pd.DataFrame, ar: pd.Series, start: int,
     """Run one BUY / RENT+INVEST pair. end_idx truncates the sample (for
     fixed-horizon runs), exactly as in full_rerun_v5.sim()."""
     p = {**BASE_SPEC, **overrides}
+    # Route the renter-side arguments to simulate_rent_invest; everything else
+    # belongs to simulate_buy.
+    rent_keys = ('leverage', 'margin_spread', 'maintenance_margin', 'relever_after_call')
+    rp = {k: p.pop(k) for k in rent_keys if k in p}
     h = ha if end_idx is None else ha.iloc[:end_idx]
     a = ar if end_idx is None else ar.iloc[:end_idx]
     b = simulate_buy(h, start, **p)
-    r = simulate_rent_invest(h, a, b, start)
+    r = simulate_rent_invest(h, a, b, start, **rp)
     return b, r
 
 
 def run_rolling(ha: pd.DataFrame, ar: pd.Series,
-                start_every_n_months: int = 3, **overrides) -> pd.DataFrame:
-    """Quarterly-start cohorts, all ending at the sample end (CZ: 71 cohorts)."""
+                start_every_n_months: int = 1, **overrides) -> pd.DataFrame:
+    """Rolling-start cohorts, all ending at the sample end.
+
+    Monthly starts from revision round 4 (previously quarterly). Monthly removes
+    an arbitrary grid at no cost, but it does NOT add independent information:
+    the underlying sample is the same, and the number of non-overlapping
+    holding-period windows is unchanged. Say so wherever the cohort count is
+    reported, or 253 cohorts will be read as 253 observations.
+    """
     n_months = len(ha)
     rows = []
     for start in range(0, n_months - 3, start_every_n_months):
@@ -567,6 +734,46 @@ def run_rolling(ha: pd.DataFrame, ar: pd.Series,
         rows.append({
             'start_date': ha.index[start],
             'months': n_months - start,
+            'nw_buy': nb, 'nw_rent': nr, 'R': nr / nb,
+            'winner': 'RENT' if nr > nb else 'BUY',
+            'mortgage_rate': row['mortgage_rate_annual'],
+            'pr_ratio': row['purchase_price_gbp'] / (row['rent_gbp'] * 12),
+            'sdlt_paid': b['sdlt_paid'],
+        })
+    return pd.DataFrame(rows)
+
+
+def run_rolling_fixed(ha: pd.DataFrame, ar: pd.Series,
+                      horizon_months: int = 60,
+                      start_every_n_months: int = 1, **overrides) -> pd.DataFrame:
+    """Cohorts that each hold for exactly `horizon_months`, started every month.
+
+    This is the paper's primary cohort design from revision round 4. Every cohort
+    holds for the same length of time, so cohorts are comparable with one another
+    and with the buyer's own decision problem: "if I buy and hold for five years,
+    what happens?"
+
+    The default horizon is five years because that is roughly how long a UK
+    first-time buyer keeps their first home - Santander put the average at 4.5
+    years. It also makes the selling-cost deduction the right treatment rather
+    than an artefact: we are measuring the buyer's wealth at the point they move
+    out of their first home, which is when those costs are actually incurred.
+
+    Contrast run_rolling(), which runs every cohort to the sample end. That gives
+    cohorts of wildly unequal length (258 months down to 4) and loads the average
+    with short recent cohorts that cannot amortise their round-trip transaction
+    costs, which pushes the buy-win share down for reasons that have nothing to
+    do with tenure. Keep it as robustness, not as the headline.
+    """
+    n_months = len(ha)
+    rows = []
+    for start in range(0, n_months - horizon_months + 1, start_every_n_months):
+        b, r = sim_pair(ha, ar, start, end_idx=start + horizon_months, **overrides)
+        nb, nr = b['net_worth'], r['net_worth']
+        row = ha.iloc[start]
+        rows.append({
+            'start_date': ha.index[start],
+            'months': horizon_months,
             'nw_buy': nb, 'nw_rent': nr, 'R': nr / nb,
             'winner': 'RENT' if nr > nb else 'BUY',
             'mortgage_rate': row['mortgage_rate_annual'],

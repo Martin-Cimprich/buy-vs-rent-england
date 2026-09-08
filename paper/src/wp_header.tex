@@ -100,6 +100,13 @@
   bookmarks=true
 ]{hyperref}
 
+% --- Line breaking ---
+% A handful of lines (long series codes, bibliography entries, wide tables)
+% cannot be broken within the normal tolerance and would otherwise overflow into
+% the margin. \emergencystretch lets TeX add interword space on those lines in a
+% final pass instead. It affects only lines that would otherwise be overfull.
+\setlength{\emergencystretch}{3em}
+
 % --- Utility ---
 \newcommand{\gbp}[1]{\mbox{\pounds#1}}
 
@@ -111,8 +118,17 @@
     % work here (its text is only flushed by \maketitle) — use \footnote.
     \renewcommand{\thefootnote}{\fnsymbol{footnote}}%
     \begin{center}
-      \vspace*{18mm}
-      {\Large\bfseries #1\par}
+      % The title sits in a field defined by two hairline rules, set one step
+      % larger and unbolded so it reads as display type rather than as
+      % emphasised body text. Title, rules and abstract share one measure
+      % (0.86\textwidth), so the page has a single axis instead of three.
+      \vspace*{16mm}
+      \rule{0.86\textwidth}{0.4pt}\par
+      \vspace{5mm}
+      {\LARGE\setstretch{1.08}\selectfont
+        \parbox{0.86\textwidth}{\centering #1\par}\par}
+      \vspace{5mm}
+      \rule{0.86\textwidth}{0.4pt}\par
       \vspace{9mm}
       {\normalsize #2\par}
       \vspace{4mm}
