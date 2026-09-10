@@ -22,7 +22,9 @@ import pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = os.path.dirname(HERE)
 TBL = os.path.join(BASE, 'output', 'tables')
-OUT_DIR = os.path.join(BASE, 'paper', 'src', 'tables')
+# The repo ships the paper as a PDF, so the generated LaTeX table lands in
+# output/tables for inspection rather than being \input by a local build.
+OUT_DIR = os.path.join(BASE, 'output', 'tables')
 os.makedirs(OUT_DIR, exist_ok=True)
 OUT = os.path.join(OUT_DIR, 'sensitivity_generated.tex')
 

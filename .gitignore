@@ -6,17 +6,6 @@ data/clean/uk_stock_returns_gbp.csv
 calculator/index.html
 calculator/calculator_data.js
 
-# LaTeX build artifacts
-paper/src/*.aux
-paper/src/*.bbl
-paper/src/*.bcf
-paper/src/*.blg
-paper/src/*.log
-paper/src/*.out
-paper/src/*.run.xml
-paper/src/*.toc
-paper/src/main.pdf
-
 # Python
 __pycache__/
 *.pyc

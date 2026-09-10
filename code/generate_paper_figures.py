@@ -40,8 +40,10 @@ for cand in [os.path.join(BASE, 'output', 'tables', 'UK'),
     if os.path.isdir(cand):
         TBL = cand
         break
+# The repo ships the paper as a PDF, not as LaTeX sources, so figures go to
+# output/figures here. The first candidate is the author's own paper tree.
 for cand in [os.path.join(BASE, 'whitepaper', 'paper_wp', 'figures'),
-             os.path.join(BASE, 'paper', 'src', 'figures')]:
+             os.path.join(BASE, 'output', 'figures')]:
     if os.path.isdir(os.path.dirname(cand)):
         FIG = cand
         break

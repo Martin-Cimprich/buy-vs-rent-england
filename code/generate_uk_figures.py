@@ -30,7 +30,7 @@ TBL = os.path.join(BASE, "output", "tables")
 # captions), written to the working-paper folder. Default: styled PNGs for the
 # web/policy edition.
 JOURNAL = '--journal' in sys.argv
-FIG = os.path.join(BASE, "paper", "src", "figures") if JOURNAL else os.path.join(BASE, "output", "figures")
+FIG = os.path.join(BASE, "output", "figures")
 GEO = os.path.join(BASE, "data", "raw", "geo", "english_regions.geojson")
 os.makedirs(FIG, exist_ok=True)
 
