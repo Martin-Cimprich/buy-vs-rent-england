@@ -56,6 +56,10 @@
   canvas{width:100%; height:auto; background:#fff; border:1px solid var(--rule); border-radius:8px;}
   .chart-title{font-size:0.85rem; font-weight:700; margin:14px 0 6px;}
 
+  .badge{margin-top:12px; padding:11px 14px; background:var(--light);
+       border-left:4px solid var(--navy); border-radius:4px; font-size:0.9rem;
+       color:#333; max-width:760px;}
+  .badge strong{color:var(--navy);}
   .method{max-width:800px; font-size:0.95rem;}
   .method h2{font-size:1.15rem; margin:20px 0 8px; color:var(--navy);}
   .method p,.method li{margin-bottom:8px; color:#333;}
@@ -67,19 +71,38 @@
   footer{border-top:1px solid var(--rule); margin-top:30px; padding:16px 0 30px;
          font-size:0.8rem; color:var(--gray);}
   footer strong{color:var(--ink);}
+
+  /* Phones. 16px on form controls is not cosmetic: iOS Safari zooms the whole
+     page when you focus an input whose font-size is below 16px, and the reader
+     then has to pinch back out on every field. Taller controls also give a
+     reasonable tap target. */
+  @media(max-width:520px){
+    .field input,.field select{font-size:16px; padding:10px;}
+    .field label{font-size:0.82rem;}
+    .tab{padding:9px 11px; font-size:0.85rem;}
+    header h1{font-size:1.45rem;}
+    .wrap{padding:0 14px;}
+  }
 </style>
 </head>
 <body>
 <header>
   <div class="wrap">
     <h1>Buy vs Rent <span>in England</span></h1>
-    <p class="sub">Should you buy a first home, or keep renting and invest the difference?
-    This free calculator implements the analysis of the research paper
-    <em>Buy versus Rent in England: A Cash-Flow-Matched Horse Race for the First-Time Buyer, 2005–2026</em>,
-    using official data (HM Land Registry, ONS, Bank of England, MSCI).</p>
+    <p class="sub">Should you buy a first home, or keep renting and invest the difference?</p>
+    <div class="badge">
+      <strong>This runs the same model as the paper.</strong>
+      Not a simplified version of it. The calculation here is a port of the simulation engine
+      behind
+      <em>Buy versus Rent in England: A Cash-Flow-Matched Horse Race for the First-Time Buyer,
+      2005&ndash;2026</em>, running on the same official data with the same defaults. An automated
+      test checks it against that engine on the paper's headline results, the cohort and win
+      counts, the wealth ratios and the forward break-even, and the two agree to five decimal
+      places.
+    </div>
     <div class="links">
-      <a href="https://github.com/Martin-Cimprich/buy-vs-rent-england" target="_blank" rel="noopener">Paper, code &amp; data (GitHub)</a>
-      <a href="#" id="linkMethod">Methodology</a>
+      <a href="https://github.com/Martin-Cimprich/buy-vs-rent-england" target="_blank" rel="noopener">Read the paper &amp; check the code</a>
+      <a href="#" id="linkMethod">Model &amp; assumptions</a>
     </div>
   </div>
 </header>
@@ -88,7 +111,7 @@
   <div class="tabs">
     <button class="tab active" data-pane="forward">What if I buy today?</button>
     <button class="tab" data-pane="backtest">How would it have gone? (2005–2026)</button>
-    <button class="tab" data-pane="method">Methodology &amp; FAQ</button>
+    <button class="tab" data-pane="method">Model &amp; assumptions</button>
   </div>
 
   <!-- ============================ FORWARD ============================ -->
@@ -176,7 +199,7 @@
         </div>
         <div class="chart-title">What actually happened: wealth paths from your entry month</div>
         <canvas id="b_chart" width="700" height="330"></canvas>
-        <div class="chart-title">Every entry quarter since 2005, on your parameters (R &gt; 1: renting won)</div>
+        <div class="chart-title">Every entry month since 2005, each held five years, on your parameters (R &gt; 1: renting won)</div>
         <canvas id="b_cohorts" width="700" height="240"></canvas>
       </div>
     </div>
@@ -185,49 +208,50 @@
   <!-- ============================ METHOD ============================ -->
   <div class="pane" id="pane-method">
     <div class="method">
-      <h2>What this calculator does</h2>
-      <p>It compares two ways of paying for the same home, on a <strong>cash-flow-matched</strong> basis.
-      The <strong style="color:var(--navy)">buyer</strong> pays a deposit, purchase costs and stamp duty, then a monthly
-      mortgage payment plus maintenance. The <strong style="color:var(--claret)">renter</strong> starts by investing
-      exactly the money the buyer put down, pays the market rent, and every month invests (or withdraws)
-      the difference between the owner's costs and the rent. At the end, the buyer's wealth is the home's
-      value minus selling costs and the remaining mortgage; the renter's wealth is the investment portfolio.</p>
-      <h2>Where the numbers come from</h2>
-      <ul>
-        <li><strong>House prices:</strong> UK House Price Index (HM Land Registry), average price of all dwellings, by region.</li>
-        <li><strong>Rents:</strong> ONS Price Index of Private Rents (average rent levels, by region; historical series back to 2005).</li>
-        <li><strong>Mortgage rate:</strong> Bank of England quoted rates on five-year fixed mortgages at 75%, 90% and 95% loan-to-value. The baseline buyer starts at 90% and is repriced at each refix by the loan-to-value they have amortised down to, so they do not pay the high-loan-to-value premium for thirty years. The effective rate on all new advances is available as the floating option.</li>
-        <li><strong>Investment returns:</strong> MSCI ACWI global equity index in GBP, net total return, minus a 0.12% p.a. fund fee.</li>
-        <li><strong>Stamp duty:</strong> the exact England first-time-buyer schedule in force in each month since 2005.</li>
-      </ul>
-      <p>The "England (representative)" series is a population-weighted average of the nine English regions'
-      prices <em>and</em> rents, so both share the same regional composition (see the paper, Section 3).</p>
-      <h2>Default assumptions (the paper's baseline)</h2>
+      <h2>What it works out</h2>
+      <p>Two ways of paying for the same home, compared pound for pound. The
+      <strong style="color:var(--navy)">buyer</strong> puts down a deposit, pays purchase costs and
+      stamp duty, then a monthly mortgage payment plus maintenance. The
+      <strong style="color:var(--claret)">renter</strong> starts by investing exactly what the buyer
+      put down, pays the market rent, and each month invests the difference between the owner's
+      costs and the rent (or withdraws it, when the rent is higher). At the end the buyer's wealth
+      is the home's value less selling costs and the outstanding mortgage; the renter's is the
+      portfolio.</p>
+
+      <h2>Defaults</h2>
+      <p>These are the paper's baseline, calibrated to what an English first-time buyer typically
+      does. Change any of them and the answer moves; the paper reports how much.</p>
       <table>
         <tr><th>Parameter</th><th>Default</th><th>Why</th></tr>
         <tr><td>Deposit</td><td>10%</td><td>Typical first-time-buyer loan-to-value</td></tr>
-        <tr><td>Mortgage term</td><td>30 years</td><td>Modern first-time-buyer norm (UK Finance)</td></tr>
-        <tr><td>Maintenance &amp; depreciation</td><td>1.5% of value/yr</td><td>ONS consumption of fixed capital on dwellings (1.20% of market value on average, 1.28% in 2024) plus ~0.35% cash maintenance and insurance. UK evidence supports 1.2&ndash;1.8%; figures of 2&ndash;3% come from studies of structure value and do not transfer, because land is 69.9% of UK residential value</td></tr>
-        <tr><td>Purchase / selling costs</td><td>1.2% / 1.8%</td><td>Conveyancing, survey, fees / agent commission incl. VAT</td></tr>
-        <tr><td>Investment return</td><td>5.9%/yr</td><td>Conservative long-run global equity assumption, net of fees</td></tr>
-        <tr><td>Rent growth</td><td>3%/yr</td><td>England average, 2005–2026</td></tr>
+        <tr><td>Mortgage term</td><td>30 years</td><td>Modern first-time-buyer norm</td></tr>
+        <tr><td>Mortgage rate</td><td>Five-year fix</td><td>99% of first-time-buyer lending is fixed and five years is the most common choice. The rate is repriced at each refix by the loan-to-value you have paid down to, so you are not charged the high-loan-to-value premium for thirty years</td></tr>
+        <tr><td>Maintenance &amp; depreciation</td><td>1.5% of value/yr</td><td>ONS consumption of fixed capital on dwellings, 1.20% of market value on average, plus about 0.35% cash maintenance and insurance</td></tr>
+        <tr><td>Purchase / selling costs</td><td>1.2% / 1.8%</td><td>Conveyancing, survey and fees / agent commission including VAT</td></tr>
+        <tr><td>Investment return</td><td>5.9%/yr</td><td>Cautious long-run global equity assumption, net of fees. Over 2005&ndash;2026 the same portfolio actually returned 10.4%</td></tr>
+        <tr><td>Rent growth</td><td>3%/yr</td><td>Close to the 2.9% England rents delivered over the sample</td></tr>
       </table>
+
+      <h2>Where the numbers come from</h2>
+      <p>House prices from the UK House Price Index (HM Land Registry); rents from the ONS Price
+      Index of Private Rents; mortgage rates from Bank of England quoted five-year fixed rates at
+      75%, 90% and 95% loan-to-value; investment returns from the MSCI ACWI global index in
+      sterling, net of tax and a 0.12% fund fee; and the exact England first-time-buyer stamp-duty
+      schedule in force in each month since 2005. Data runs to June 2026.</p>
+      <p>"England (representative)" is a population-weighted average of the nine English regions'
+      prices <em>and</em> rents, so both sides share one regional composition. Using the published
+      national averages instead would understate the price-to-rent ratio, because prices are
+      weighted by transactions and rents by tenancies.</p>
+
       <h2>What it leaves out</h2>
-      <p>Taxes (a first-time buyer's home is CGT-free and the renter's flows fit in ISAs for most households),
-      council tax and utilities (paid under both tenures), moving costs, and everything non-financial:
-      security of tenure, freedom to renovate, flexibility, and the discipline required to actually invest
-      the difference every month. The paper discusses all of these.</p>
-      <h2>FAQ</h2>
-      <p><strong>Is this financial advice?</strong> No. It is an educational tool showing how the arithmetic
-      works and how it would have played out historically. Your circumstances, and the future, will differ.</p>
-      <p><strong>Why does a smaller deposit help the buyer?</strong> Leverage. The mortgage lets the buyer hold
-      a large asset with little capital; when prices rise even modestly, the return on the buyer's own money is
-      amplified. The paper shows an all-cash buyer would never have beaten a renter who invested globally.</p>
-      <p><strong>Why global equities and not UK shares or a savings account?</strong> Because that is the
-      renter's honest best alternative. The paper shows a UK-only (FTSE 100) renter would have lost to the
-      buyer in most cohorts — diversification is what makes renting competitive.</p>
-      <p><strong>Can I check the code?</strong> Yes — everything (paper, data pipeline, this calculator) is
-      open source: <a href="https://github.com/Martin-Cimprich/buy-vs-rent-england">github.com/Martin-Cimprich/buy-vs-rent-england</a>.</p>
+      <p>Taxes, on the grounds that a first-time buyer's home is free of capital-gains tax and the
+      renter's contributions fit inside ISA allowances for most households. Council tax and
+      utilities, which the occupant pays either way. Moving costs. And everything non-financial:
+      security of tenure, freedom to renovate, the flexibility to leave, and the discipline needed
+      to actually invest the difference every single month. The renter's side of these results
+      assumes that discipline throughout.</p>
+      <p><strong>This is not financial advice.</strong> It shows how the arithmetic works and how it
+      would have played out on past data. Your circumstances, and the future, will differ.</p>
     </div>
   </div>
 </div>
@@ -295,13 +319,41 @@ function readParams(prefix) {
   };
 }
 
+// ---- canvas sizing ----
+// One place that maps a canvas's CSS box onto its backing store. Returns null
+// when the canvas is not measurable (its pane is hidden, or the layout has not
+// settled), so callers draw nothing rather than baking in a wrong width; the
+// ResizeObserver below calls them again once the box has a real size.
+function prepCanvas(canvas) {
+  const dpr = window.devicePixelRatio || 1;
+  // Remember the design height on first sight. Assigning canvas.height writes
+  // the height ATTRIBUTE, so reading the design height back out of that
+  // attribute multiplies it by the device pixel ratio on every redraw. On a
+  // phone (dpr 2) that doubles the backing store each time: 360px became
+  // 188,743,680px within twenty redraws and the canvas ran out of memory.
+  if (canvas.dataset.designHeight === undefined) {
+    canvas.dataset.designHeight = canvas.getAttribute('height') || '300';
+  }
+  const W = Math.floor(canvas.clientWidth);
+  const H = +canvas.dataset.designHeight;
+  if (!(W > 40) || !(H > 0)) return null;
+  const bw = Math.round(W * dpr), bh = Math.round(H * dpr);
+  if (canvas.width !== bw || canvas.height !== bh) {
+    canvas.width = bw;
+    canvas.height = bh;
+  }
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  return { ctx: ctx, W: W, H: H };
+}
+
 // ---- generic line chart ----
 function drawLines(canvas, labels, seriesList, yFmt) {
-  const dpr = window.devicePixelRatio || 1;
-  const W = canvas.clientWidth || canvas.width, H = +canvas.getAttribute('height');
-  canvas.width = W * dpr; canvas.height = H * dpr; canvas.style.height = H + 'px';
-  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
-  ctx.clearRect(0, 0, W, H);
+  const g = prepCanvas(canvas);
+  if (!g) return;
+  const ctx = g.ctx, W = g.W, H = g.H;
   const padL = 62, padR = 12, padT = 14, padB = 30;
   const all = seriesList.flatMap(s => s.data);
   let yMin = Math.min(0, ...all), yMax = Math.max(...all);
@@ -340,11 +392,9 @@ function drawLines(canvas, labels, seriesList, yFmt) {
 
 // ---- cohort bar chart ----
 function drawCohorts(canvas, cohorts, highlightIdx) {
-  const dpr = window.devicePixelRatio || 1;
-  const W = canvas.clientWidth || canvas.width, H = +canvas.getAttribute('height');
-  canvas.width = W * dpr; canvas.height = H * dpr; canvas.style.height = H + 'px';
-  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
-  ctx.clearRect(0, 0, W, H);
+  const g = prepCanvas(canvas);
+  if (!g) return;
+  const ctx = g.ctx, W = g.W, H = g.H;
   const padL = 46, padR = 8, padT = 10, padB = 26;
   const Rs = cohorts.map(c => c.R);
   const yMin = Math.min(0.5, ...Rs) - 0.05, yMax = Math.max(1.5, ...Rs) + 0.05;
@@ -430,8 +480,11 @@ function initBacktest() {
   const st = $('b_start');
   for (let i = 0; i < N - 12; i++) st.add(new Option(CALC_DATA.months[i], i));
   st.value = 0;
-  sel.addEventListener('change', updateBacktest);
-  st.addEventListener('change', updateBacktest);
+  // Bind every control by id, in one place. b_fix shipped once as a <select>
+  // with no listener at all, so the five-year fix, the two-year fix and the
+  // floating rate returned identical numbers: the control looked functional
+  // and did nothing. Selects need 'change'; number inputs need 'input'.
+  ['b_region','b_start','b_fix'].forEach(id => $(id).addEventListener('change', updateBacktest));
   ['b_dep','b_term','b_maint','b_pc','b_sc'].forEach(id => $(id).addEventListener('input', updateBacktest));
   updateBacktest();
 }
@@ -473,17 +526,60 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
   document.querySelectorAll('.pane').forEach(x => x.classList.remove('active'));
   t.classList.add('active');
   $('pane-' + t.dataset.pane).classList.add('active');
-  if (t.dataset.pane === 'forward') updateForward();
-  if (t.dataset.pane === 'backtest') updateBacktest();
+  // The pane was display:none until a moment ago, so its canvases had no
+  // measurable width and drew nothing. It is laid out synchronously by the
+  // time the class change has been applied, so redraw straight away.
+  redrawGuarded();
 }));
 $('linkMethod').addEventListener('click', e => {
   e.preventDefault();
   document.querySelector('[data-pane="method"]').click();
 });
 
+// Redraw whichever pane is showing. Cheap: the simulation is a few hundred
+// months of arithmetic, so there is no need to cache.
+function redrawActive() {
+  const pane = document.querySelector('.pane.active');
+  if (!pane) return;
+  if (pane.id === 'pane-forward') updateForward();
+  if (pane.id === 'pane-backtest') updateBacktest();
+}
+
 initForward();
 initBacktest();
-window.addEventListener('resize', () => { updateForward(); updateBacktest(); });
+
+// A canvas whose box changes size needs redrawing at the new size: this covers
+// the first layout, switching tabs, rotating a phone, browser zoom, and a late
+// web font. Without it the charts keep whatever width they were first measured
+// at, which on a fresh page load is often far too narrow.
+// Observe each chart's CONTAINER, not the canvas. Container size is driven by
+// layout; the canvas's own size is something we write during a redraw, so
+// observing the canvas would feed back into itself. Redrawing synchronously
+// here matters: requestAnimationFrame does not fire in a tab that is not being
+// painted, so a chart deferred to rAF can stay at the wrong size indefinitely.
+let redrawing = false;
+function redrawGuarded() {
+  if (redrawing) return;
+  redrawing = true;
+  try { redrawActive(); } finally { redrawing = false; }
+}
+
+if (typeof ResizeObserver !== 'undefined') {
+  const ro = new ResizeObserver(redrawGuarded);
+  ['f_chart', 'b_chart', 'b_cohorts'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.parentElement) ro.observe(el.parentElement);
+  });
+}
+
+// For browsers without ResizeObserver, and for a first paint that happens
+// before the font metrics are known.
+window.addEventListener('resize', redrawGuarded);
+window.addEventListener('orientationchange', redrawGuarded);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(redrawGuarded);
+}
+window.addEventListener('load', redrawGuarded);
 </script>
 </body>
 </html>
