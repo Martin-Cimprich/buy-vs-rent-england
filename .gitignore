@@ -2,9 +2,9 @@
 data/raw/financial/
 data/clean/uk_stock_returns_gbp.csv
 
-# Built calculator (embeds the above data) — build with calculator/build_calculator.py
-calculator/index.html
-calculator/calculator_data.js
+# The built calculator IS committed, so that the tool can simply be downloaded
+# and opened. It embeds derived monthly returns, which output/tables already
+# publishes; MSCI's raw index levels stay out of the repository.
 
 # Python
 __pycache__/

@@ -6,6 +6,9 @@
 > 2005–2026.* Working paper, Queen Mary University of London.
 > ([paper/buy-vs-rent-england-2026.pdf](paper/buy-vs-rent-england-2026.pdf))
 
+**Just want the calculator?** It is a single HTML file that runs the paper's own model
+offline: [how to download it](#the-calculator).
+
 ## What the paper does
 
 It compares two ways of paying for the same home, month by month from January 2005 to
@@ -73,7 +76,7 @@ from one to ten years, and region by region.
 | `data/clean/` | Cleaned monthly datasets built by `prep_uk_data_v3.py` |
 | `output/tables/` | All result tables and `uk_key_numbers.json` (every number in the paper) |
 | `output/figures/` | Figures produced by the figure scripts |
-| `calculator/` | Source of the free calculator (one self-contained HTML file) |
+| `calculator/` | The calculator: `index.html` is ready to download and use; the rest builds it |
 | `scripts/` | Fetch script for the licence-restricted financial series (see below) |
 
 ## Reproducing the results
@@ -126,13 +129,22 @@ the chart sizing cannot bake in a stale width.
 
 ## The calculator
 
-One HTML file with no dependencies: download it, open it, and it works offline on a phone
-or a laptop. It runs the same engine as the paper rather than a simplified version, and
+One HTML file, nothing to install. It works offline, on a phone or a laptop, with no build
+step and no network.
+
+**To get it:** open
+[`calculator/index.html`](https://github.com/Martin-Cimprich/buy-vs-rent-england/blob/main/calculator/index.html)
+and use GitHub's **Download raw file** button (the ⤓ icon, top right of the file view).
+Then double-click the saved file. That is the whole installation.
+
+It runs the same engine as the paper rather than a simplified version, and
 `engine.test.mjs` is what backs that claim. Forward-looking break-even analysis, a 2005–2026
 historical backtest on the paper's five-year cohort design, and regional presets.
 
+To rebuild it after changing the engine or refreshing the data:
+
 ```bash
-python calculator/build_calculator.py     # writes calculator/index.html
+python calculator/build_calculator.py     # rewrites calculator/index.html
 ```
 
 The mortgage side offers the baseline five-year fix (repriced by current loan-to-value), a
@@ -147,12 +159,14 @@ the parameter that moves the historical answer most.
   [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
   The exact vintages used are archived in `data/raw/`.
 - **10-year gilt yields**: OECD (CC-BY-4.0), via FRED.
-- **MSCI ACWI index levels** and the **Morningstar-sourced FTSE 100 ETF series** are
-  proprietary and are **not redistributed** here. `scripts/fetch_financial_series.py`
-  re-downloads them from their public endpoints in about a minute, after which the full
-  pipeline reproduces every number in the paper. (For the same reason, the built calculator
-  with embedded return data is not committed; `calculator/build_calculator.py` produces it
-  locally.)
+- **MSCI ACWI** and **FTSE 100** index *levels* are proprietary and are not included.
+  `scripts/fetch_financial_series.py` re-downloads them from their public endpoints in
+  about a minute, after which the full pipeline reproduces every number in the paper.
+  What the repository does publish is the *derived* monthly total-return series in
+  `output/tables/` and inside the built calculator. That series is a transformation of the
+  index rather than the index itself, and it is in any case already implied by the
+  month-by-month portfolio paths in `output/tables/uk_single_start_paths.csv`, which is
+  what makes the published results checkable.
 
 ## Disclaimer
 
