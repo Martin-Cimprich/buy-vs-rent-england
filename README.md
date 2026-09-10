@@ -6,8 +6,10 @@
 > 2005–2026.* Working paper, Queen Mary University of London.
 > ([paper/buy-vs-rent-england-2026.pdf](paper/buy-vs-rent-england-2026.pdf))
 
-**Just want the calculator?** It is a single HTML file that runs the paper's own model
-offline: [how to download it](#the-calculator).
+### ▶ [Open the calculator](https://martin-cimprich.github.io/buy-vs-rent-england/)
+
+It runs the paper's own model in your browser, on a phone or a laptop. Nothing to install.
+You can also [download the single HTML file](#the-calculator) and use it offline.
 
 ## What the paper does
 
@@ -76,7 +78,8 @@ from one to ten years, and region by region.
 | `data/clean/` | Cleaned monthly datasets built by `prep_uk_data_v3.py` |
 | `output/tables/` | All result tables and `uk_key_numbers.json` (every number in the paper) |
 | `output/figures/` | Figures produced by the figure scripts |
-| `calculator/` | The calculator: `index.html` is ready to download and use; the rest builds it |
+| `calculator/` | The calculator: `index.html` is ready to use or download; the rest builds it |
+| `index.html` | Site root, redirects to the calculator (GitHub Pages) |
 | `scripts/` | Fetch script for the licence-restricted financial series (see below) |
 
 ## Reproducing the results
@@ -129,13 +132,12 @@ the chart sizing cannot bake in a stale width.
 
 ## The calculator
 
-One HTML file, nothing to install. It works offline, on a phone or a laptop, with no build
-step and no network.
+**Use it in a browser:** https://martin-cimprich.github.io/buy-vs-rent-england/
 
-**To get it:** open
+**Or keep a copy.** It is one HTML file with no dependencies, so it works offline. Open
 [`calculator/index.html`](https://github.com/Martin-Cimprich/buy-vs-rent-england/blob/main/calculator/index.html)
-and use GitHub's **Download raw file** button (the ⤓ icon, top right of the file view).
-Then double-click the saved file. That is the whole installation.
+and use GitHub's **Download raw file** button (the ⤓ icon, top right of the file view), then
+double-click the saved file. That is the whole installation.
 
 It runs the same engine as the paper rather than a simplified version, and
 `engine.test.mjs` is what backs that claim. Forward-looking break-even analysis, a 2005–2026

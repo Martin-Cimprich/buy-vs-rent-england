@@ -9,7 +9,7 @@
 // listener: it rendered, it looked functional, and changing it did nothing.
 //
 // Run: node calculator/smoke.test.mjs
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 
 const html = readFileSync(new URL('./index.html', import.meta.url), 'utf-8');
 const FX = JSON.parse(readFileSync(new URL('./engine.fixtures.json', import.meta.url), 'utf-8'));
@@ -118,6 +118,17 @@ check('redraws on load and on font load',
       html.includes("addEventListener('load', redrawGuarded)") && html.includes('document.fonts.ready'));
 check('redraws synchronously, not via rAF',
       !/ResizeObserver\(\(\) => \{[\s\S]{0,120}requestAnimationFrame/.test(html));
+
+// ---- 6. The GitHub Pages site root must reach the calculator ----
+// The root page is a redirect rather than a second copy of the build, so the
+// hosted version and the downloadable file cannot drift apart.
+const root = readFileSync(new URL('../index.html', import.meta.url), 'utf-8');
+check('site root redirects to the calculator',
+      /http-equiv="refresh"[^>]*calculator\/index\.html/.test(root));
+check('site root has a visible fallback link, not just a meta refresh',
+      /<a href="calculator\/index\.html">/.test(root));
+check('site root is not a duplicate of the build', !root.includes('const CALC_DATA'));
+check('Jekyll disabled for Pages', existsSync(new URL('../.nojekyll', import.meta.url)));
 
 console.log(failures === 0 ? '\nALL SMOKE TESTS PASSED' : `\n${failures} FAILURES`);
 process.exit(failures === 0 ? 0 : 1);
